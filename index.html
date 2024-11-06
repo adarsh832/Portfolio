@@ -61,8 +61,8 @@
 
         <!-- About Section -->
         <section id="about" class="about">
-            <h2 class="section-title" data-aos="fade-down">About Me</h2>
             <div class="about-content">
+                <h2 class="section-title" data-aos="fade-down">About Me</h2>
                 <div class="about-grid">
                     <div class="about-image" data-aos="fade-right">
                         <img src="images/about-image.jpg" alt="About Me Image">
@@ -131,31 +131,262 @@
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <h3>Adarsh Shah</h3>
-                <p>Full Stack Developer</p>
+        <!-- Projects Section -->
+        <section id="projects" class="projects">
+            <div class="projects-content">
+                <h2 class="section-title" data-aos="fade-down">My Projects</h2>
+                <div class="projects-filter" data-aos="fade-up">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="web">Web Apps</button>
+                    <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+                    <button class="filter-btn" data-filter="ui">UI/UX</button>
+                </div>
+                
+                <div class="projects-grid">
+                    <!-- Project Card 1 -->
+                    <div class="project-card" data-category="web" data-aos="fade-up">
+                        <div class="project-image">
+                            <img src="images/project1.jpg" alt="Project 1">
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>E-Commerce Platform</h3>
+                            <p>A full-stack e-commerce solution with React and Node.js</p>
+                            <div class="project-tech">
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="project-card" data-category="mobile" data-aos="fade-up" data-aos-delay="200">
+                        <div class="project-image">
+                            <img src="images/project2.jpg" alt="Project 2">
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Fitness Tracker App</h3>
+                            <p>Mobile app for tracking workouts and nutrition</p>
+                            <div class="project-tech">
+                                <span>React Native</span>
+                                <span>Firebase</span>
+                                <span>Redux</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="project-card" data-category="ui" data-aos="fade-up" data-aos-delay="400">
+                        <div class="project-image">
+                            <img src="images/project3.jpg" alt="Project 3">
+                            <div class="project-overlay">
+                                <div class="project-links">
+                                    <a href="#" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Dashboard Design</h3>
+                            <p>Modern analytics dashboard with dark mode</p>
+                            <div class="project-tech">
+                                <span>Figma</span>
+                                <span>HTML/CSS</span>
+                                <span>JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projects-cta" data-aos="fade-up">
+                    <a href="https://github.com/yourusername" class="btn primary-btn" target="_blank">
+                        <i class="fab fa-github"></i> View More on GitHub
+                    </a>
+                </div>
             </div>
-            <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills">
+            <div class="skills-content">
+                <h2 class="section-title" data-aos="fade-down">
+                    <span class="jp">スキル</span>
+                    My Skills
+                </h2>
+                
+                <div class="skills-grid">
+                    <!-- Frontend Skills -->
+                    <div class="skill-category" data-aos="fade-right">
+                        <h3 class="category-title">
+                            <i class="fas fa-code"></i>
+                            <span class="jp">フロントエンド</span>
+                            Frontend
+                        </h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>HTML5/CSS3</span>
+                                    <span class="percentage">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 90%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>JavaScript</span>
+                                    <span class="percentage">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 85%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>React</span>
+                                    <span class="percentage">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 80%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backend Skills -->
+                    <div class="skill-category" data-aos="fade-left">
+                        <h3 class="category-title">
+                            <i class="fas fa-server"></i>
+                            <span class="jp">バックエンド</span>
+                            Backend
+                        </h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Node.js</span>
+                                    <span class="percentage">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 85%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Python</span>
+                                    <span class="percentage">75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 75%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>MongoDB</span>
+                                    <span class="percentage">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 80%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tools & Others -->
+                    <div class="skill-category" data-aos="fade-up">
+                        <h3 class="category-title">
+                            <i class="fas fa-tools"></i>
+                            <span class="jp">ツール</span>
+                            Tools & Others
+                        </h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Git</span>
+                                    <span class="percentage">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 90%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Docker</span>
+                                    <span class="percentage">70%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 70%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-info">
+                                    <span>Figma</span>
+                                    <span class="percentage">75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-level" style="width: 75%">
+                                        <div class="skill-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Adarsh Shah</h3>
+                    <p>Full Stack Developer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Adarsh Shah. All rights reserved.</p>
-        </div>
-    </footer>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Adarsh Shah. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
 
     <!-- JavaScript -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
