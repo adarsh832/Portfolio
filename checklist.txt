@@ -1,0 +1,109 @@
+PORTFOLIO CHECKLIST
+==================
+
+1. IMAGES TO ADD
+---------------
+- Profile picture: /images/profile.jpg
+- About section image: /images/about-image.jpg
+- Project screenshots:
+  * /images/project1.jpg
+  * /images/project2.jpg
+  * /images/project3.jpg
+
+2. PERSONAL INFORMATION
+----------------------
+- Update name throughout the site (currently "Adarsh Shah")
+- Update email address (currently "adarshshah675@gmail.com")
+- Update location (currently "Vadodara, India")
+- Update phone number (currently "+91 XXXXXXXXXX")
+
+3. SOCIAL MEDIA LINKS
+--------------------
+Replace "yourusername" in these links:
+- GitHub: https://github.com/yourusername
+- LinkedIn: https://linkedin.com/in/yourusername
+- Twitter: https://twitter.com/yourusername
+- Instagram: https://instagram.com/yourusername
+
+4. EDUCATION DETAILS
+-------------------
+- University name (currently "University Name")
+- Course details (currently "Bachelor in Computer Science")
+- Year of study (currently "2019 - 2023")
+- Certification details (currently "Web Development Certification")
+- Institution name (currently "Institution Name")
+
+5. EXPERIENCE/STATS
+------------------
+Update numbers in:
+- Years Experience (currently "2+")
+- Projects Completed (currently "20+")
+- Happy Clients (currently "15+")
+
+6. PROJECT DETAILS
+-----------------
+For each project card:
+- Project title
+- Project description
+- Technologies used
+- Live demo link
+- GitHub repository link
+
+7. SKILLS PERCENTAGES
+--------------------
+Update skill levels:
+Frontend:
+- HTML5/CSS3 (currently 90%)
+- JavaScript (currently 85%)
+- React (currently 80%)
+
+Backend:
+- Node.js (currently 85%)
+- Python (currently 75%)
+- MongoDB (currently 80%)
+
+Tools:
+- Git (currently 90%)
+- Docker (currently 70%)
+- Figma (currently 75%)
+
+8. SECURITY/API KEYS
+-------------------
+- Get reCAPTCHA site key (replace "YOUR_RECAPTCHA_SITE_KEY")
+- EmailJS credentials are set:
+  * Public Key: 67esGcJl8wWhgSBWD
+  * Service ID: service_dcrf55l
+  * Template ID: template_xbn7xuh
+
+9. RESUME/CV
+-----------
+- Add your CV/resume file (update path in "path/to/resume.pdf")
+
+10. META INFORMATION
+------------------
+- Update meta tags in index.html
+- Add favicon
+- Update site title (currently "My Portfolio")
+
+11. OPTIONAL ENHANCEMENTS
+------------------------
+- Add custom domain
+- Set up Google Analytics
+- Add blog section
+- Add portfolio filters
+- Add multi-language support
+- Add dark/light mode toggle
+- Add custom 404 page images
+- Add loading screen custom animations
+
+Remember to:
+- Test all links
+- Check responsive design on all devices
+- Validate contact form
+- Test loading screen
+- Check all animations
+- Verify all social media links
+- Test email functionality
+- Ensure all images are optimized
+- Validate HTML/CSS
+- Test cross-browser compatibility 

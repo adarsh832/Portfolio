@@ -13,8 +13,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Loading Screen CSS -->
+    <link rel="stylesheet" href="css/loading-screen.css">
+
+    <!-- Security meta tags -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Prevent caching of sensitive pages -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon/favicon.ico">
+    <meta name="theme-color" content="#15B392">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h1 class="welcome-text typing-text">Welcome to My Portfolio</h1>
+            <p class="loading-message">Preparing something amazing for you...</p>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header Section -->
     <header>
         <nav class="navbar">
@@ -363,6 +395,117 @@
             </div>
         </section>
 
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="contact-content">
+                <h2 class="section-title" data-aos="fade-down">Get In Touch</h2>
+                <div class="contact-grid">
+                    <!-- Contact Information -->
+                    <div class="contact-info" data-aos="fade-right">
+                        <div class="info-card">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Email</h3>
+                            <p>adarshshah675@gmail.com</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Location</h3>
+                            <p>Vadodara, India</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-phone"></i>
+                            <h3>Phone</h3>
+                            <p>+91 XXXXXXXXXX</p>
+                        </div>
+                        <div class="social-connect">
+                            <h3>Connect With Me</h3>
+                            <div class="social-icons">
+                                <a href="https://github.com/yourusername" target="_blank" class="social-icon">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-icon">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="https://twitter.com/yourusername" target="_blank" class="social-icon">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="https://instagram.com/yourusername" target="_blank" class="social-icon">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="contact-form" data-aos="fade-left">
+                        <form id="contactForm" autocomplete="off" novalidate>
+                            <!-- Add CSRF token (hidden field) -->
+                            <input type="hidden" name="_csrf" value="">
+                            
+                            <!-- Add honeypot field -->
+                            <div class="form-group" style="display:none">
+                                <input type="text" name="_honey" autocomplete="off">
+                            </div>
+                            
+                            <!-- Update existing form fields with security attributes -->
+                            <div class="form-group">
+                                <input type="text" 
+                                       id="name" 
+                                       name="name" 
+                                       placeholder=" " 
+                                       required 
+                                       pattern="[A-Za-z\s]+" 
+                                       maxlength="50"
+                                       autocomplete="off"
+                                       onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'')">
+                                <label for="name">Your Name</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       placeholder=" " 
+                                       required
+                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                       maxlength="100"
+                                       autocomplete="off">
+                                <label for="email">Your Email</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" 
+                                       id="subject" 
+                                       name="subject" 
+                                       placeholder=" " 
+                                       required
+                                       maxlength="100"
+                                       autocomplete="off">
+                                <label for="subject">Subject</label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="message" 
+                                          name="message" 
+                                          placeholder=" " 
+                                          required
+                                          maxlength="1000"
+                                          autocomplete="off"></textarea>
+                                <label for="message">Your Message</label>
+                            </div>
+                            
+                            <!-- Add reCAPTCHA -->
+                            <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                            
+                            <button type="submit" class="btn primary-btn">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer>
             <div class="footer-content">
@@ -377,9 +520,9 @@
                     <a href="#contact">Contact</a>
                 </div>
                 <div class="footer-social">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com/yourusername"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/yourusername"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com/yourusername"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -397,5 +540,18 @@
             offset: 100
         });
     </script>
+    <!-- Add before closing body tag -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("67esGcJl8wWhgSBWD");
+        })();
+    </script>
+    <!-- Add before closing body tag, after EmailJS script -->
+    <script src="js/script.js"></script>
+    <!-- Add before closing body tag -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Add before closing body tag -->
+    <script src="js/loading-screen.js"></script>
 </body>
 </html> 
