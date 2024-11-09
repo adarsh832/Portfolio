@@ -20,7 +20,7 @@ PORTFOLIO CHECKLIST
 3. SOCIAL MEDIA LINKS
 --------------------
 Replace "yourusername" in these links:
-- GitHub: https://github.com/yourusername
+- GitHub: https://github.com/adarsh832
 - LinkedIn: https://linkedin.com/in/yourusername
 - Twitter: https://twitter.com/yourusername
 - Instagram: https://instagram.com/yourusername

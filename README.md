@@ -75,7 +75,7 @@ A sleek, responsive, and interactive portfolio website built with HTML, CSS, and
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/portfolio.git
+   git clone https://github.com/adarsh832/portfolio.git
    ```
 
 2. **Setup EmailJS**
@@ -157,7 +157,7 @@ portfolio/
 2. **Local Development**
    ```bash
    # Clone repository
-   git clone https://github.com/yourusername/portfolio.git
+   git clone https://github.com/adarsh832/portfolio.git
 
    # Navigate to project
    cd portfolio
