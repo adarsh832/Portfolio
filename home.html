@@ -650,13 +650,7 @@
 
                     <!-- Contact Form -->
                     <div class="contact-form" data-aos="fade-left">
-                        <form action="https://formsubmit.co/adarshshah675@gmail.com" method="POST" id="contactForm">
-                            <!-- FormSubmit Configuration -->
-                            <input type="hidden" name="_subject" value="New Portfolio Contact!">
-                            <input type="hidden" name="_template" value="table">
-                            <input type="hidden" name="_next" value="https://adarsh832.github.io/Portfolio/thank-you.html">
-                            <input type="hidden" name="_captcha" value="false">
-                            
+                        <form id="contactForm" onsubmit="return submitForm(event)">
                             <div class="form-group">
                                 <input type="text" 
                                        id="name" 
@@ -700,6 +694,9 @@
                                           autocomplete="off"></textarea>
                                 <label for="message">Your Message</label>
                             </div>
+
+                            <!-- Form Message Display -->
+                            <div id="formMessage" class="form-message" style="display: none;"></div>
                             
                             <button type="submit" class="btn primary-btn">
                                 <i class="fas fa-paper-plane"></i> Send Message
@@ -746,6 +743,72 @@
     </script>
     <!-- Add GSAP for smooth animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <!-- Form submission script -->
+    <script>
+        async function submitForm(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const formMessage = document.getElementById('formMessage');
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            try {
+                const response = await fetch('send_email.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Show success message
+                    formMessage.className = 'form-message success';
+                    formMessage.textContent = 'Message sent successfully!';
+                    form.reset();
+                } else {
+                    // Show error message
+                    formMessage.className = 'form-message error';
+                    formMessage.textContent = result.error || 'Failed to send message. Please try again.';
+                }
+            } catch (error) {
+                // Show error message
+                formMessage.className = 'form-message error';
+                formMessage.textContent = 'Failed to send message. Please try again.';
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+                
+                // Show message
+                formMessage.style.display = 'block';
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }
+            
+            return false;
+        }
+    </script>
+    
     <!-- Add before closing body tag -->
     <script src="js/loading-screen.js"></script>
 </body>

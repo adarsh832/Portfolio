@@ -2241,12 +2241,14 @@ footer {
     border-color: #ff4444;
 }
 
+/* Form Messages */
 .form-message {
-    margin-top: 1rem;
+    margin: 1rem 0;
     padding: 1rem;
     border-radius: 5px;
     text-align: center;
-    animation: slideIn 0.3s ease-out;
+    font-size: 0.9rem;
+    animation: slideIn 0.3s ease;
 }
 
 .form-message.success {
