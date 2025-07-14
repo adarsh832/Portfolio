@@ -564,3 +564,20 @@ function generateFavicon() {
 
 // Call the function when the page loads
 document.addEventListener('DOMContentLoaded', generateFavicon);
+
+// Form handling
+document.querySelector('form[name="contact"]').addEventListener('submit', function(e) {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    // Show loading state
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+
+    // Form will be handled by Netlify
+    // This is just for UX feedback
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
+});
