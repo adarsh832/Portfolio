@@ -20,9 +20,32 @@ links.forEach(link => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        const target = document.querySelector(this.getAttribute('href'));
+        
+        if (target) {
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1000;
+            let start = null;
+            
+            function animation(currentTime) {
+                if (start === null) start = currentTime;
+                const timeElapsed = currentTime - start;
+                const progress = Math.min(timeElapsed / duration, 1);
+                
+                // Easing function
+                const ease = t => t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1;
+                
+                window.scrollTo(0, startPosition + (distance * ease(progress)));
+                
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                }
+            }
+            
+            requestAnimationFrame(animation);
+        }
     });
 });
 
@@ -146,10 +169,16 @@ document.addEventListener('DOMContentLoaded', function() {
             projectCards.forEach(card => {
                 if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
                     card.style.display = 'block';
-                    card.classList.add('fade-in');
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
                 } else {
-                    card.style.display = 'none';
-                    card.classList.remove('fade-in');
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
                 }
             });
         });
@@ -260,3 +289,269 @@ document.querySelectorAll('.form-group input, .form-group textarea').forEach(ele
         }
     });
 });
+
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize custom cursor
+    initCustomCursor();
+    
+    // Initialize other interactions
+    initNavbarInteractions();
+    initSmoothScroll();
+    initProjectsScroll();
+});
+
+// Custom cursor initialization
+function initCustomCursor() {
+    // Create cursor elements if they don't exist
+    let cursor = document.querySelector('.custom-cursor');
+    let cursorDot = document.querySelector('.cursor-dot');
+
+    if (!cursor) {
+        cursor = document.createElement('div');
+        cursor.classList.add('custom-cursor');
+        document.body.appendChild(cursor);
+    }
+
+    if (!cursorDot) {
+        cursorDot = document.createElement('div');
+        cursorDot.classList.add('cursor-dot');
+        document.body.appendChild(cursorDot);
+    }
+
+    // Set initial position
+    cursor.style.opacity = '1';
+    cursorDot.style.opacity = '1';
+    
+    // Update cursor position
+    document.addEventListener('mousemove', (e) => {
+        requestAnimationFrame(() => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+    });
+
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+        cursorDot.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+        cursorDot.style.opacity = '1';
+    });
+
+    // Add hover effects for interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .navbar, .logo, .nav-links a');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover-effect');
+            cursorDot.classList.add('hover-effect');
+            el.classList.add('element-hover');
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover-effect');
+            cursorDot.classList.remove('hover-effect');
+            el.classList.remove('element-hover');
+        });
+    });
+}
+
+// Navbar interactions
+function initNavbarInteractions() {
+    const navbar = document.querySelector('.navbar');
+    const navLinks = document.querySelector('.nav-links');
+    const links = document.querySelectorAll('.nav-links a');
+    let isExpanded = false;
+
+    // Toggle navbar expansion
+    navbar.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+        navbar.classList.toggle('expanded', isExpanded);
+    });
+
+    // Handle link clicks
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                isExpanded = false;
+                navbar.classList.remove('expanded');
+            }
+        });
+    });
+}
+
+// Smooth scroll functionality
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            
+            if (target) {
+                const headerOffset = 100;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollBy({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Scroll animations
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// Projects horizontal scroll
+function initProjectsScroll() {
+    const container = document.querySelector('.projects-grid-container');
+    const leftBtn = document.querySelector('.scroll-left');
+    const rightBtn = document.querySelector('.scroll-right');
+    const scrollAmount = 400; // Adjust scroll amount as needed
+
+    if (container && leftBtn && rightBtn) {
+        // Show/hide scroll buttons based on scroll position
+        function updateScrollButtons() {
+            leftBtn.style.opacity = container.scrollLeft > 0 ? '1' : '0.5';
+            rightBtn.style.opacity = 
+                container.scrollLeft < (container.scrollWidth - container.clientWidth - 10) ? '1' : '0.5';
+        }
+
+        // Initial button state
+        updateScrollButtons();
+
+        // Scroll left
+        leftBtn.addEventListener('click', () => {
+            container.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+            setTimeout(updateScrollButtons, 100);
+        });
+
+        // Scroll right
+        rightBtn.addEventListener('click', () => {
+            container.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+            setTimeout(updateScrollButtons, 100);
+        });
+
+        // Update buttons on scroll
+        container.addEventListener('scroll', updateScrollButtons);
+
+        // Handle touch/drag scroll
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            container.style.cursor = 'grabbing';
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.style.cursor = 'grab';
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.style.cursor = 'grab';
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 2;
+            container.scrollLeft = scrollLeft - walk;
+        });
+
+        // Set initial cursor style
+        container.style.cursor = 'grab';
+    }
+}
+
+// Function to generate text-based favicon
+function generateFavicon() {
+    // Generate standard favicon (32x32)
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+
+    // Set background
+    ctx.fillStyle = '#15B392';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Set text style
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 20px Poppins';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Draw text
+    ctx.fillText('AS', canvas.width/2, canvas.height/2);
+
+    // Set favicon
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = canvas.toDataURL("image/x-icon");
+    document.head.appendChild(link);
+
+    // Generate high-resolution version (192x192) for PWA
+    const canvasHD = document.createElement('canvas');
+    canvasHD.width = 192;
+    canvasHD.height = 192;
+    const ctxHD = canvasHD.getContext('2d');
+
+    // Set background
+    ctxHD.fillStyle = '#15B392';
+    ctxHD.fillRect(0, 0, canvasHD.width, canvasHD.height);
+
+    // Set text style with larger font
+    ctxHD.fillStyle = '#FFFFFF';
+    ctxHD.font = 'bold 120px Poppins';
+    ctxHD.textAlign = 'center';
+    ctxHD.textBaseline = 'middle';
+
+    // Draw text
+    ctxHD.fillText('AS', canvasHD.width/2, canvasHD.height/2);
+
+    // Add shadow effect
+    ctxHD.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    ctxHD.shadowBlur = 10;
+    ctxHD.shadowOffsetX = 0;
+    ctxHD.shadowOffsetY = 4;
+
+    // Set apple touch icon
+    const appleTouchLink = document.querySelector("link[rel='apple-touch-icon']") || document.createElement('link');
+    appleTouchLink.rel = 'apple-touch-icon';
+    appleTouchLink.sizes = '192x192';
+    appleTouchLink.href = canvasHD.toDataURL("image/png");
+    document.head.appendChild(appleTouchLink);
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', generateFavicon);
