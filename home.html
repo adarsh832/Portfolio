@@ -650,19 +650,22 @@
 
                     <!-- Contact Form -->
                     <div class="contact-form" data-aos="fade-left">
-                        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                            <input type="hidden" name="form-name" value="contact">
-                            <!-- Honeypot field -->
-                            <p class="hidden">
-                                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-                            </p>
+                        <form action="https://formsubmit.co/adarshshah675@gmail.com" method="POST" id="contactForm">
+                            <!-- FormSubmit Configuration -->
+                            <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_next" value="https://adarsh832.github.io/Portfolio/thank-you.html">
+                            <input type="hidden" name="_captcha" value="false">
                             
                             <div class="form-group">
                                 <input type="text" 
                                        id="name" 
                                        name="name" 
                                        placeholder=" " 
-                                       required>
+                                       required 
+                                       pattern="[A-Za-z\s]+" 
+                                       maxlength="50"
+                                       autocomplete="off">
                                 <label for="name">Your Name</label>
                             </div>
                             
@@ -671,7 +674,9 @@
                                        id="email" 
                                        name="email" 
                                        placeholder=" " 
-                                       required>
+                                       required
+                                       maxlength="100"
+                                       autocomplete="off">
                                 <label for="email">Your Email</label>
                             </div>
                             
@@ -680,7 +685,9 @@
                                        id="subject" 
                                        name="subject" 
                                        placeholder=" " 
-                                       required>
+                                       required
+                                       maxlength="100"
+                                       autocomplete="off">
                                 <label for="subject">Subject</label>
                             </div>
                             
@@ -688,7 +695,9 @@
                                 <textarea id="message" 
                                           name="message" 
                                           placeholder=" " 
-                                          required></textarea>
+                                          required
+                                          maxlength="1000"
+                                          autocomplete="off"></textarea>
                                 <label for="message">Your Message</label>
                             </div>
                             

@@ -2271,29 +2271,3 @@ footer {
         opacity: 1;
     }
 }
-
-/* Hide honeypot field */
-.hidden {
-    display: none !important;
-}
-
-/* Form success message */
-.form-success {
-    background-color: rgba(21, 179, 146, 0.1);
-    color: #15B392;
-    padding: 1rem;
-    border-radius: 5px;
-    margin-top: 1rem;
-    text-align: center;
-    display: none;
-}
-
-.form-success.show {
-    display: block;
-    animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
