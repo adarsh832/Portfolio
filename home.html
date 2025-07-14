@@ -650,16 +650,13 @@
 
                     <!-- Contact Form -->
                     <div class="contact-form" data-aos="fade-left">
-                        <form id="contactForm" autocomplete="off" novalidate>
-                            <!-- Add CSRF token (hidden field) -->
-                            <input type="hidden" name="_csrf" value="">
+                        <form action="https://formsubmit.co/adarshshah675@gmail.com" method="POST" id="contactForm">
+                            <!-- FormSubmit Configuration -->
+                            <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_next" value="https://adarsh832.github.io/Portfolio/thank-you.html">
+                            <input type="hidden" name="_captcha" value="false">
                             
-                            <!-- Add honeypot field -->
-                            <div class="form-group" style="display:none">
-                                <input type="text" name="_honey" autocomplete="off">
-                            </div>
-                            
-                            <!-- Update existing form fields with security attributes -->
                             <div class="form-group">
                                 <input type="text" 
                                        id="name" 
@@ -668,8 +665,7 @@
                                        required 
                                        pattern="[A-Za-z\s]+" 
                                        maxlength="50"
-                                       autocomplete="off"
-                                       onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'')">
+                                       autocomplete="off">
                                 <label for="name">Your Name</label>
                             </div>
                             
@@ -679,7 +675,6 @@
                                        name="email" 
                                        placeholder=" " 
                                        required
-                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                        maxlength="100"
                                        autocomplete="off">
                                 <label for="email">Your Email</label>
@@ -705,9 +700,6 @@
                                           autocomplete="off"></textarea>
                                 <label for="message">Your Message</label>
                             </div>
-                            
-                            <!-- Add reCAPTCHA -->
-                            <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
                             
                             <button type="submit" class="btn primary-btn">
                                 <i class="fas fa-paper-plane"></i> Send Message
@@ -754,15 +746,6 @@
     </script>
     <!-- Add GSAP for smooth animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <!-- Add before closing body tag -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        (function() {
-            emailjs.init("67esGcJl8wWhgSBWD");
-        })();
-    </script>
-    <!-- Add before closing body tag, after EmailJS script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <!-- Add before closing body tag -->
     <script src="js/loading-screen.js"></script>
 </body>

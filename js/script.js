@@ -191,65 +191,74 @@ let lastSubmission = 0;
 const SUBMISSION_COOLDOWN = 60000; // 1 minute
 
 // Update contact form handling
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault();
     
-    // Check cooldown
-    if (Date.now() - lastSubmission < SUBMISSION_COOLDOWN) {
-        showNotification('Please wait before sending another message.', 'error');
-        return;
-    }
-    
-    // Check honeypot
-    if (this.querySelector('[name="_honey"]').value) {
-        return; // Silent failure for potential bots
-    }
-    
-    // Verify reCAPTCHA
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (!recaptchaResponse) {
-        showNotification('Please complete the reCAPTCHA.', 'error');
-        return;
-    }
-    
-    // Validate inputs
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    // Basic validation
-    if (!name || !email || !subject || !message) {
-        showNotification('Please fill in all fields.', 'error');
-        return;
-    }
-    
-    // Email validation
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailRegex.test(email)) {
-        showNotification('Please enter a valid email address.', 'error');
-        return;
-    }
-    
-    // Sanitize inputs (basic)
-    const sanitizeInput = (str) => {
-        return str.replace(/[<>]/g, '');
-    };
-    
-    // Prepare template parameters with sanitized inputs
-    const templateParams = {
-        from_name: sanitizeInput(name),
-        from_email: sanitizeInput(email),
-        subject: sanitizeInput(subject),
-        message: sanitizeInput(message),
-        to_name: 'Adarsh Shah',
-        'g-recaptcha-response': recaptchaResponse
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+
+    // Get form data
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
     };
 
-    // Rest of your existing EmailJS code...
+    // Send email using EmailJS
+    emailjs.send('default_service', 'template_default', {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message
+    })
+    .then(function(response) {
+        // Show success message
+        showFormMessage('Message sent successfully!', 'success');
+        // Reset form
+        document.getElementById('contactForm').reset();
+    })
+    .catch(function(error) {
+        // Show error message
+        showFormMessage('Failed to send message. Please try again.', 'error');
+    })
+    .finally(function() {
+        // Reset button state
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    });
+});
+
+// Function to show form messages
+function showFormMessage(message, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.textContent = message;
     
-    // Update last submission time
-    lastSubmission = Date.now();
+    const form = document.getElementById('contactForm');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling);
+    
+    // Remove message after 5 seconds
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 5000);
+}
+
+// Form input validation
+const formInputs = document.querySelectorAll('#contactForm input, #contactForm textarea');
+formInputs.forEach(input => {
+    input.addEventListener('input', function() {
+        if (this.checkValidity()) {
+            this.classList.remove('invalid');
+            this.classList.add('valid');
+        } else {
+            this.classList.remove('valid');
+            this.classList.add('invalid');
+        }
+    });
 });
 
 // Notification function

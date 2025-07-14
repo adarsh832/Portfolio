@@ -1648,6 +1648,12 @@ footer {
     animation: spin 1s linear infinite;
 }
 
+/* Disabled button state */
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 /* Minimalist Hero Section Styles */
 .hero.minimal-hero {
     background: #fff;
@@ -2222,4 +2228,46 @@ footer {
     0% { opacity: 1; }
     50% { opacity: 0.7; }
     100% { opacity: 1; }
+}
+
+/* Form Validation and Messages */
+.form-group input.valid,
+.form-group textarea.valid {
+    border-color: #15B392;
+}
+
+.form-group input.invalid,
+.form-group textarea.invalid {
+    border-color: #ff4444;
+}
+
+.form-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+.form-message.success {
+    background-color: rgba(21, 179, 146, 0.1);
+    color: #15B392;
+    border: 1px solid #15B392;
+}
+
+.form-message.error {
+    background-color: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    border: 1px solid #ff4444;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
