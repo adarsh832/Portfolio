@@ -651,6 +651,11 @@
                     <!-- Contact Form -->
                     <div class="contact-form" data-aos="fade-left">
                         <form id="contactForm" onsubmit="return submitForm(event)">
+                            <!-- Web3Forms Access Key -->
+                            <input type="hidden" name="access_key" value="97ee1b86-8f86-42dc-ac2c-363cacd1e700">
+                            <input type="hidden" name="subject" value="New Contact from Portfolio">
+                            <input type="hidden" name="from_name" value="Portfolio Contact Form">
+                            
                             <div class="form-group">
                                 <input type="text" 
                                        id="name" 
@@ -677,7 +682,7 @@
                             <div class="form-group">
                                 <input type="text" 
                                        id="subject" 
-                                       name="subject" 
+                                       name="message_subject" 
                                        placeholder=" " 
                                        required
                                        maxlength="100"
@@ -753,31 +758,21 @@
             const submitBtn = form.querySelector('button[type="submit"]');
             const formMessage = document.getElementById('formMessage');
             
-            // Get form data
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-            
             // Show loading state
             submitBtn.disabled = true;
             const originalBtnText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
             try {
-                const response = await fetch('send_email.php', {
+                const formData = new FormData(form);
+                const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+                    body: formData
                 });
                 
                 const result = await response.json();
                 
-                if (response.ok) {
+                if (result.success) {
                     // Show success message
                     formMessage.className = 'form-message success';
                     formMessage.textContent = 'Message sent successfully!';
@@ -785,12 +780,13 @@
                 } else {
                     // Show error message
                     formMessage.className = 'form-message error';
-                    formMessage.textContent = result.error || 'Failed to send message. Please try again.';
+                    formMessage.textContent = result.message || 'Failed to send message. Please try again.';
                 }
             } catch (error) {
                 // Show error message
                 formMessage.className = 'form-message error';
                 formMessage.textContent = 'Failed to send message. Please try again.';
+                console.error('Form submission error:', error);
             } finally {
                 // Reset button state
                 submitBtn.disabled = false;
