@@ -4,11 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Random fun URLs to redirect to
     const funSites = [
-        'https://theuselessweb.com/',
-        'https://cat-bounce.com/',
+        
         'https://pointerpointer.com/',
-        'https://findtheinvisiblecow.com/',
-        'https://neal.fun/'
+        
     ];
 
     portalBtn.addEventListener('click', function() {
