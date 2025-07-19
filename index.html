@@ -3,115 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adarsh Shah</title>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.22/build/spline-viewer.js"></script>
+    <title>Adarsh Shah | Portfolio Loader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Include three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background-color: #1a1a1a;
             overflow: hidden;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            position: relative;
+            background-color: #f0f9f6;
+            font-family: 'Inter', sans-serif;
         }
-
-        spline-viewer {
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            background-color: #f0f9f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1.5s ease;
+            overflow: hidden;
+        }
+        #three-canvas {
             position: absolute;
             top: 0;
             left: 0;
-        }
-
-        .loading-container {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 2;
-        }
-
-        .loading-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 18px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 300;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .progress-bar {
-            width: 150px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .progress {
-            width: 0%;
+            width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 2px;
-            transition: width 0.3s ease;
         }
-
-        @keyframes fadeIn {
-            from { 
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .loader-hidden {
+            opacity: 0;
+            pointer-events: none;
         }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+        .content {
+             /* Demo content styles - will be replaced by your site */
+            display: none; /* Hide the demo content as we are redirecting */
+            text-align: center;
+            padding-top: 100px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <spline-viewer url="https://prod.spline.design/CNubmjvJ7o-um6S8/scene.splinecode"></spline-viewer>
-    <div class="loading-container">
-        <div class="loading-text">Loading your experience...</div>
-        <div class="progress-bar">
-            <div class="progress" id="progress"></div>
-        </div>
+
+    <div class="loader-wrapper" id="loader">
+        <canvas id="three-canvas"></canvas>
     </div>
 
+    <!-- This content is now hidden and just a placeholder -->
+    <div class="content">
+        <h1>Welcome to My Portfolio</h1>
+        <p>This content will be revealed after the loading animation finishes.</p>
+    </div>
+
+    <!-- We need these three.js add-ons for text rendering -->
+    <script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
+    <script src="https://threejs.org/examples/js/geometries/TextGeometry.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const progress = document.getElementById('progress');
-            let width = 0;
-            
-            // Simulate loading progress
-            const interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
-                    // Redirect to index.html after a short delay
-                    setTimeout(() => {
-                        window.location.href = 'home.html';
-                    }, 500);
-                } else {
-                    width += Math.random() * 3 + 1; // Random increment between 1-4
-                    width = Math.min(width, 100);
-                    progress.style.width = width + '%';
-                }
-            }, 100);
+        // --- HIDE LOADER & REDIRECT LOGIC ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const destinationUrl = 'home.html'; // UPDATED a local file
+
+            // Give time for the animation to play out
+            setTimeout(() => {
+                // Start the fade-out animation
+                loader.classList.add('loader-hidden');
+
+                // Wait for the fade-out transition to complete before redirecting
+                setTimeout(() => {
+                    window.location.href = destinationUrl;
+                }, 1500); // This duration MUST match the transition duration in the CSS
+
+            }, 4000); // Initial delay to show the animation
         });
+
+        // --- THREE.JS SCENE SETUP ---
+        if (typeof THREE !== 'undefined') {
+            let scene, camera, renderer, particleSystem;
+            const mouse = new THREE.Vector2(-100, -100);
+
+            // --- SHADER CODE ---
+            const vertexShader = `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `;
+
+            const fragmentShader = `
+                varying vec2 vUv;
+                uniform float u_time;
+                uniform float u_fill_level; // 0 to 1
+                uniform vec3 u_liquid_color;
+                uniform vec3 u_base_color;
+
+                // Function to create a wave
+                float wave(vec2 position, float speed, float amplitude, float frequency) {
+                    return sin(position.x * frequency + u_time * speed) * amplitude;
+                }
+
+                void main() {
+                    // Create multiple overlapping waves for a more natural look
+                    float wave1 = wave(vUv, 2.0, 0.02, 10.0);
+                    float wave2 = wave(vUv, 1.5, 0.02, 15.0);
+                    float wave3 = wave(vUv, 1.0, 0.015, 20.0);
+                    
+                    // Combine waves to form the liquid surface
+                    float surface_level = u_fill_level + wave1 + wave2 + wave3;
+
+                    // Determine color based on whether the pixel is "underwater"
+                    if (vUv.y < surface_level) {
+                        gl_FragColor = vec4(u_liquid_color, 1.0);
+                    } else {
+                        gl_FragColor = vec4(u_base_color, 1.0);
+                    }
+                }
+            `;
+
+            // 1. Initialization
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 5;
+
+                const canvas = document.getElementById('three-canvas');
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                // --- TEXT WITH LIQUID SHADER ---
+                const fontLoader = new THREE.FontLoader();
+                fontLoader.load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', (font) => {
+                    const textGeometry = new THREE.TextGeometry('AS', {
+                        font: font,
+                        size: 1.5,
+                        height: 0.2,
+                        curveSegments: 12,
+                        bevelEnabled: true,
+                        bevelThickness: 0.03,
+                        bevelSize: 0.02,
+                        bevelOffset: 0,
+                        bevelSegments: 5
+                    });
+
+                    // Center the text geometry
+                    textGeometry.computeBoundingBox();
+                    const textWidth = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
+                    textGeometry.translate(-textWidth / 2, 0, 0);
+
+                    // The shader material
+                    const shaderMaterial = new THREE.ShaderMaterial({
+                        vertexShader: vertexShader,
+                        fragmentShader: fragmentShader,
+                        uniforms: {
+                            u_time: { value: 0.0 },
+                            u_fill_level: { value: -0.1 }, // Start slightly below
+                            u_liquid_color: { value: new THREE.Color(0x20C997) },
+                            u_base_color: { value: new THREE.Color(0xd0d0d0) }
+                        }
+                    });
+
+                    const textMesh = new THREE.Mesh(textGeometry, shaderMaterial);
+                    scene.add(textMesh);
+                });
+
+                // --- INTERACTIVE PARTICLE BACKGROUND ---
+                createParticles();
+
+                // Event Listeners
+                window.addEventListener('resize', onWindowResize, false);
+                window.addEventListener('mousemove', onMouseMove, false);
+            }
+
+            function createParticles() {
+                const particleCount = 5000;
+                const positions = new Float32Array(particleCount * 3);
+                for (let i = 0; i < particleCount * 3; i++) {
+                    positions[i] = (Math.random() - 0.5) * 15;
+                }
+                const particlesGeometry = new THREE.BufferGeometry();
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                const particlesMaterial = new THREE.PointsMaterial({
+                    color: 0x20C997,
+                    size: 0.02,
+                    blending: THREE.AdditiveBlending,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+                particleSystem.position.z = -5; // Move particles behind the text
+                scene.add(particleSystem);
+            }
+
+            // 2. Event Handlers
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            }
+
+            function onMouseMove(event) {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            }
+
+            // 3. Animation Loop
+            const clock = new THREE.Clock();
+            let fillLevel = -0.1;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+
+                // Animate the text shader
+                const textObject = scene.children.find(child => child.type === 'Mesh');
+                if (textObject) {
+                    textObject.material.uniforms.u_time.value = elapsedTime;
+                    
+                    // Animate the fill level from -0.1 to 1.1 over ~2.5 seconds
+                    if (fillLevel < 1.1) {
+                         fillLevel += 0.007;
+                         textObject.material.uniforms.u_fill_level.value = fillLevel;
+                    }
+                }
+
+                // Animate the particle background
+                if (particleSystem) {
+                    const positions = particleSystem.geometry.attributes.position.array;
+                    const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+                    vector.unproject(camera);
+                    const dir = vector.sub(camera.position).normalize();
+                    const distance = -camera.position.z / dir.z;
+                    const mousePos = camera.position.clone().add(dir.multiplyScalar(distance));
+
+                    for (let i = 0; i < positions.length / 3; i++) {
+                        const i3 = i * 3;
+                        const particle = new THREE.Vector3(positions[i3], positions[i3 + 1], positions[i3 + 2]);
+                        const dist = particle.distanceTo(mousePos);
+                        if (dist < 2.0) {
+                            const force = (2.0 - dist) * 0.05;
+                            const direction = particle.clone().sub(mousePos).normalize();
+                            positions[i3] += direction.x * force;
+                            positions[i3 + 1] += direction.y * force;
+                        }
+                    }
+                    particleSystem.geometry.attributes.position.needsUpdate = true;
+                    particleSystem.rotation.y = elapsedTime * 0.05;
+                }
+
+                renderer.render(scene, camera);
+            }
+
+            init();
+            animate();
+        } else {
+            console.error("Three.js library not found.");
+        }
     </script>
+
 </body>
 </html>
