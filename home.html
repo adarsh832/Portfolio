@@ -4,60 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Adarsh Shah</title>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.22/build/spline-viewer.js"></script>
-
+    <title>Adarsh Shah | Creative Developer</title>
+    
     <!-- CSS Links -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
     <!-- Loading Screen CSS -->
     <link rel="stylesheet" href="css/loading-screen.css">
 
     <!-- Security meta tags -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="robots" content="index, follow">
     
-    <!-- Prevent caching of sensitive pages -->
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, proxy-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="shortcut icon" href="favicon/favicon.ico">
-    <link rel="manifest" href="favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#15B392">
-    <meta name="theme-color" content="#15B392">
+    <meta name="theme-color" content="#0a0a0a">
     
     <!-- Scripts -->
     <script src="js/script.js" defer></script>
 </head>
-<body>
-   
+<body class="dark-theme">
+    
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <!-- Header Section -->
     <header>
         <nav class="navbar">
-            <div class="logo">AS</div>
+            <div class="logo">AS<span class="dot">.</span></div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#apdate" class="nav-link">Apdate</a></li>
+                <li><a href="#projects" class="nav-link">Work</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </nav>
     </header>
@@ -66,108 +65,54 @@
     <main>
         <!-- Hero Section -->
         <section id="home" class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="animate-text">Hi, I'm <span class="highlight">Adarsh Shah</span></h1>
-                    <h2 class="animate-text">AI explorer and developer</h2>
-                    <p class="animate-text">a passionate developer, AI explorer, and creative problem solver.</p>
-                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
-                        <a href="#projects" class="btn primary-btn">View My Work</a>
-                        <a href="#contact" class="btn secondary-btn">Contact Me</a>
-                    </div>
-                    <div class="social-links" data-aos="fade-up" data-aos-delay="600">
-                        <a href="#" target="https://github.com/adarsh832"><i class="fab fa-github"></i></a>
-                        <a href="#" target="https://github.com/adarsh832"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    </div>
+            <div class="hero-background">
+                <div class="gradient-orb orb-1"></div>
+                <div class="gradient-orb orb-2"></div>
+                <div class="grid-overlay"></div>
+            </div>
+            <div class="hero-content container">
+                <h1 class="hero-title">
+                    <div class="line">Crafting Digital</div>
+                    <div class="line"><span class="highlight">Experiences</span> That</div>
+                    <div class="line">Feel Alive.</div>
+                </h1>
+                <p class="hero-subtitle">Adarsh Shah — Generative AI Developer</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn primary-btn">View Work</a>
+                    <a href="#contact" class="btn secondary-btn">Let's Talk</a>
                 </div>
-                <div class="hero-image" data-aos="fade-left" data-aos-delay="200">
-                    <img src="images/profile.jpg" alt="Profile Picture">
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <div class="mouse">
+                    <div class="wheel"></div>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="about">
-            <div class="about-content">
-                <h2 class="section-title" data-aos="fade-down">About Me</h2>
-                <div class="about-grid">
-                    <div class="about-image" data-aos="fade-right">
-                        <img src="images/about-image.jpg" alt="About Me Image">
+        <!-- Apdate App Section -->
+        <section id="apdate" class="apdate-section">
+            <div class="container">
+                <div class="apdate-wrapper">
+                    <div class="apdate-content">
+                        <span class="section-tag">Featured Product</span>
+                        <h2 class="section-title">Apdate</h2>
+                        <p class="section-desc">
+                            The world of Generative AI is evolving at an incredible pace. New tools, groundbreaking research, and critical updates are released every single day. Staying informed feels like a full-time job.
+                            <br><br>
+                            <strong>Apdate</strong> is your personal AI intelligence briefing, cutting through the noise to bring you what matters most. Our smart backend uses AI to scan the web, then summarizes the most important developments into a clean, simple, and beautiful interface.
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-mobile-alt"></i> <strong>Stay Updated, Effortlessly:</strong> Daily, bite-sized summaries of GenAI trends.</li>
+                            <li><i class="fas fa-robot"></i> <strong>Discover New Tools:</strong> Be the first to know about breakthrough platforms and prompts.</li>
+                            <li><i class="fas fa-bookmark"></i> <strong>Build Your Library:</strong> Save game-changing articles and prompts.</li>
+                            <li><i class="fas fa-sparkles"></i> <strong>Clean Experience:</strong> A clutter-free, intuitive interface.</li>
+                        </ul>
+                        <a href="#" class="btn primary-btn">Download App <i class="fas fa-arrow-right"></i></a>
                     </div>
-                    <div class="about-details" data-aos="fade-left">
-                        <h3>AI Enthusiast</h3>
-                        <p>I'm a passionate AI Developer with expertise in building intelligent applications and systems. With a strong foundation in machine learning, natural language processing, and AI development, I create innovative solutions that leverage cutting-edge AI technologies to solve real-world problems.</p>
-                        
-                        <div class="about-info">
-                            <div class="info-item">
-                                <span class="info-title">Name:</span>
-                                <span class="info-value">Adarsh Shah</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-title">Email:</span>
-                                <span class="info-value">adarshshah675@gmail.com</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-title">Location:</span>
-                                <span class="info-value">Vadodara, India</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-title">Focus Areas:</span>
-                                <span class="info-value">AI/ML, NLP, LLMs</span>
-                            </div>
-                        </div>
-
-                        <div class="education-experience">
-                            <div class="education" data-aos="fade-up">
-                                <h4><i class="fas fa-graduation-cap"></i> Education & AI Journey</h4>
-                                <div class="timeline">
-                                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
-                                        <h5><i class="fas fa-laptop-code"></i> Diploma in Computer Science</h5>
-                                        <p><i class="fas fa-university"></i> Parul University</p>
-                                        <p><i class="fas fa-map-marker-alt"></i> Vadodara, Gujarat</p>
-                                        <span><i class="far fa-calendar-alt"></i> 2021 - 2024</span>
-                                    </div>
-                                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
-                                        <h5><i class="fas fa-graduation-cap"></i> Degree in Computer Science</h5>
-                                        <p><i class="fas fa-university"></i> ITM SLS Vadodara</p>
-                                        <p><i class="fas fa-map-marker-alt"></i> Vadodara, Gujarat</p>
-                                        <span><i class="far fa-calendar-alt"></i> 2024 - 2027</span>
-                                    </div>
-                                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
-                                        <h5><i class="fas fa-robot"></i> AI Development</h5>
-                                        <p><i class="fas fa-certificate"></i> Specialization in AI/ML</p>
-                                        <p><i class="fas fa-building"></i> Self-Paced Learning</p>
-                                        <span><i class="far fa-calendar-alt"></i> 2022 - Present</span>
-                                    </div>
-                                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
-                                        <h5><i class="fas fa-brain"></i> AI Projects & Research</h5>
-                                        <p><i class="fas fa-code-branch"></i> Personal AI Projects</p>
-                                        <p><i class="fas fa-tools"></i> LLM Development</p>
-                                        <span><i class="far fa-calendar-alt"></i> 2023 - Present</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stats">
-                            <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-                                <h3 class="counter">8+</h3>
-                                <p>AI Projects</p>
-                            </div>
-                            <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
-                                <h3 class="counter">5+</h3>
-                                <p>LLM Implementations</p>
-                            </div>
-                            <div class="stat-item" data-aos="fade-up" data-aos-delay="600">
-                                <h3 class="counter">3+</h3>
-                                <p>Research Papers</p>
-                            </div>
-                        </div>
-
-                        <div class="about-buttons">
-                            <a href="#contact" class="btn primary-btn">Collaborate</a>
-                            <a href="resume.pdf" class="btn secondary-btn" download>Download CV</a>
+                    <div class="apdate-visual">
+                        <div class="phone-mockup">
+                            <img src="images/apdate-mockup.png" alt="Apdate App Interface" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                     </div>
                 </div>
@@ -176,506 +121,108 @@
 
         <!-- Projects Section -->
         <section id="projects" class="projects">
-            <div class="projects-content">
-                <h2 class="section-title" data-aos="fade-down">My Projects</h2>
-                <div class="projects-filter" data-aos="fade-up">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="web">Web Apps</button>
-                    <button class="filter-btn" data-filter="ai">AI/ML</button>
-                    <button class="filter-btn" data-filter="python">Python</button>
-                    <button class="filter-btn" data-filter="tools">Tools</button>
-                </div>
+            <div class="container">
+                <span class="section-tag">Selected Work</span>
+                <h2 class="section-title">Recent Projects</h2>
                 
-                <div class="projects-grid-container">
-                    <div class="projects-grid">
-                        <!-- Project Card 1 - Portfolio -->
-                        <div class="project-card" data-category="web" data-aos="fade-up">
-                            <div class="project-image">
-                                <img src="images/project1.jpg" alt="Portfolio Website">
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Portfolio" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Portfolio" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <div class="project-card">
+                        <div class="card-image">
+                            <img src="images/project-code-agent.png" alt="Code Agent">
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Code Agent</h3>
+                            <p>AI-powered code editor providing intelligent assistance and real-time suggestions.</p>
+                            <div class="tech-stack">
+                                <span>Python</span><span>LangChain</span><span>Gemini</span><span>Streamlit</span>
                             </div>
-                            <div class="project-info">
-                                <h3>Portfolio Website</h3>
-                                <p>Modern portfolio website with smooth animations and responsive design</p>
-                                <div class="project-tech">
-                                    <span>HTML5</span>
-                                    <span>CSS3</span>
-                                    <span>JavaScript</span>
-                                    <span>GSAP</span>
-                                </div>
+                            <div class="card-links">
+                                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Project Card 2 - Amora Chatbot -->
-                        <div class="project-card" data-category="ai" data-aos="fade-up">
-                            <div class="project-display chat-display">
-                                <div class="chat-messages">
-                                    <div class="message user">Hey Amora! 👋</div>
-                                    <div class="message bot">Hello! I'm Amora, your emotional AI companion 💝</div>
-                                    <div class="message user">How are you feeling today?</div>
-                                    <div class="message bot">I'm feeling wonderful and excited to chat with you! 🌟</div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Amora" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Amora" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
+                    <!-- Project 2 -->
+                    <div class="project-card">
+                        <div class="card-image">
+                            <img src="images/project-amora.png" alt="Amora AI Chatbot">
+                        </div>
+                        <div class="card-content">
+                            <h3>Amora — AI Chatbot</h3>
+                            <p>Emotional AI companion for expressive conversations.</p>
+                            <div class="tech-stack">
+                                <span>Python</span><span>OpenAI</span><span>Streamlit</span>
                             </div>
-                            <div class="project-info">
-                                <h3>Amora — Emotional AI Chatbot</h3>
-                                <p>💬 Romantic/friendly AI chatbot for expressive conversations</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>OpenAI</span>
-                                    <span>Streamlit</span>
-                                    <span>TTS</span>
-                                </div>
+                            <div class="card-links">
+                                <a href="https://github.com/adarsh832/Amora" target="_blank"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Project Card 3 - Roadmap Generator -->
-                        <div class="project-card" data-category="python" data-aos="fade-up">
-                            <div class="project-display flowchart-display">
-                                <div class="flowchart">
-                                    <div class="node start">Start</div>
-                                    <div class="arrow">↓</div>
-                                    <div class="node">Input Goals</div>
-                                    <div class="arrow">↓</div>
-                                    <div class="node">Generate Path</div>
-                                    <div class="arrow">↓</div>
-                                    <div class="node end">Success!</div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Road_map_AI" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Road_map_AI" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Roadmap Generator</h3>
-                                <p>🛤️ Generates personalized learning roadmaps based on user input</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>OpenAI</span>
-                                    <span>Flask</span>
-                                </div>
-                            </div>
+                    <!-- Project 3 -->
+                    <div class="project-card">
+                        <div class="card-image">
+                            <img src="images/project-gemini.png" alt="Gemini Linux Assistant">
                         </div>
-
-                        <!-- Project Card 4 - AI Assistant -->
-                        <div class="project-card" data-category="ai" data-aos="fade-up">
-                            <div class="project-display terminal-display">
-                                <div class="terminal">
-                                    <div class="terminal-header">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <div class="terminal-content">
-                                        <span class="prompt">$</span> ash --help<br>
-                                        <span class="output">AI Assistant v1.0.0</span><br>
-                                        <span class="prompt">$</span> ash chat<br>
-                                        <span class="output">How can I help you today?</span>
-                                    </div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Ash_AI" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Ash_AI" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
+                        <div class="card-content">
+                            <h3>Gemini Linux Assistant</h3>
+                            <p>Natural language to Linux shell command converter.</p>
+                            <div class="tech-stack">
+                                <span>Python</span><span>Gemini</span><span>Shell</span>
                             </div>
-                            <div class="project-info">
-                                <h3>Personal AI Assistant</h3>
-                                <p>🤖 Intelligent AI assistant powered by Ollama for personal task automation</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>Ollama</span>
-                                    <span>LLM</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project Card 5 - Message It Out -->
-                        <div class="project-card" data-category="ai" data-aos="fade-up">
-                            <div class="project-display message-display">
-                                <div class="message-interface">
-                                    <div class="message-header">
-                                        <div class="emotion-selector">
-                                            <span class="emotion active">😊 Happy</span>
-                                            <span class="emotion">❤️ Love</span>
-                                            <span class="emotion">😔 Sad</span>
-                                        </div>
-                                    </div>
-                                    <div class="message-content">
-                                        <div class="typing-indicator">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                        <div class="generated-text">
-                                            Crafting the perfect message...
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Message-it-out" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Message-it-out" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Message It Out</h3>
-                                <p>🎭 AI-powered message composer with emotional intelligence</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>Streamlit</span>
-                                    <span>Gemini AI</span>
-                                    <span>NLP</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project Card 6 - Code Agent -->
-                        <div class="project-card" data-category="tools" data-aos="fade-up">
-                            <div class="project-display code-editor-display">
-                                <div class="editor-interface">
-                                    <div class="editor-tabs">
-                                        <span class="tab active">main.py</span>
-                                        <span class="tab">agent.py</span>
-                                    </div>
-                                    <div class="editor-content">
-                                        <div class="line-numbers">1<br>2<br>3</div>
-                                        <div class="code-content">
-                                            <span class="keyword">def</span> <span class="function">analyze_code</span>()<span class="operator">:</span><br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># AI-powered code analysis</span><br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"Optimized!"</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Code-agent" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Code-agent" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Code Agent</h3>
-                                <p>🤖 AI-powered code editor with intelligent assistance</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>Langchain</span>
-                                    <span>Gemini</span>
-                                    <span>Streamlit</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project Card 7 - Compatibility Analyzer -->
-                        <div class="project-card" data-category="ai" data-aos="fade-up">
-                            <div class="project-display compatibility-display">
-                                <div class="compatibility-interface">
-                                    <div class="hearts-container">
-                                        <div class="heart-animation">
-                                            <i class="fas fa-heart"></i>
-                                            <div class="percentage">95%</div>
-                                        </div>
-                                    </div>
-                                    <div class="compatibility-stats">
-                                        <div class="stat-bar">
-                                            <span class="label">Chemistry</span>
-                                            <div class="bar"><div class="fill" style="width: 90%"></div></div>
-                                        </div>
-                                        <div class="stat-bar">
-                                            <span class="label">Values</span>
-                                            <div class="bar"><div class="fill" style="width: 85%"></div></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Compatibility-Analyzer" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Compatibility-Analyzer" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Compatibility Analyzer</h3>
-                                <p>❤️ AI-powered relationship compatibility analysis</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>ML</span>
-                                    <span>NLP</span>
-                                    <span>Analytics</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project Card 8 - Gemini Linux Assistant -->
-                        <div class="project-card" data-category="python" data-aos="fade-up">
-                            <div class="project-display terminal-display">
-                                <div class="terminal">
-                                    <div class="terminal-header">
-                                        <span class="dot red"></span>
-                                        <span class="dot yellow"></span>
-                                        <span class="dot green"></span>
-                                    </div>
-                                    <div class="terminal-content">
-                                        <span class="prompt">$</span> gemini convert<br>
-                                        <span class="output">Enter command in natural language:</span><br>
-                                        <span class="prompt">>></span> show all running processes<br>
-                                        <span class="output">Converting to: ps aux</span>
-                                    </div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832/Gemini-Linux-Assistant" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832/Gemini-Linux-Assistant" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Gemini Linux Assistant</h3>
-                                <p>🧠 Natural language to Linux shell command converter using Google's Gemini AI</p>
-                                <div class="project-tech">
-                                    <span>Python</span>
-                                    <span>Gemini AI</span>
-                                    <span>Shell</span>
-                                    <span>CLI</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card" data-category="tools" data-aos="fade-up">
-  <div class="project-display chat-display" >
-    <!-- Visual mock-up using the chat interface style -->
-    <div class="chat-messages">
-      <div class="message user">Can I manage my PAH tokens here?</div>
-      <div class="message bot">Yes! Connect your wallet to get started. ウォレット</div>
-      <div class="message user">Okay, what's my balance?</div>
-      <div class="message bot">Your balance is 1,234.56 PAH. Ready to transfer! 💸</div>
-    </div>
-    <!-- Overlay with project links -->
-    <div class="project-overlay">
-      <div class="project-links">
-        <!-- 
-          NOTE: The user did not provide a live demo link, so both links point to GitHub.
-          Update the first link if you have a live version deployed.
-        -->
-        <a href="https://github.com/adarsh832/PAAH-PAH-Token-dApp" class="project-link" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
-        <a href="https://github.com/adarsh832/PAAH-PAH-Token-dApp" class="project-link" target="_blank" aria-label="GitHub Repository"><i class="fab fa-github"></i></a>
-      </div>
-    </div>
-  </div>
-  <!-- 
-    Project title and description section.
-  -->
-  <div class="project-info">
-      <h3 class="project-title">PAAH (PAH) Token dApp</h3>
-      <p class="project-description">A React-based frontend for the PAAH smart contract, allowing users to connect a wallet, view balances, and transfer tokens.</p>
-      <div class="project-tech">
-                                    <span>Blockchain</span>
-                                    <span>Solidity</span>
-                                    <span>React</span>
-                                </div>
-  </div>
-</div>
-
-
-                        <!-- Project Card 9 - Future Projects -->
-                        <div class="project-card" data-category="web" data-aos="fade-up">
-                            <div class="project-display cube-display">
-                                <div class="cube">
-                                    <div class="cube-face front">Front</div>
-                                    <div class="cube-face back">Back</div>
-                                    <div class="cube-face right">Right</div>
-                                    <div class="cube-face left">Left</div>
-                                    <div class="cube-face top">Top</div>
-                                    <div class="cube-face bottom">Bottom</div>
-                                </div>
-                                <div class="project-overlay">
-                                    <div class="project-links">
-                                        <a href="https://github.com/adarsh832" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>
-                                        <a href="https://github.com/adarsh832" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>More Coming Soon</h3>
-                                <p>🚀 Stay tuned for more exciting projects in development</p>
-                                <div class="project-tech">
-                                    <span>Web3</span>
-                                    <span>AI</span>
-                                    <span>Cloud</span>
-                                </div>
+                            <div class="card-links">
+                                <a href="https://github.com/adarsh832/Gemini-Linux-Assistant" target="_blank"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="scroll-buttons">
-                    <button class="scroll-btn scroll-left" aria-label="Scroll left">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="scroll-btn scroll-right" aria-label="Scroll right">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <div class="projects-cta" data-aos="fade-up">
-                    <a href="https://github.com/adarsh832" class="btn primary-btn" target="_blank">
-                        <i class="fab fa-github"></i> View More on GitHub
-                    </a>
+                
+                <div class="view-all-container">
+                    <a href="https://github.com/adarsh832" target="_blank" class="btn secondary-btn">View All Archives</a>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="skills">
-            <div class="skills-content">
-                <h2 class="section-title" data-aos="fade-down">
-                    <span class="jp">スキル</span>
-                    My Skills
-                </h2>
-                
-                <div class="skills-grid">
-                    <!-- Frontend Skills -->
-                    <div class="skill-category" data-aos="fade-right">
-                        <h3 class="category-title">
-                            <i class="fas fa-code"></i>
-                            <span class="jp">フロントエンド</span>
-                            Frontend
-                        </h3>
-                        <div class="skill-items">
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>HTML5/CSS3</span>
-                                    <span class="percentage">90%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 90%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-wrapper">
+                    <div class="about-image">
+                        <img src="images/profile.jpeg" alt="Adarsh Shah" style="border-radius: 20px;  transition: filter 0.3s ease;">
+                    </div>
+                    <div class="about-text">
+                        <span class="section-tag">About Me</span>
+                        <h2 class="section-title">Behind the Code</h2>
+                        <p>Computer Engineering student and founder with a passion for building minimalist, AI-powered solutions. Experienced in full-stack development, with specialized skills in Generative AI, Agentic AI, and Machine Learning.</p>
+                        <p>Proven ability to lead projects from concept to MVP, leveraging technologies like LangChain, AWS, and Python to create impactful applications.</p>
+                        
+                        <div class="stats-row">
+                            <div class="stat">
+                                <span class="number">10+</span>
+                                <span class="label">Projects</span>
                             </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>JavaScript</span>
-                                    <span class="percentage">85%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 85%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>Python</span>
-                                    <span class="percentage">80%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 80%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
+                            <div class="stat">
+                                <span class="number">4+</span>
+                                <span class="label">Years Exp</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Backend Skills -->
-                    <div class="skill-category" data-aos="fade-left">
-                        <h3 class="category-title">
-                            <i class="fas fa-server"></i>
-                            <span class="jp">バックエンド</span>
-                            Backend
-                        </h3>
-                        <div class="skill-items">
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>Python</span>
-                                    <span class="percentage">85%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 85%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>Java</span>
-                                    <span class="percentage">75%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 75%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>C/C++</span>
-                                    <span class="percentage">80%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 80%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tools & Others -->
-                    <div class="skill-category" data-aos="fade-up">
-                        <h3 class="category-title">
-                            <i class="fas fa-tools"></i>
-                            <span class="jp">ツール</span>
-                            Tools & Others
-                        </h3>
-                        <div class="skill-items">
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>Git</span>
-                                    <span class="percentage">90%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 90%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>Ollama</span>
-                                    <span class="percentage">70%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 70%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="skill-item">
-                                <div class="skill-info">
-                                    <span>Gen-AI</span>
-                                    <span class="percentage">75%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-level" style="width: 75%">
-                                        <div class="skill-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="about-skills">
+                        <h3>Tech Stack</h3>
+                        <div class="skill-tags">
+                            <span>Generative AI</span>
+                            <span>Agentic AI</span>
+                            <span>LLM</span>
+                            <span>RAG</span>
+                            <span>LangChain</span>
+                            <span>AWS</span>
+                            <span>Python</span>
+                            <span>Flutter</span>
+                            <span>Flask</span>
+                            <span>Node.js</span>
+                            <span>Docker</span>
                         </div>
                     </div>
                 </div>
@@ -684,136 +231,54 @@
 
         <!-- Contact Section -->
         <section id="contact" class="contact">
-            <div class="contact-content">
-                <h2 class="section-title" data-aos="fade-down">Get In Touch</h2>
-                <div class="contact-grid">
-                    <!-- Contact Information -->
-                    <div class="contact-info" data-aos="fade-right">
-                        <div class="info-card">
-                            <i class="fas fa-envelope"></i>
-                            <h3>Email</h3>
-                            <p>adarshshah675@gmail.com</p>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <h3>Location</h3>
-                            <p>Vadodara, India</p>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-phone"></i>
-                            <h3>Phone</h3>
-                            <p>+91 9875090935</p>
-                        </div>
-                        <div class="social-connect">
-                            <h3>Connect With Me</h3>
-                            <div class="social-icons">
-                                <a href="https://github.com/adarsh832" target="_blank" class="social-icon">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="https://www.linkedin.com/in/adarsh-shah-3b713122a" target="_blank" class="social-icon">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                                
-                            </div>
-                        </div>
+            <div class="container">
+                <div class="contact-wrapper">
+                    <div class="contact-header">
+                        <h2 class="section-title">Let's Create Something</h2>
+                        <p>Have a project in mind? Let's talk.</p>
+                        <a href="mailto:adarshshah675@gmail.com" class="email-link">adarshshah675@gmail.com</a>
                     </div>
-
-                    <!-- Contact Form -->
-                    <div class="contact-form" data-aos="fade-left">
-                        <form id="contactForm" onsubmit="return submitForm(event)">
-                            <!-- Web3Forms Access Key -->
-                            <input type="hidden" name="access_key" value="97ee1b86-8f86-42dc-ac2c-363cacd1e700">
-                            <input type="hidden" name="subject" value="New Contact from Portfolio">
-                            <input type="hidden" name="from_name" value="Portfolio Contact Form">
-                            
-                            <div class="form-group">
-                                <input type="text" 
-                                       id="name" 
-                                       name="name" 
-                                       placeholder=" " 
-                                       required 
-                                       pattern="[A-Za-z\s]+" 
-                                       maxlength="50"
-                                       autocomplete="off">
-                                <label for="name">Your Name</label>
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="email" 
-                                       id="email" 
-                                       name="email" 
-                                       placeholder=" " 
-                                       required
-                                       maxlength="100"
-                                       autocomplete="off">
-                                <label for="email">Your Email</label>
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="text" 
-                                       id="subject" 
-                                       name="message_subject" 
-                                       placeholder=" " 
-                                       required
-                                       maxlength="100"
-                                       autocomplete="off">
-                                <label for="subject">Subject</label>
-                            </div>
-                            
-                            <div class="form-group">
-                                <textarea id="message" 
-                                          name="message" 
-                                          placeholder=" " 
-                                          required
-                                          maxlength="1000"
-                                          autocomplete="off"></textarea>
-                                <label for="message">Your Message</label>
-                            </div>
-
-                            <!-- Form Message Display -->
-                            <div id="formMessage" class="form-message" style="display: none;"></div>
-                            
-                            <button type="submit" class="btn primary-btn">
-                                <i class="fas fa-paper-plane"></i> Send Message
-                            </button>
-                        </form>
-                    </div>
+                    
+                    <form id="contactForm" class="contact-form" onsubmit="return submitForm(event)">
+                        <input type="hidden" name="access_key" value="97ee1b86-8f86-42dc-ac2c-363cacd1e700">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Tell me about your project" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Send Message</button>
+                    </form>
                 </div>
             </div>
         </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="footer-content">
-                <div class="footer-info">
-                    <h3>Adarsh Shah</h3>
-                    <p>Full Stack Developer</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
-                </div>
-                <div class="footer-social">
-                    <a href="https://github.com/adarsh832"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/yourusername"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://twitter.com/yourusername"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Adarsh Shah. All rights reserved.</p>
-            </div>
-        </footer>
     </main>
 
-    <!-- JavaScript -->
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">AS<span class="dot">.</span></div>
+                <div class="social-links">
+                    <a href="https://github.com/adarsh832" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/adarsh-shah-3b713122a" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+                <p class="copyright">&copy; 2024 Adarsh Shah. Crafted with <i class="fas fa-heart"></i></p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>    <!-- JavaScript -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init({
             duration: 1000,
             once: true,
-            offset: 100
         });
     </script>
     <!-- Add GSAP for smooth animations -->
