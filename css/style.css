@@ -620,10 +620,36 @@ header.scrolled {
     align-items: center;
 }
 
-.about-image {
+.about-image-wrapper {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
+    aspect-ratio: 1 / 1;
+    /* Or fix height/width if preferred */
+    cursor: none;
+}
+
+.img-base,
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.img-base {
+    z-index: 1;
+}
+
+.img-overlay {
+    z-index: 2;
+    clip-path: inset(100% 0 0 0);
+    /* Hidden from bottom up */
+    filter: url(#liquid);
+    /* Apply liquid distortion */
 }
 
 .about-image img {
@@ -790,6 +816,129 @@ footer {
     font-size: 0.9rem;
 }
 
+/* Advanced Animations CSS */
+
+/* Floating Shapes */
+.floating-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Bring forward for interaction */
+    overflow: hidden;
+    pointer-events: none;
+    /* Let clicks pass through container */
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.15;
+    filter: blur(50px);
+    z-index: 1;
+    pointer-events: auto;
+    /* Enable dragging on shapes */
+    cursor: grab;
+    transition: transform 0.1s;
+    will-change: transform;
+}
+
+.shape:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+    /* Feedback */
+}
+
+/* Ensure content is above shapes but allows click-through */
+header,
+main,
+section,
+footer {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+    /* Let clicks pass to shapes */
+}
+
+/* Re-enable interaction for text and interactables */
+header *,
+main *,
+section *,
+footer * {
+    pointer-events: auto;
+}
+
+/* Explicitly fix buttons/links just in case */
+.btn,
+a,
+button,
+input,
+textarea,
+.project-card,
+.apdate-card {
+    pointer-events: auto;
+}
+
+.shape-1 {
+    top: 10%;
+    left: 10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.shape-2 {
+    top: 60%;
+    right: 15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #0055ff 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.shape-3 {
+    top: 30%;
+    right: 30%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #ff0055 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.shape-4 {
+    bottom: 10%;
+    left: 20%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #aa00ff 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.shape-5 {
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+    opacity: 0.1;
+    border-radius: 50%;
+}
+
+/* Magnetic Button Effect */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transform: translate(0, 0);
+    z-index: 1;
+}
+
+/* Hacker Text Effect */
+.hacker-text {
+    font-family: 'Space Mono', monospace;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .hero-title {
@@ -803,9 +952,38 @@ footer {
         gap: 3rem;
     }
 
+    .about-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .phone-mockup {
+        width: 250px;
+        height: 500px;
+    }
+
     .apdate-visual {
         order: -1;
     }
+}
+
+/* Cinematic Text Reveal / Flip */
+.reveal-text {
+    overflow: hidden;
+    line-height: 1.2;
+    perspective: 1000px;
+    /* Essential for 3D flip */
+}
+
+.reveal-text span {
+    display: inline-block;
+    opacity: 0;
+    transform-origin: bottom center;
+    /* Pivot point for flip */
 }
 
 @media (max-width: 768px) {
@@ -827,4 +1005,17 @@ footer {
         gap: 2rem;
         text-align: center;
     }
+}
+
+/* Interactive Canvas */
+#interaction-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Passes clicks through */
+    z-index: 9999;
+    /* Top layer visuals */
 }
