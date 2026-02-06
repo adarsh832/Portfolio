@@ -1,180 +1,82 @@
-# 🚀 Modern Portfolio Website
+# Adarsh Shah | Creative Engineer Portfolio
 
-A sleek, responsive, and interactive portfolio website built with HTML, CSS, and JavaScript. Features modern design elements, smooth animations, and a great user experience.
+A high-performance, cinematic personal portfolio website designed to showcase engineering precision and creative system design. Built with a focus on motion, typography, and interactive storytelling.
 
-![Portfolio Preview](preview.gif)
+![Portfolio Preview](screenshot.png) 
+*(Note: Add a screenshot of your hero section here named screenshot.png)*
 
-## ✨ Features
+## 🚀 Features
 
-### 🎯 Core Features
-- **Responsive Design**: Works seamlessly on all devices
-- **Modern UI/UX**: Clean and professional interface
-- **Interactive Elements**: Engaging user interactions
-- **Performance Optimized**: Fast loading and smooth animations
-- **Cross-Browser Compatible**: Works on all modern browsers
+*   **Cinematic Experience**: Heavy use of **GSAP** (GreenSock) for high-end scroll animations, parallax effects, and magnetic interactions.
+*   **"Creative Engineer" Aesthetic**: A dark, architectural design system using a "Racing Green" and "Obsidian" palette.
+*   **Interactive Project Gallery**: Custom-designed SVG illustrations for projects (APDATE, TRACKMANIA, GEMINI) that react to hover states.
+*   **Functional Contact Form**: Integrated with **Formspree** via AJAX for seamless, no-redirect email submissions.
+*   **Theme System**: Built-in Dark/Light mode toggle with persistence.
+*   **Performance**: Pure HTML/JS structure with no heavy framework overhead. Tailwind CSS via CDN for rapid styling.
 
-### 🎨 Design Elements
-- **Loading Screen**: Custom animated welcome screen for first-time visitors
-- **Smooth Scrolling**: Fluid navigation throughout the site
-- **Animated Sections**: Elements animate as they enter viewport
-- **Dynamic Skills Bars**: Interactive skill representation
-- **Project Showcase**: Filterable project gallery
-- **Custom 404 Page**: Space-themed error page with interactive elements
+## 🛠️ Tech Stack
 
-### 📱 Key Sections
-1. **Hero Section**
-   - Professional introduction
-   - Call-to-action buttons
-   - Social media links
-   - Animated background
-
-2. **About Section**
-   - Professional summary
-   - Key information
-   - Education timeline
-   - Experience stats
-
-3. **Projects Section**
-   - Project filtering
-   - Project cards with hover effects
-   - Live demo & code links
-   - Technology tags
-
-4. **Skills Section**
-   - Categorized skills
-   - Animated progress bars
-   - Tool proficiency
-   - Technology stack
-
-5. **Contact Section**
-   - Contact form with EmailJS integration
-   - Social media links
-   - Location information
-   - Professional email
-
-## 🛠️ Technologies Used
-
-- **Frontend**:
-  - HTML5
-  - CSS3
-  - JavaScript (ES6+)
-  
-- **Libraries & APIs**:
-  - Font Awesome
-  - Google Fonts
-  - EmailJS
-  - reCAPTCHA
-
-- **Security**:
-  - Content Security Policy
-  - XSS Protection
-  - CSRF Protection
-  - Rate Limiting
-
-## 🚀 Getting Started
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/adarsh832/portfolio.git
-   ```
-
-2. **Setup EmailJS**
-   - Create an EmailJS account
-   - Set up an email service
-   - Create an email template
-   - Update credentials in `script.js`
-
-3. **Customize Content**
-   - Update personal information
-   - Add project details
-   - Modify skills and percentages
-   - Add your own images
-
-4. **Deploy**
-   - Host on GitHub Pages
-   - Or deploy to Netlify/Vercel
+*   **Core**: HTML5, Vanilla JavaScript (ES6+)
+*   **Styling**: [Tailwind CSS](https://tailwindcss.com/) (via CDN)
+*   **Motion**: 
+    *   [GSAP](https://greensock.com/gsap/) (Core, ScrollTrigger)
+    *   [Lenis](https://github.com/studio-freight/lenis) (Smooth Scroll)
+*   **Icons**: Material Icons Outlined, Custom SVGs
+*   **Backend (Form)**: [Formspree](https://formspree.io/)
 
 ## 📂 Project Structure
 
-```
-portfolio/
-├── index.html              # Main HTML file
-├── 404.html               # Custom 404 error page
-├── checklist.txt          # Development checklist
-├── preview.gif            # Portfolio preview
-├── .htaccess              # Apache server configuration
-├── web.config             # IIS server configuration
-├── netlify.toml           # Netlify configuration
-├── vercel.json            # Vercel configuration
-├── css/
-│   ├── style.css         # Main stylesheet
-│   ├── loading-screen.css # Loading screen styles
-│   └── 404.css           # 404 page styles
-├── js/
-│   ├── script.js         # Main JavaScript file
-│   ├── loading-screen.js # Loading screen functionality
-│   └── 404.js           # 404 page interactions
-├── images/
-│   ├── profile.jpg       # Profile picture
-│   ├── about-image.jpg   # About section image
-│   ├── project1.jpg      # Project screenshot
-│   ├── project2.jpg      # Project screenshot
-│   └── project3.jpg      # Project screenshot
-└── templates/
-    └── email.html        # EmailJS template
+```text
+d:\Porfolio\
+├── images/                 # Image Assets Directory
+│   ├── favicon.svg         # Custom "AS" Monogram Favicon
+│   ├── pp.jpeg             # Profile Picture
+│   ├── project_apdate.svg  # App Illustration
+│   ├── project_trackmania.svg # AI Racing Illustration
+│   └── project_gemini.svg  # Linux Assistant Illustration
+├── index.html              # Main application entry point
+├── resume.pdf              # Downloadable CV
+└── README.md               # Project Documentation
 ```
 
-### 📁 Directory Structure Explanation
+## ⚡ Quick Start
 
-#### Root Files
-- `index.html`: Main entry point
-- `404.html`: Custom error page
-- Configuration files for different hosting platforms
+1.  **Clone or Download** this repository.
+2.  **Open locally**:
+    Simply double-click `index.html` to open it in your default browser.
+    *   *Tip: For the best experience with smooth scrolling, use a local server (e.g., Live Server extension in VS Code).*
 
-#### CSS Directory
-- Organized stylesheets for different components
-- Modular approach for better maintenance
+## 🔧 Customization
 
-#### JavaScript Directory
-- Separated functionality into logical modules
-- Enhanced maintainability and debugging
+### 1. Contact Form
+The form is currently connected to a demo Formspree endpoint. To make it yours:
+1.  Go to [formspree.io](https://formspree.io) and create a form.
+2.  Open `index.html` and search for `<form id="contact-form"`.
+3.  Replace the `action` URL with your own:
+    ```html
+    <form action="https://formspree.io/f/YOUR_NEW_CODE" ...>
+    ```
 
-#### Images Directory
-- Optimized images for web
-- Project screenshots and personal photos
+### 2. Updating Projects
+Edit the `data-` attributes in the `#work` section of `index.html`:
+```html
+<div class="group ..." 
+    data-title="NEW PROJECT" 
+    data-desc="Description here..." 
+    data-image="images/new_image.svg" 
+    data-github="https://github.com/..."
+>
+```
 
-#### Templates Directory
-- Email templates for contact form
-- Customizable message formats
+### 3. Adding Resume
+Ensure your PDF resume is named `resume.pdf` and placed in the root directory. The download button links to it automatically.
 
-## 🔧 Development Setup
+## 🎨 Design Philosophy
 
-1. **Prerequisites**
-   - Web browser
-   - Text editor (VS Code recommended)
-   - Basic knowledge of HTML, CSS, JS
+*   **Typography**: *Archivo Black* (Headlines) & *Inter* (Body) for a structured, industrial feel.
+*   **Motion**: Animations are "weighted" to feel physical and deliberate, avoiding cheap, fast transitions.
+*   **Visuals**: "Engineering" themes—grids, terminals, schematics, and clean lines.
 
-2. **Local Development**
-   ```bash
-   # Clone repository
-   git clone https://github.com/adarsh832/portfolio.git
+## 📝 License
 
-   # Navigate to project
-   cd portfolio
-
-   # Open in browser
-   # Use Live Server or similar tool
-   ```
-
-3. **File Organization**
-   - Keep images in `/images`
-   - Styles in `/css`
-   - Scripts in `/js`
-   - Templates in `/templates`
-
-4. **Best Practices**
-   - Comment your code
-   - Use consistent naming
-   - Optimize images
-   - Validate HTML/CSS
-   - Test cross-browser compatibility
+© 2026 Adarsh Shah. All Rights Reserved.

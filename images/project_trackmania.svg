@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+    <defs>
+        <clipPath id="screen-mask">
+            <rect x="0" y="0" width="800" height="600" />
+        </clipPath>
+        <linearGradient id="track-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background Frame: The "Game" View -->
+    <rect width="800" height="600" fill="#111"/>
+    
+    <!-- The Track (Curved Road) -->
+    <path d="M -50 600 C 200 400, 300 200, 400 0 h 300 C 500 200, 400 400, 150 600 Z" fill="url(#track-grad)"/>
+    <!-- Apex Kerbs -->
+    <path d="M 150 600 C 400 400, 500 200, 700 0" stroke="#ff0000" stroke-width="15" stroke-dasharray="20 20"/>
+    <path d="M 150 600 C 400 400, 500 200, 700 0" stroke="#ffffff" stroke-width="15" stroke-dasharray="20 20" stroke-dashoffset="20"/>
+
+    <!-- F1 Car (Top Down Symbol) -->
+    <g transform="translate(350, 350) rotate(-20)">
+        <!-- Rear Wing -->
+        <rect x="-20" y="30" width="40" height="10" fill="#ff3333"/>
+        <!-- Body -->
+        <path d="M -10 30 L -12 -10 L -5 -30 L 0 -40 L 5 -30 L 12 -10 L 10 30 Z" fill="#ccc"/>
+        <!-- Front Wing -->
+        <rect x="-25" y="-40" width="50" height="8" fill="#ff3333"/>
+        <!-- Tires -->
+        <rect x="-28" y="5" width="12" height="20" rx="3" fill="#111"/> <!-- RL -->
+        <rect x="16" y="5" width="12" height="20" rx="3" fill="#111"/> <!-- RR -->
+        <rect x="-28" y="-35" width="12" height="20" rx="3" fill="#111"/> <!-- FL -->
+        <rect x="16" y="-35" width="12" height="20" rx="3" fill="#111"/> <!-- FR -->
+        
+        <!-- Driver Helmet -->
+        <circle cx="0" cy="-5" r="4" fill="#ffff00"/>
+    </g>
+
+    <!-- COMPUTER VISION OVERLAY -->
+    
+    <!-- 1. Bounding Box Detection -->
+    <g stroke="#00ff00" stroke-width="2" fill="none">
+        <rect x="310" y="290" width="90" height="100" stroke-dasharray="10 5">
+            <animate attributeName="stroke-opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+        </rect>
+        <line x1="310" y1="290" x2="330" y2="290" stroke-width="4"/>
+        <line x1="310" y1="290" x2="310" y2="310" stroke-width="4"/>
+        <line x1="400" y1="390" x2="380" y2="390" stroke-width="4"/>
+        <line x1="400" y1="390" x2="400" y2="370" stroke-width="4"/>
+        
+        <!-- Label -->
+        <rect x="310" y="270" width="60" height="16" fill="#00ff00"/>
+        <text x="315" y="282" fill="black" font-family="monospace" font-size="10" font-weight="bold">CAR_OBJ</text>
+    </g>
+
+    <!-- 2. Path Prediction (The "Thinking" Lines) -->
+    <path d="M 350 350 Q 340 250, 420 100" stroke="#00ffff" stroke-width="3" fill="none" opacity="0.8"/>
+    <path d="M 350 350 Q 380 250, 500 100" stroke="#00ffff" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M 350 350 Q 300 250, 350 100" stroke="#00ffff" stroke-width="1" fill="none" opacity="0.3"/>
+    
+    <circle cx="420" cy="100" r="5" fill="#00ffff">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- 3. HUD Data -->
+    <g transform="translate(50, 50)" font-family="monospace" font-size="14" fill="#00ff00">
+        <text x="0" y="0">CV_MODE: ACTIVE</text>
+        <text x="0" y="20">FPS: 144</text>
+        <text x="0" y="40">STEER: -15.4°</text>
+        <text x="0" y="60">THROTTLE: 98%</text>
+        <text x="0" y="80">CONFIDENCE: 0.992</text>
+    </g>
+
+    <!-- 4. Top Right Map/Minimap Processing -->
+    <rect x="650" y="20" width="130" height="100" fill="#000" stroke="#00ff00" stroke-width="1"/>
+    <path d="M 670 100 C 690 60, 720 40, 760 30" stroke="#fff" stroke-width="2" fill="none"/>
+    <rect x="650" y="20" width="130" height="100" fill="url(#grid-pat)" opacity="0.2"/>
+    
+    <!-- Scanlines -->
+    <path d="M0 0 h800 v600 h-800 z" fill="url(#scanlines)" opacity="0.1" pointer-events="none"/>
+    <defs>
+        <pattern id="scanlines" patternUnits="userSpaceOnUse" width="4" height="4">
+            <path d="M0 4 h4" stroke="black" stroke-width="2"/>
+        </pattern>
+    </defs>
+
+</svg>

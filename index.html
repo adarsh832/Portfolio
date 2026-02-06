@@ -1,158 +1,1968 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adarsh Shah | Loading...</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Adarsh Shah — Creative Engineer building applications, web platforms, and intelligent systems with precision and performance-driven design.">
+<title>Adarsh Shah | Engineer &amp; Developer</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background-light": "#f2f0ea",
+                        "background-dark": "#121212",
+                        "primary": "#102a22", // Racing Green
+                        "accent-dark": "#0f172a",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1e1e1e",
+                    },
+                    fontFamily: {
+                        display: ["'Archivo Black'", "sans-serif"],
+                        body: ["'Inter'", "sans-serif"],
+                    },
+                    fontSize: {
+                        'huge': '14vw',
+                    },
+                    animation: {
+                        'swing': 'swing 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        swing: {
+                            '0%, 100%': { transform: 'rotate(1deg)' },
+                            '50%': { transform: 'rotate(-1deg)' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Space Grotesk', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Scene Spacing - Visual Silence */
+        /* Scene Spacing - Visual Silence */
+        section {
+            min-height: 120vh; /* Ensure scenes are tall enough for scrolling */
+            padding-top: 20vh;
+            padding-bottom: 20vh;
+        }
+        
+        /* OVERRIDES for tight transitions */
+        #work, #transition-band {
+            min-height: auto !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
         }
 
-        .loader-container {
+        #hero-scene {
+            height: 100vh;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
             position: relative;
             z-index: 10;
-            text-align: center;
         }
 
-        .logo-text {
-            font-size: 4rem;
-            font-weight: 700;
-            letter-spacing: -2px;
+        /* Custom Cursor */
+        * {
+            cursor: none !important;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            margin: 0;
+            padding: 0;
+        }    
+        
+        /* Reset global section padding for the horizontal scenes */
+        #chapter-wrapper section {
+            min-height: 100vh;
+            height: 100vh;
+            padding: 0;
+        }    
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: black;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        .dark #cursor-dot {
+            background-color: white;
+        }
+        
+        /* F1 / Architectural Utilities */
+        .text-stroke-sm {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+        }
+        /* Menu Overlay Styling - Heavy Inertia */
+        #menu-overlay {
+            clip-path: circle(0% at 100% 0%);
+            transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1); /* expo.out feel */
+        }
+        #menu-overlay.open {
+            clip-path: circle(150% at 100% 0%);
+        }
+        .blur-in {
+            filter: blur(10px);
             opacity: 0;
-            transform: translateY(20px);
+        }
+        
+        /* Project Divider */
+        .project-divider {
+            width: 0%;
+        }
+        
+        /* Pin Effect */
+        .pin-head {
+            opacity: 0;
+            transform: scale(0);
+        }
+        
+        /* Editorial Reveal Masks */
+        .reveal-mask {
+            overflow: hidden;
+            display: block; /* or inline-block depending on context */
+            position: relative;
+        }
+        .reveal-text {
+            display: block;
+            transform: translateY(100%);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        
+        /* Lock-in Effect State */
+        .locked-in {
+            filter: contrast(110%);
+            font-weight: 500; /* Subtle weight shift if font supports it */
+            letter-spacing: -0.01em; /* Tighten slightly */
+            transition: all 0.5s ease-out;
         }
 
-        .logo-text .dot {
-            color: #00ff88;
+        /* Rolling Text Styles */
+        .roll-line {
+            display: block;
+            overflow: hidden;
+            line-height: 1;
+        }
+        .roll-word {
             display: inline-block;
+            white-space: nowrap;
+            margin-right: 0.2em; /* Space between words */
         }
-
-        .progress-bar-container {
-            width: 200px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 20px auto 0;
+        .roll-char {
+            display: inline-block;
             position: relative;
             overflow: hidden;
-            opacity: 0;
+        }
+        .roll-inner {
+            display: block; /* Allows transform */
+            position: relative;
+        }
+        .roll-text {
+            display: block;
         }
 
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #00ff88;
+        /* Modal Styles */
+        #project-modal {
+            clip-path: circle(0% at 50% 50%); /* Start closed */
+            transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #project-modal.open {
+            clip-path: circle(150% at 50% 50%);
+        }
+
+        /* --- HERO GRID & BORDERS (Engineering Aesthetic) --- */
+        #global-grid-layer {
+            position: fixed; /* Global fixed background */
+            inset: 0;
+            z-index: 0; /* Behind everything */
+            pointer-events: none;
+            opacity: 0; /* JS handles fade in */
+            background-image: 
+                linear-gradient(rgba(100, 100, 100, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 100, 100, 0.08) 1px, transparent 1px); /* Darker: 0.05 -> 0.08 */
+            background-size: 50px 50px;
+            /* Reduced mask for broader visibility */
+            mask-image: radial-gradient(circle at center, black 60%, transparent 100%); 
+            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+        }
+        
+        #hero-frame {
             position: absolute;
-            top: 0;
-            left: 0;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            inset: 30px; /* Slight inset from edges */
+            z-index: 5;
+            pointer-events: none;
+            border: 1px solid rgba(100, 100, 100, 0.1); /* Very subtle */
+            opacity: 0; /* JS handles reveal */
         }
 
-        .loading-text {
-            margin-top: 15px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.9rem;
-            color: #888;
+        /* Corner Markers */
+        .corner-marker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: rgba(100, 100, 100, 0.3); /* Slightly more visible than frame */
+            border-style: solid;
+            transition: all 0.5s ease;
+        }
+        .tl { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+        .tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+        .bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
+        .br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+        
+        .technical-label {
+             position: absolute;
+             font-family: 'Inter', sans-serif; /* Or monospace */
+             font-size: 0.5rem;
+             letter-spacing: 0.2em;
+             color: rgba(100, 100, 100, 0.4);
+             text-transform: uppercase;
+        }
+        .lbl-tl { top: 10px; left: 15px; }
+        .lbl-br { bottom: 10px; right: 15px; }
+
+        /* --- FLOATING ICONS LAYER --- */
+        #hero-icons-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 2; /* Content is 10, Grid is 1, Frame is 5. We want these behind Frame? Or floating freely? 
+                           User said "reinforce technical identity". 
+                           Let's put them at z-index 2 (above grid, below frame/text). */
+            pointer-events: none;
+        }
+        .hero-icon {
+            position: absolute;
+            color: rgba(100, 100, 100, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; /* JS reveal */
+        }
+        .hero-icon .material-icons-outlined {
+            font-size: 32px; /* Default base */
+            font-weight: 100; /* Thin look if font supports, strictly relying on icon style */
+        }
+        /* Positions */
+        .icon-pos-1 { top: 15%; left: 10%; } /* Top Left - Memory */
+        .icon-pos-2 { bottom: 20%; right: 12%; } /* Bottom Right - Code */
+        .icon-pos-3 { top: 30%; right: 20%; } /* Mid Right - Cloud */
+        .icon-pos-4 { bottom: 15%; left: 25%; } /* Deep Left - Laptop */
+
+        /* Styles */
+        .icon-blur { filter: blur(1.5px); opacity: 0.3 !important; } /* Distance */
+        .icon-sm { transform: scale(0.8); }
+        .icon-lg { transform: scale(1.2); }
+
+        /* --- INTERACTIVE MICRO-PANELS --- */
+        .hero-icon {
+            cursor: pointer;
+            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            /* Ensure pointer events are active for click */
+            pointer-events: auto !important; 
+        }
+        
+        /* Active State (Sharp, Scale) */
+        .hero-icon.active {
+            opacity: 1 !important;
+            filter: blur(0) !important;
+            transform: scale(1.05);
+            z-index: 50; /* Bring to front */
+        }
+        
+        /* Focus Mode: Dim others */
+        .hero-icon.dimmed {
+            opacity: 0.1 !important;
+            filter: blur(2px) grayscale(100%);
+        }
+
+        /* Micro Panel */
+        .micro-panel {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
+            width: 200px;
+            border-radius: 4px; /* Minimal rounded */
+            opacity: 0;
+            visibility: hidden;
+            /* Positioning logic will be handled by CSS relative to icon or fixed if simpler. 
+               Let's try relative with offset. */
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%) translateX(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Extremely subtle */
+            pointer-events: none; /* Let clicks pass through if needed, but text selection might be wanted. */
+        }
+        
+        .dark .micro-panel {
+            background-color: rgba(20, 20, 20, 0.95);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Adjust position for right-side icons to push left */
+        .icon-pos-2 .micro-panel, 
+        .icon-pos-3 .micro-panel {
+            left: auto;
+            right: 100%;
+            transform: translateY(-50%) translateX(-10px);
+            text-align: right;
+        }
+
+        /* Panel Typography */
+        .panel-header {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0;
+            letter-spacing: 0.1em;
+            color: #1a1a1a;
+            margin-bottom: 4px;
         }
+        .dark .panel-header { color: #fff; }
 
-        /* Background Effects */
-        .bg-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.2;
-            z-index: 1;
+        .panel-line {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(0,0,0,0.1);
+            margin-bottom: 6px;
         }
+        .dark .panel-line { background-color: rgba(255,255,255,0.1); }
 
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: #00ff88;
-            top: -100px;
-            left: -100px;
+        .panel-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55rem;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #666;
         }
+        .dark .panel-desc { color: #aaa; }
 
-        .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: #0055ff;
-            bottom: -50px;
-            right: -50px;
-        }
     </style>
+    </style>
+    <!-- Custom Cursor Element -->
+    <div id="cursor-dot"></div>
 </head>
-<body>
-
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-
-    <div class="loader-container">
-        <div class="logo-text">AS<span class="dot">.</span></div>
-        <div class="progress-bar-container">
-            <div class="progress-bar"></div>
+<body class="bg-background-light dark:bg-background-dark text-black dark:text-gray-100 font-body transition-colors duration-300 overflow-x-hidden">
+<nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center text-black dark:text-white">
+<div class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80">
+            Engineer / Dev
         </div>
-        <div class="loading-text">Initializing</div>
-    </div>
+    <div class="relative z-50 flex items-center gap-4">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="w-10 h-10 border border-black dark:border-white flex items-center justify-center cursor-pointer group bg-white dark:bg-black hover:opacity-80 transition-opacity" aria-label="Toggle Theme">
+            <!-- Sun Icon (Default/Light) -->
+            <svg id="theme-sun" class="w-5 h-5 hidden dark:block text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <!-- Moon Icon (Dark/Active) -->
+            <svg id="theme-moon" class="w-5 h-5 block dark:hidden text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+        <!-- Hamburger Button -->
+        <div id="menu-btn" class="w-10 h-10 border border-black dark:border-white flex items-center justify-center cursor-pointer group bg-white dark:bg-black transition-transform hover:scale-110">
+            <div class="relative w-5 h-5 flex flex-col justify-between items-center transition-all duration-300">
+                <span id="line1" class="w-full h-0.5 bg-black dark:bg-white transition-all duration-300 origin-center"></span>
+                <span id="line2" class="w-full h-0.5 bg-black dark:bg-white transition-all duration-300"></span>
+                <span id="line3" class="w-full h-0.5 bg-black dark:bg-white transition-all duration-300 origin-center"></span>
+            </div>
+        </div>
 
+        <!-- Menu Pop-up (Square on corner) -->
+        <div id="menu-overlay" class="fixed top-0 right-0 w-[300px] h-[350px] bg-black/90 dark:bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center rounded-bl-3xl z-40 origin-top-right transform">
+             <ul class="flex flex-col space-y-6 text-center">
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#" onclick="toggleMenu()">Home</a>
+                </li>
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#profile" onclick="toggleMenu()">Identity</a>
+                </li>
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#work" onclick="toggleMenu()">Projects</a>
+                </li>
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#contact" onclick="toggleMenu()">Connect</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Global Engineering Grid (Moved outside sections) -->
+<div id="global-grid-layer"></div>
+
+<div id="chapter-wrapper" class="flex flex-nowrap w-[200vw] overflow-x-hidden">
+    <section id="hero-scene" class="relative group w-screen h-screen flex-shrink-0 flex items-center justify-center p-0 overflow-hidden">
+        <!-- 1. Deep Background Layer -->
+        <div id="hero-bg-layer" class="absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000 opacity-40 group-hover:opacity-60">
+            <div class="absolute top-[20%] left-[20%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-pulse-slow"></div>
+            <div class="absolute bottom-[20%] right-[20%] w-[35vw] h-[35vw] bg-gray-400/20 dark:bg-gray-600/20 rounded-full blur-[80px]"></div>
+        </div>
+
+        <!-- 2. Mid Layer (Atmosphere) -->
+        <div id="hero-noise-layer" class="absolute inset-0 z-1 pointer-events-none opacity-20 mix-blend-overlay">
+             <svg class="w-full h-full opacity-50" xmlns="http://www.w3.org/2000/svg">
+                <filter id="noiseFilter">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                </filter>
+                <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+            </svg>
+            <div class="absolute inset-0 bg-gradient-radial from-transparent to-black/20"></div>
+        </div>
+
+        <!-- 3. Engineering Grid Layer (REMOVED - Moved to Global) -->
+
+        <!-- 4. Framing Borders -->
+        <div id="hero-frame">
+            <div class="corner-marker tl"></div>
+            <div class="corner-marker tr"></div>
+            <div class="corner-marker bl"></div>
+            <div class="corner-marker br"></div>
+            <span class="technical-label lbl-tl">SYS.REF // 2024</span>
+            <span class="technical-label lbl-br">ENG.MODE // ACT</span>
+        </div>
+
+        <!-- 5. Floating Icons Layer -->
+        <!-- Added structure for interactivity -->
+        <div id="hero-icons-layer">
+            
+            <!-- Icon 1: Memory -->
+            <div class="hero-icon icon-pos-1 icon-lg" data-id="1">
+                <span class="material-icons-outlined">memory</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">APPLICATIONS</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Building scalable digital products from concept to deployment.</p>
+                </div>
+            </div>
+
+            <!-- Icon 2: Terminal -->
+            <div class="hero-icon icon-pos-2" data-id="2">
+                <span class="material-icons-outlined">terminal</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">WEB SYSTEMS</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Crafting structured, high-performance web experiences.</p>
+                </div>
+            </div>
+
+            <!-- Icon 3: Cloud -->
+            <div class="hero-icon icon-pos-3 icon-sm" data-id="3">
+                <span class="material-icons-outlined">cloud_queue</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">AUTOMATION</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Engineering tools that streamline workflows and increase efficiency.</p>
+                </div>
+            </div>
+
+            <!-- Icon 4: Laptop (Blurred) -->
+            <div class="hero-icon icon-pos-4 icon-blur" data-id="4">
+                <span class="material-icons-outlined">laptop_mac</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">INTELLIGENT LOGIC</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Integrating advanced systems where they create real impact.</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="hero-content-wrapper" class="flex-grow flex flex-col justify-center items-center relative z-10">
+            <h2 class="font-display text-huge leading-[0.85] uppercase tracking-tighter text-center select-none text-monument" id="hero-title" style="transform: translateZ(-50px); opacity: 0;">
+                <span class="inline-block relative" id="hero-first">Adarsh</span><br/>
+                <span class="inline-block relative" id="hero-last">Shah</span>
+            </h2>
+            <div class="mt-8 text-center opacity-0 animate-[fadeInUp_1s_ease-out_1s_forwards]" style="animation-fill-mode: forwards; animation-delay: 1s;">
+                <p class="font-display text-lg md:text-xl uppercase tracking-widest text-black dark:text-white mb-3">I design and build digital systems with precision.</p>
+                <p class="font-body text-xs md:text-sm text-gray-500 max-w-md mx-auto leading-relaxed">From applications and web platforms to intelligent automation, I engineer ideas into scalable, high-performance products.</p>
+            </div>
+        </div>
+        
+        <!-- Architectural Scroll Indicator -->
+        <div id="scroll-indicator" class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 pointer-events-none opacity-0 mix-blend-difference" style="opacity: 0;">
+             <!-- Guide Line -->
+             <div class="relative w-px h-12 bg-black/10 dark:bg-white/10 overflow-hidden">
+                <!-- Moving Cursor -->
+                <div id="scroll-cursor" class="absolute top-0 left-0 w-full h-2 bg-black dark:bg-white"></div>
+             </div>
+        </div>
+
+        <div class="absolute bottom-12 w-full flex flex-col md:flex-row justify-between items-center text-[10px] font-bold tracking-[0.3em] uppercase text-black/60 dark:text-gray-400 px-6 gap-4" id="hero-footer">
+            <span>Est. 2024</span>
+            <span>Computer Engineering</span>
+            <span>Vadodara, IN</span>
+        </div>
+    </section>
+    
+    <section class="w-screen h-screen flex-shrink-0 flex items-center justify-center px-6 md:px-12 lg:px-24 max-w-7xl mx-auto" id="profile">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 w-full items-center">
+            <div class="lg:col-span-5 relative h-[500px] flex justify-center items-center" style="perspective: 1000px;"> <!-- Added perspective -->
+                <!-- String -->
+                <div id="id-card-string" class="absolute top-0 left-1/2 w-px h-32 bg-gray-400 dark:bg-gray-500 z-10 origin-top"></div>
+                
+                <!-- Enhanced Card -->
+                <div id="id-card" class="relative mt-24 w-72 bg-white dark:bg-neutral-100 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] p-5 origin-top rounded-2xl border border-white/50 dark:border-white/20"> 
+                    
+                    <!-- Realistic Slot Punch -->
+                    <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner z-20 border border-black/5"></div>
+                    
+                    <!-- Header -->
+                    <div class="flex justify-between items-start mb-4 border-b border-gray-200 dark:border-gray-300 pb-3">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xs ring-4 ring-gray-50 dark:ring-gray-200/50">AS</div>
+                        <div class="text-right">
+                            <span class="block text-[0.55rem] text-gray-400 uppercase tracking-widest">Identity</span>
+                            <span class="block text-sm font-black text-black font-display uppercase tracking-tight">Eng. Level 4</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo with Holographic Detail -->
+                    <div class="aspect-[4/5] bg-gray-100 mb-4 overflow-hidden grayscale relative rounded-xl shadow-inner group">
+                        <img alt="Profile Portrait" class="w-full h-full object-cover opacity-90 mix-blend-multiply transition-transform duration-700 group-hover:scale-105" src="images/pp.jpeg"/>
+                        
+                        <!-- Active Status Badge -->
+                        <div class="absolute bottom-2 left-2 bg-white/90 backdrop-blur-md px-2 py-0.5 text-[0.5rem] font-bold uppercase tracking-wider text-black border border-black/10 rounded-md shadow-sm">
+                            Active Status
+                        </div>
+
+                        <!-- Holographic Sticker -->
+                        <div class="absolute top-2 right-2 w-8 h-8 rounded-full opacity-60 mix-blend-overlay bg-gradient-to-tr from-cyan-400 via-white to-purple-400 shadow-lg animate-pulse"></div>
+                    </div>
+                    
+                    <!-- Details -->
+                    <div class="grid grid-cols-2 gap-4 text-black border-t border-gray-100 dark:border-gray-300 pt-3">
+                        <div>
+                            <span class="block text-[0.5rem] text-gray-400 uppercase tracking-wider">Role</span>
+                            <span class="block text-xs font-bold text-gray-800">Developer</span>
+                        </div>
+                        <div>
+                            <span class="block text-[0.5rem] text-gray-400 uppercase tracking-wider">Spec</span>
+                            <span class="block text-xs font-bold text-gray-800">Full Stack</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Barcode with Numbers -->
+                    <div class="mt-4 opacity-30">
+                         <div class="h-4 w-full bg-cover bg-repeat-x" style="background-image: repeating-linear-gradient(90deg, black 0px, black 1px, transparent 1px, transparent 3px);"></div>
+                         <div class="flex justify-between text-[0.4rem] font-mono tracking-[0.2em] mt-1 text-black">
+                            <span>001092</span>
+                            <span>839102</span>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-8">
+            <div>
+                <div class="mb-8">
+                     <div class="reveal-mask">
+                        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                            The
+                        </h2>
+                     </div>
+                     <div class="reveal-mask">
+                        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                            Architect
+                        </h2>
+                     </div>
+                     <div class="reveal-mask">
+                        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                            Mindset.
+                        </h2>
+                     </div>
+                </div>
+            </div>
+            <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300 font-light max-w-xl">
+            <p>
+                I don’t just write code — I build systems.
+            </p>
+            <p>
+                My work sits at the intersection of creativity and engineering. I design applications, craft web experiences, and develop intelligent tools that solve real problems with clarity and structure.
+            </p>
+            <p class="text-sm text-gray-400 dark:text-gray-400">
+                Every project is built with intent — scalable, maintainable, and engineered to perform.
+            </p>
+            </div>
+            <div class="pt-4">
+            <a class="inline-block border-b border-black dark:border-white text-black dark:text-white uppercase tracking-widest text-[10px] font-bold py-1 hover:opacity-60 transition-opacity" href="resume.pdf" download>
+                                    DOWNLOAD CV
+                                </a>
+            </div>
+            </div>
+        </div>
+    </section>
+</div>
+<section id="transition-band" class="relative z-20 w-full py-6 -mt-24 overflow-hidden bg-transparent select-none pointer-events-none fade-mask">
+    <div class="flex flex-col gap-4 transform -rotate-1 origin-center">
+        <!-- Row 1: Left to Right -->
+        <div class="marquee-row-1 flex whitespace-nowrap">
+             <span class="text-[6vw] font-display font-black uppercase tracking-widest text-primary px-4">
+                Precision • Systems • Scale • Performance • Precision • Systems • Scale • Performance •
+             </span>
+             <span class="text-[6vw] font-display font-black uppercase tracking-widest text-primary px-4">
+                Precision • Systems • Scale • Performance • Precision • Systems • Scale • Performance •
+             </span>
+        </div>
+        <!-- Row 2: Right to Left -->
+        <div class="marquee-row-2 flex whitespace-nowrap">
+             <span class="text-[6vw] font-display font-black uppercase tracking-widest text-black dark:text-white px-4">
+                Python • Architecture • Cloud • Design • Python • Architecture • Cloud • Design •
+             </span>
+             <span class="text-[6vw] font-display font-black uppercase tracking-widest text-black dark:text-white px-4">
+                 Python • Architecture • Cloud • Design • Python • Architecture • Cloud • Design •
+             </span>
+        </div>
+    </div>
+</section>
+<style>
+    .text-stroke-light { -webkit-text-stroke: 1px rgba(0,0,0,0.1); color: transparent; }
+    .text-stroke-dark { -webkit-text-stroke: 1px rgba(255,255,255,0.1); color: transparent; }
+    .fade-mask { mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
+    
+    /* SCULPTURAL TYPOGRAPHY */
+    .text-monument {
+        color: #1a1a1a; /* Off-black for dark depth */
+        text-shadow: 
+            -1px -1px 1px rgba(255,255,255,0.1), /* Top-Left Highlight */
+            1px 1px 0px rgba(0,0,0,0.1),         /* Depth Layer 1 */
+            2px 2px 0px rgba(0,0,0,0.05),        /* Depth Layer 2 */
+            0px 10px 30px rgba(0,0,0,0.2);       /* Ambient Shadow */
+        will-change: transform, opacity, text-shadow;
+    }
+    .dark .text-monument {
+        color: #f0f0f0; /* Off-white */
+        text-shadow: 
+            -1px -1px 1px rgba(255,255,255,0.2), 
+            1px 1px 0px rgba(0,0,0,0.5),
+            2px 2px 0px rgba(0,0,0,0.3),
+            0px 10px 30px rgba(0,0,0,0.5);
+    }
+</style>
+<section class="pb-24 pt-24 px-6 md:px-12 lg:px-24" id="work">
+<div class="mb-20">
+<div class="mb-20">
+    <div class="reveal-mask">
+        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase mb-6 text-black dark:text-white">
+            Selected<br/>Works
+        </h2>
+    </div>
+<div class="flex items-center justify-between border-t border-black/10 dark:border-white/10 pt-4">
+<div class="h-px bg-black dark:bg-white w-full mr-4 opacity-10 project-divider"></div>
+<div class="text-right">
+<span class="block font-display text-xl text-gray-400 dark:text-gray-500">01 —</span>
+<span class="block font-display text-xl text-gray-400 dark:text-gray-500">04</span>
+</div>
+</div>
+</div>
+<div id="work-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-4 lg:gap-8 items-start">
+<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform -rotate-1 transition-all duration-300 cursor-pointer" 
+    data-title="APDATE" 
+    data-desc="A smart productivity application deployed on the Google Play Store. Built to transform user intent into structured actions through carefully designed system logic and performance-focused engineering." 
+    data-image="images/project_apdate.svg"
+    data-github="https://play.google.com/store/apps/details?id=com.apdate.apdate&pcampaignid=web_share">
+    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
+    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
+            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_apdate.svg"/>
+        </div>
+        <div class="px-2">
+            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
+                <span>Intelligent Productivity App</span>
+            </div>
+            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">APDATE</h3>
+            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">A smart productivity application deployed on the Google Play Store.</p>
+            <div class="flex justify-end">
+                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <span class="material-icons-outlined text-xs">north_east</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform rotate-2 md:mt-12 transition-all duration-300 cursor-pointer"
+    data-title="TRACKMANIA_AI"
+    data-desc="An experimental automation project exploring real-time interaction and decision-based system design. Built as a creative engineering challenge focused on behavior and structure."
+    data-image="images/project_trackmania.svg"
+    data-github="https://github.com/adarsh832">
+    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
+    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
+            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_trackmania.svg"/>
+        </div>
+        <div class="px-2">
+            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
+                <span>Automation & System Experiment</span>
+            </div>
+            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">TRACKMANIA_AI</h3>
+            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">An experimental automation project exploring real-time interaction.</p>
+            <div class="flex justify-end">
+                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <span class="material-icons-outlined text-xs">north_east</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform -rotate-1 transition-all duration-300 cursor-pointer"
+    data-title="GEMINI LINUX ASSISTANT"
+    data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
+    data-image="images/project_gemini.svg"
+    data-github="https://github.com/adarsh832">
+    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
+    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
+            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_gemini.svg"/>
+        </div>
+        <div class="px-2">
+            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
+                <span>Developer Automation Tool</span>
+            </div>
+            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">GEMINI<br/>LINUX ASSISTANT</h3>
+            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">A command-line assistant that converts natural language into executable system commands.</p>
+            <div class="flex justify-end">
+                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <span class="material-icons-outlined text-xs">north_east</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="relative aspect-[3/4] bg-transparent border border-dashed border-gray-400 dark:border-gray-600 p-8 flex flex-col justify-center items-center text-center hover:bg-white/50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="space-y-2">
+<h3 class="font-display text-2xl uppercase text-black dark:text-white">Archive</h3>
+<p class="text-[0.5rem] uppercase tracking-[0.3em] text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">View All Projects</p>
+</div>
+</div>
+</div>
+</section>
+
+    <!-- PROJECT DETAIL MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-[100] bg-white dark:bg-black text-black dark:text-white flex justify-center items-center pointer-events-none opacity-0">
+        <div class="absolute inset-0 bg-gray-100 dark:bg-neutral-900 opacity-90 backdrop-blur-xl"></div>
+        
+        <!-- Close Button -->
+        <button id="close-modal-btn" class="absolute top-8 right-8 w-12 h-12 flex justify-center items-center rounded-full border border-black/10 dark:border-white/10 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all z-20">
+            <span class="material-icons-outlined">close</span>
+        </button>
+
+        <div class="relative z-10 w-full max-w-5xl p-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+             <!-- Image -->
+             <div class="aspect-[4/3] bg-gray-200 overflow-hidden shadow-2xl relative group">
+                <img id="modal-image" src="" alt="Project Detail" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+             </div>
+
+             <!-- Content -->
+             <div class="space-y-8">
+                 <h2 id="modal-title" class="font-display text-5xl md:text-7xl uppercase leading-none"></h2>
+                 <p id="modal-desc" class="text-lg md:text-xl font-light text-gray-500 max-w-md"></p>
+                 
+                 <a id="modal-github" href="#" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-black dark:bg-white text-white dark:text-black uppercase tracking-widest text-xs font-bold hover:gap-6 transition-all duration-300">
+                    <span>Visit Github</span>
+                    <span class="material-icons-outlined text-sm">arrow_forward</span>
+                 </a>
+             </div>
+        </div>
+    </div>
+<section class="bg-[#0b1b16] relative overflow-hidden text-white py-32 px-6" id="contact">
+    <div class="absolute inset-0 flex items-end justify-center pointer-events-none select-none z-0">
+        <h1 class="font-display text-[35vw] leading-none text-white opacity-[0.03] translate-y-[20%]">SHAH</h1>
+    </div>
+    
+    <!-- AUDIO VISUAL FRAME LAYER -->
+    <div id="contact-frame-layer" class="absolute inset-[30px] md:inset-[50px] pointer-events-none z-20 mix-blend-overlay">
+        <div id="cf-top" class="absolute top-0 left-0 w-full h-px bg-white/20 origin-left scale-x-0"></div>
+        <div id="cf-right" class="absolute top-0 right-0 w-px h-full bg-white/20 origin-top scale-y-0"></div>
+        <div id="cf-bottom" class="absolute bottom-0 left-0 w-full h-px bg-white/20 origin-left scale-x-0"></div>
+        <div id="cf-left" class="absolute top-0 left-0 w-px h-full bg-white/20 origin-top scale-y-0"></div>
+    </div>
+    
+    <!-- DEPTH OVERLAY -->
+    <div id="contact-depth-overlay" class="absolute inset-0 bg-black/40 pointer-events-none z-0 opacity-0 transition-opacity duration-1000"></div>
+<div class="relative z-10 max-w-4xl mx-auto text-center">
+<p class="text-[0.6rem] uppercase tracking-[0.4em] mb-10 text-gray-500 opacity-0">Start</p>
+<h2 class="rolling-text font-display text-5xl md:text-7xl lg:text-[80px] uppercase leading-[0.9] mb-4">
+                READY TO BUILD<br/>SOMETHING<br/>MEANINGFUL?
+            </h2>
+<p class="font-body text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">Let’s turn ideas into thoughtfully engineered digital products.</p>
+<button id="initiate-contact-btn" class="px-10 py-4 border border-white/20 hover:bg-white hover:text-primary transition-all duration-300 text-[10px] uppercase tracking-[0.2em] font-bold">
+                Initiate Collaboration
+            </button>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto mt-40 border-t border-white/5 pt-12 grid grid-cols-1 md:grid-cols-3 text-[10px] uppercase tracking-[0.3em] text-gray-500 gap-12">
+<div class="flex flex-col gap-4">
+<span class="text-white/30">Social</span>
+<div class="flex gap-6 text-white/70">
+<a class="hover:text-white transition-colors" href="https://www.linkedin.com/in/adarsh-shah-3b713122a">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="https://github.com/adarsh832">GitHub</a>
+<a class="hover:text-white transition-colors" href="https://play.google.com/store/apps/details?id=com.apdate.apdate&pcampaignid=web_share">Play Store</a>
+<a class="hover:text-white transition-colors" href="https://adarsh-shah.netlify.app/">Portfolio</a>
+</div>
+</div>
+<div class="flex flex-col gap-4 md:items-center">
+<span class="text-white/30">Location</span>
+<span class="text-white/70">Vadodara, Gujarat, India</span>
+</div>
+<div class="flex flex-col gap-4 md:items-end">
+<span class="text-white/30">Copyright</span>
+<span class="text-white/70">© 2026 Adarsh Shah</span>
+</div>
+</div>
+</section>
+
+    <!-- CINEMATIC CONTACT FORM MODAL -->
+    <div id="contact-form-modal" class="fixed inset-0 z-[100] flex justify-center items-center pointer-events-none" style="display: none;">
+        <!-- Backdrop -->
+        <div id="contact-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity"></div>
+        
+        <!-- Form Container -->
+        <div id="contact-form-card" class="relative bg-background-light dark:bg-card-dark w-full max-w-lg p-12 md:p-16 shadow-2xl rounded-lg opacity-0 transform translate-y-4 scale-[0.98]">
+            <!-- Close Button -->
+            <button id="close-contact-btn" class="absolute top-6 right-6 p-2 opacity-50 hover:opacity-100 transition-opacity">
+                <span class="material-icons-outlined text-primary dark:text-background-light text-lg">close</span>
+            </button>
+
+            <!-- Content -->
+            <div class="space-y-12">
+                <!-- Header -->
+                <div class="space-y-6 text-center">
+                    <h2 id="contact-title" class="font-display text-3xl md:text-4xl uppercase leading-tight text-primary dark:text-background-light opacity-0 translate-y-2">
+                        Let’s Build<br>Something Exceptional.
+                    </h2>
+                    <div id="contact-divider" class="h-px bg-primary/10 dark:bg-background-light/10 w-0 mx-auto"></div>
+                </div>
+
+                <!-- Fields -->
+                <form id="contact-form" class="space-y-8" action="https://formspree.io/f/xnjbqnlp" method="POST">
+                    <!-- Name Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <input type="text" id="input-name" name="name" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-primary dark:text-background-light focus:outline-none focus:border-primary dark:focus:border-background-light transition-colors placeholder-transparent font-body text-sm"
+                            placeholder="Name">
+                        <label for="input-name" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-primary dark:peer-focus:text-background-light peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-primary dark:peer-valid:text-background-light">
+                            Name
+                        </label>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <input type="email" id="input-email" name="email" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-primary dark:text-background-light focus:outline-none focus:border-primary dark:focus:border-background-light transition-colors placeholder-transparent font-body text-sm"
+                            placeholder="Email Address">
+                        <label for="input-email" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-primary dark:peer-focus:text-background-light peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-primary dark:peer-valid:text-background-light">
+                            Email Address
+                        </label>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <textarea id="input-message" name="message" rows="1" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-primary dark:text-background-light focus:outline-none focus:border-primary dark:focus:border-background-light transition-colors placeholder-transparent font-body text-sm resize-none"
+                            placeholder="Message"></textarea>
+                        <label for="input-message" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-primary dark:peer-focus:text-background-light peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-primary dark:peer-valid:text-background-light">
+                            Message
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="contact-input-group opacity-0 pt-4 flex justify-center">
+                        <button type="submit" class="px-8 py-3 bg-primary dark:bg-background-light text-white dark:text-primary uppercase text-[10px] tracking-[0.25em] font-bold hover:opacity-90 transition-opacity rounded-sm">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success Message (Ajax) -->
+                <div id="contact-success" class="hidden text-center space-y-6 py-12">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 mb-4 border border-green-200 dark:border-green-800">
+                        <span class="material-icons-outlined text-green-600 dark:text-green-400 text-4xl">check</span>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl uppercase text-primary dark:text-background-light mb-2">Message Transmitted</h3>
+                        <p class="font-body text-sm text-gray-500">We will establish connection shortly.</p>
+                    </div>
+                    <button onclick="resetForm()" class="text-[10px] uppercase tracking-widest text-black dark:text-white border-b border-black dark:border-white hover:opacity-50 transition-opacity">
+                        Send Another Signal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-        const tl = gsap.timeline({
-            onComplete: () => {
-                window.location.href = 'home.html';
+        // --- 1. CONFIGURATION & UTILS ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // CINEMATIC SCROLL CONFIG
+        const SCENE_CONFIG = {
+            scrub: 1.5, // Heavy, weighted scroll
+            ease: "power2.out"
+        };
+
+        // Custom Cursor Logic (Preserved)
+        const cursor = document.getElementById('cursor-dot');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Hover Effects (Preserved)
+        const interactiveElements = document.querySelectorAll('a, button, .group');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+                cursor.style.opacity = '0.5';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '8px';
+                cursor.style.height = '8px';
+                cursor.style.opacity = '1';
+            });
+        });
+
+        // --- 2. MENU LOGIC (Preserved) ---
+        const menuBtn = document.getElementById('menu-btn');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                menuOverlay.classList.add('open');
+                line1.style.transform = "translateY(7px) rotate(45deg)";
+                line2.style.opacity = "0";
+                line3.style.transform = "translateY(-7px) rotate(-45deg)";
+                gsap.to(menuLinks, { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "expo.out", delay: 0.4 });
+            } else {
+                menuOverlay.classList.remove('open');
+                line1.style.transform = "none";
+                line2.style.opacity = "1";
+                line3.style.transform = "none";
+                gsap.to(menuLinks, { y: 20, opacity: 0, duration: 0.3, overwrite: true });
+            }
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+
+
+        // --- 3. SCENE 1 & 2: HERO -> IDENTITY (Horizontal Chapter Shift) ---
+        // Setup initial positions for "Chapter 2"
+        // --- CINEMATIC ID CARD CONFIG ---
+        // Initial "Suspended" drops state
+        // 1. Card State
+        gsap.set("#id-card", { 
+            x: 50,          
+            y: -120,        
+            rotation: 15,   
+            opacity: 0,
+            transformOrigin: "50% -100px", // Pivot from string top
+            force3D: true, // Hardware acceleration
+            rotationZ: 15 // Ensure Z axis rotation
+        });
+
+        // 2. String State (Syncs with Card)
+        gsap.set("#id-card-string", {
+            x: 50,
+            y: -120, // Moves with the system
+            rotation: 15,
+            opacity: 0,
+            transformOrigin: "top center", // Pivots at its own top
+            force3D: true,
+            rotationZ: 15
+        });
+        
+        // Helper to animate both as a rigid body
+        const physicsObj = ["#id-card", "#id-card-string"];
+
+        let idCardEntered = false;
+        function playIdCardEntry() {
+            if (idCardEntered) return;
+            idCardEntered = true;
+
+            const tl = gsap.timeline();
+
+            // 1. GRAVITY FALL (Both drop together)
+            tl.to(physicsObj, {
+                y: 0,
+                x: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.inOut", // "Decelerates naturally as it approaches"
+            })
+            // 2. SWING PHASE (Synced Oscillation)
+            // First swing wider
+            .to(physicsObj, {
+                rotation: -6,  
+                rotationZ: -6,
+                duration: 0.5,
+                ease: "power1.inOut" // Natural harmonic turn
+            })
+            .to(physicsObj, {
+                rotation: 3,   
+                rotationZ: 3,
+                duration: 0.5,
+                ease: "power1.inOut"
+            })
+            .to(physicsObj, {
+                rotation: -1.5,
+                rotationZ: -1.5, 
+                duration: 0.5,
+                ease: "power1.inOut"
+            })
+            .to(physicsObj, {
+                rotation: 0.5,
+                rotationZ: 0.5, 
+                duration: 0.5,
+                ease: "power1.inOut"
+            })
+            // 3. SETTLE
+            .to(physicsObj, {
+                rotation: 0,   
+                rotationZ: 0,
+                duration: 0.8,
+                ease: "power1.out"
+            });
+        }
+
+        gsap.set(".reveal-text", { x: 200 }); // Text lags behind card
+
+        const chapterTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#chapter-wrapper",
+                start: "top top",
+                end: "+=150%", // Scroll distance to complete pan
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1
             }
         });
 
-        tl.to(".logo-text", {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power4.out"
-        })
-        .to(".progress-bar-container", {
-            opacity: 1,
-            duration: 0.5
-        }, "-=0.5")
-        .to(".loading-text", {
-            opacity: 1,
-            duration: 0.5
-        }, "-=0.5")
-        .to(".progress-bar", {
-            width: "100%",
-            duration: 2,
-            ease: "power2.inOut"
-        })
-        .to(".loading-text", {
-            opacity: 0,
-            duration: 0.3
-        }, "-=0.5")
-        .to(".progress-bar-container", {
-            height: 0,
-            opacity: 0,
-            duration: 0.5,
-            ease: "power2.inOut"
-        })
-        .to(".logo-text", {
-            scale: 1.5,
-            opacity: 0,
-            filter: "blur(10px)",
-            duration: 0.8,
-            ease: "power2.in"
+        chapterTL
+            // 1. Pan Camera Left
+            .to("#chapter-wrapper", { 
+                xPercent: -50, // Move 50% of 200vw = 100vw
+                ease: "none" // Linear movement driven by scroll
+            })
+            // 2. Hero Exit Effects (Concurrent)
+            .to("#hero-content-wrapper", { 
+                scale: 0.9, 
+                opacity: 0, 
+                x: -100, 
+                duration: 0.5 
+            }, 0) // Start at time 0
+            .to(["#hero-footer", "#scroll-indicator"], { // Include scroll indicator in exit
+                opacity: 0,
+                duration: 0.3 // Disappear quickly on scroll
+            }, 0)
+            // 3. About Entry Effects (Concurrent, slight delay for parallax)
+            .call(playIdCardEntry, null, 0.5) // Trigger Cinematic Entry upon arrival
+            .to(".reveal-text", {
+                x: 0,
+                y: 0, // Ensure vertical reveal works too
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 0.3); // Text follows card
+
+        
+        // --- HERO INTERACTION (Cinematic Hover) ---
+        const heroSection = document.querySelector('#hero-scene');
+        const heroTitleText = document.querySelector('#hero-title');
+
+        if (heroSection && heroTitleText) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                // Reverse Parallax: Moves opposite to cursor (Weighty)
+                gsap.to(heroTitleText, {
+                    x: -x * 20, // Max 10px shift
+                    y: -y * 20,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    overwrite: "auto" // Allow scroll override
+                });
+
+                // Grid Micro-Parallax (Technical depth)
+                // Moves slightly slower than text for depth separation
+                gsap.to('#global-grid-layer', {
+                    x: -x * 10,
+                    y: -y * 10,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    overwrite: "auto"
+                });
+
+                // Icon Parallax (Layered Depth)
+                // Foreground moves faster, Background (blurred) moves slower
+                gsap.utils.toArray('.hero-icon').forEach(icon => {
+                    const speed = icon.classList.contains('icon-blur') ? 5 : 15;
+                    const xMove = icon.classList.contains('icon-pos-2') ? x * speed : -x * speed; // Varied direction
+                    
+                    gsap.to(icon, {
+                        x: xMove,
+                        y: -y * speed,
+                        duration: 2.0,
+                        ease: "power2.out",
+                        overwrite: "auto"
+                    });
+                });
+            });
+            
+            // --- CINEMATIC ENTRY SEQUENCE ---
+            // Use 'fromTo' to guarantee initial state and avoid conflict
+            const heroEntryTL = gsap.timeline({ delay: 0.5 }); 
+            
+            // 1. Grid Fades In (Structure first)
+            heroEntryTL.to('#global-grid-layer', {
+                opacity: 1, 
+                duration: 2.0,
+                ease: "power2.inOut"
+            })
+            // 2. Borders Draw In (Technical Reveal)
+            .fromTo('#hero-frame', 
+                { clipPath: "inset(0 50% 0 50%)", opacity: 0 }, 
+                { clipPath: "inset(0 0 0 0)", opacity: 1, duration: 1.5, ease: "expo.out" },
+                "-=1.5"
+            )
+            // 3. Hero Text Emergence (Signature)
+            .fromTo('#hero-title', 
+                { opacity: 0, z: -50, color: "#050505" }, // Start: Deep, Dark, Invisible
+                { 
+                    opacity: 1, 
+                    z: 0, 
+                    color: "#1a1a1a", // Stage 2 color
+                    duration: 2.5, // Slow emergence
+                    ease: "power3.out"
+                },
+                "-=1.0"
+            )
+            // 4. Light Reveal (Subtle Color/Highlight Shift)
+            .to('#hero-title', { 
+                color: "#111", // Final sharp color
+                textShadow: "-1px -1px 1px rgba(255,255,255,0.1), 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05), 0px 10px 30px rgba(0,0,0,0.2)",
+                duration: 2.0, 
+                ease: "power2.inOut" 
+            }, "-=1.5")
+            // 5. Icons Materialize (Technical Spacing)
+            .to('.hero-icon', {
+                opacity: 1,
+                y: "-=5", // Slight drift up
+                stagger: 0.2, // Sequential
+                duration: 2.0,
+                ease: "power2.out"
+            }, "-=2.0");
+
+            // --- FLOATING ICON LOOPS (Atmospheric) ---
+            document.querySelectorAll('.hero-icon').forEach((icon) => {
+                // Randomize float params for organic technical feel
+                const duration = 3 + Math.random() * 2; // 3-5s
+                const yDist = 5 + Math.random() * 5; // 5-10px
+                const delay = Math.random() * 2;
+
+                gsap.to(icon, {
+                    y: `+=${yDist}`,
+                    duration: duration,
+                    yoyo: true,
+                    repeat: -1,
+                    ease: "sine.inOut",
+                    delay: delay
+                });
+            });
+
+            // --- SCROLL INDICATOR REVEAL ---
+            gsap.to('#scroll-indicator', {
+                opacity: 1,
+                duration: 2.0,
+                delay: 2.5, // Appears late, after text settles
+                ease: "power2.out"
+            });
+            
+            // --- SCROLL CURSOR LOOP (Drafting Motion) ---
+            gsap.to('#scroll-cursor', {
+                y: 48, // Fall length (h-12 = 3rem = 48px approx, minus cursor height) ... actually relative % is safer
+                yPercent: 600, // 48px container / 8px cursor = 600% movement
+                duration: 2.0,
+                ease: "power2.inOut",
+                repeat: -1,
+                repeatDelay: 0.5
+            });
+        }
+
+
+
+        // --- 5. SCENE 3: WORK (The Pinned Gallery) ---
+        // Cards enter with "Museum Weight" + Pinned Logic
+        const workGroups = gsap.utils.toArray("#work .group");
+        
+        // Master Timeline for Sequential Pinning
+        // Master Timeline for Sequential Pinning
+        const galleryTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#work", // Pin the entire section
+                start: "top top", // Start when section hits top of viewport
+                end: "+=150%", // Reduced scroll distance for faster pinning
+                scrub: 0.5, // Tighter scrub for snappier feel
+                pin: true, // Lock in place
+                anticipatePin: 1
+            }
         });
+
+        // --- INTERACTIVE SYSTEM NODES (Logic) ---
+        const icons = document.querySelectorAll('.hero-icon');
+        let activeIcon = null;
+
+        function closePanel(icon) {
+            if (!icon) return;
+            const panel = icon.querySelector('.micro-panel');
+            
+            // Animate Out
+            gsap.to(panel, {
+                autoAlpha: 0,
+                y: 0, // Return to center/down
+                duration: 0.3,
+                ease: "power2.in"
+            });
+            
+            // Reset Icon State
+            icon.classList.remove('active');
+        }
+
+        function openPanel(icon) {
+            const panel = icon.querySelector('.micro-panel');
+            
+            // Animate In
+            gsap.to(panel, {
+                autoAlpha: 1,
+                y: -6, // Slide up slightly
+                duration: 0.4,
+                ease: "power2.out"
+            });
+            
+            // Set Icon State
+            icon.classList.add('active');
+        }
+
+        function updateFocusMode(newActiveIcon) {
+            // Dim others
+            icons.forEach(icon => {
+                if (icon === newActiveIcon) {
+                    icon.classList.remove('dimmed');
+                } else {
+                    if (newActiveIcon) {
+                        icon.classList.add('dimmed');
+                    } else {
+                        icon.classList.remove('dimmed');
+                    }
+                }
+            });
+        }
+
+        icons.forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                // Close previous if any (though hover usually means only one at a time)
+                if (activeIcon && activeIcon !== icon) closePanel(activeIcon);
+                
+                // Open new
+                openPanel(icon);
+                activeIcon = icon;
+                updateFocusMode(icon);
+            });
+
+            icon.addEventListener('mouseleave', () => {
+                // Close current
+                closePanel(icon);
+                activeIcon = null;
+                updateFocusMode(null);
+            });
+        });
+
+        // Global Click to Dismiss (Backup, though hover mostly handles it)
+        // Removed as hover handles exit naturally
+
+        // Initial setup: Hide all cards first
+        gsap.set(workGroups, { y: 100, opacity: 0, scale: 0.9, rotation: 10 });
+
+        workGroups.forEach((group, i) => {
+            const cardContent = group.querySelector('.card-content');
+            const pinHead = group.querySelector('.pin-head');
+            
+            // Sequential Reveal Timeline
+            // We use 'add' to place them in sequence on the scrub timeline
+            
+            if (cardContent && pinHead) {
+                // Pin Project Card sequence
+                const tl = gsap.timeline();
+                
+                tl.to(group, { 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    rotation: i % 2 === 0 ? -2 : 2, // Slight random tilt
+                    duration: 1, 
+                    ease: "power3.out" 
+                })
+                .fromTo(pinHead, 
+                    { y: -300, opacity: 0, scale: 3 },
+                    { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "bounce.out" },
+                    "-=0.4"
+                );
+
+                galleryTimeline.add(tl, `card${i}`);
+                
+            } else {
+                // Archive / View All Card
+                galleryTimeline.to(group, { 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1, 
+                    rotation: 0,
+                    duration: 1, 
+                    ease: "power2.out" 
+                }, "-=0.2");
+            }
+            
+            // Add a pause/spacer after each card so user can appreciate it
+            galleryTimeline.to({}, { duration: 0.5 });
+        });
+
+        // Scene Exit: Drift off-axis
+        /* REMOVED: Caused conflict with last card
+        gsap.to("#work-grid", {
+           ...
+        });
+        */
+
+
+        // --- 6. SCENE 4: CONTACT (Resolution) ---
+        // Background Shift (REMOVED to keep original palette)
+        /*
+        gsap.to("body", {
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 60%",
+                end: "top 20%",
+                scrub: 1
+            },
+            backgroundColor: "#0b1b16", 
+            color: "white" 
+        });
+        */
+
+        // Hero Static Frame Entry
+        gsap.from("#contact h2", {
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 70%",
+                end: "top 40%",
+                scrub: 1
+            },
+            scale: 0.9,
+            opacity: 0
+        });
+        
+        // Button Final Reveal (Visual Silence -> Action)
+        gsap.from("#contact button", {
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "center 60%",
+                scrub: false // Snap reveal
+            },
+            opacity: 0,
+            duration: 1.5,
+            ease: "power2.out"
+        });
+
+        // --- PRE-INIT DARK MODE LOGIC ---
+        // Verify current state on load
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // --- THEME TOGGLE LOGIC ---
+        const themeToogleBtn = document.getElementById('theme-toggle');
+        
+        function toggleTheme() {
+            // Toggle Class
+            const isNowDark = !document.documentElement.classList.contains('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+
+            // Animate Hero Text to match new theme
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle) {
+                const targetColor = isNowDark ? "#f0f0f0" : "#1a1a1a";
+                const targetShadow = isNowDark 
+                    ? "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 0px rgba(0,0,0,0.5), 2px 2px 0px rgba(0,0,0,0.3), 0px 10px 30px rgba(0,0,0,0.5)" 
+                    : "-1px -1px 1px rgba(255,255,255,0.1), 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05), 0px 10px 30px rgba(0,0,0,0.2)";
+                
+                gsap.to(heroTitle, {
+                    color: targetColor,
+                    textShadow: targetShadow,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            }
+        }
+
+        if (themeToogleBtn) {
+            themeToogleBtn.addEventListener('click', toggleTheme);
+        }
+
+        // --- CINEMATIC CONTACT FRAME (Compositional Boundary) ---
+        const contactFrameTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 60%", // Starts as section enters focus
+                toggleActions: "play reverse play reverse" // Fade in/out naturally
+            }
+        });
+
+        // 1. Top Border Draws (Left -> Right)
+        contactFrameTL
+            .to("#cf-top", { scaleX: 1, duration: 1.2, ease: "power2.inOut" })
+            
+            // 2. Side Borders Drop (Top -> Bottom) - Slight overlap
+            .to(["#cf-right", "#cf-left"], { 
+                scaleY: 1, 
+                duration: 1.0, 
+                ease: "power2.out",
+                stagger: 0.2 
+            }, "-=0.4")
+            
+            // 3. Bottom Border Completes (Left -> Right to close loop)
+            .to("#cf-bottom", { 
+                scaleX: 1, 
+                duration: 1.2, 
+                ease: "power2.out" 
+            }, "-=0.6")
+
+            // 4. Atmosphere Shift (Depth & Focus)
+            .to("#contact-depth-overlay", { opacity: 1, duration: 1.5 }, 0)
+            .to("#initiate-contact-btn", { 
+                filter: "contrast(110%) drop-shadow(0 0 10px rgba(255,255,255,0.2))", // Subtle "Hot" Focus
+                duration: 1.5 
+            }, 0.5);
+
+        // --- 7. ROLLING TEXT ANIMATION ---
+        function initRollingText() {
+            const rollingElements = document.querySelectorAll('.rolling-text');
+            
+            rollingElements.forEach(el => {
+                const originalContent = el.innerHTML;
+                const lines = originalContent.split(/<br\s*\/?>/i);
+                
+                el.innerHTML = ''; // Clear container
+                
+                const allChars = []; // Store all char elements for staggering
+
+                lines.forEach((lineContent, lineIndex) => {
+                    const cleanLine = lineContent.trim();
+                    if (!cleanLine) return;
+
+                    const lineWrapper = document.createElement('div');
+                    lineWrapper.className = 'roll-line';
+                    
+                    // Split into words to preserve spacing structure
+                    const words = cleanLine.split(/\s+/);
+                    
+                    words.forEach((word, wordIndex) => {
+                        const wordWrapper = document.createElement('span');
+                        wordWrapper.className = 'roll-word';
+                        
+                        // Split word into characters
+                        const chars = word.split('');
+                        
+                        chars.forEach(char => {
+                            const charWrapper = document.createElement('span');
+                            charWrapper.className = 'roll-char';
+                            
+                            const inner = document.createElement('span');
+                            inner.className = 'roll-inner';
+                            
+                            const text1 = document.createElement('span');
+                            text1.className = 'roll-text';
+                            text1.innerHTML = char;
+                            
+                            const text2 = document.createElement('span');
+                            text2.className = 'roll-text absolute top-full left-0 w-full';
+                            text2.innerHTML = char;
+                            text2.ariaHidden = "true";
+
+                            inner.appendChild(text1);
+                            inner.appendChild(text2);
+                            charWrapper.appendChild(inner);
+                            wordWrapper.appendChild(charWrapper);
+                            
+                            allChars.push(inner);
+                        });
+                        
+                        lineWrapper.appendChild(wordWrapper);
+                    });
+                    
+                    el.appendChild(lineWrapper);
+                });
+
+                // Hover Interaction
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(allChars, {
+                        y: "-100%",
+                        duration: 0.6,
+                        stagger: 0.02,
+                        ease: "power3.inOut"
+                    });
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(allChars, {
+                        y: "0%",
+                        duration: 0.6,
+                        stagger: {
+                            each: 0.02,
+                            from: "end" // Reverse stagger on exit
+                        },
+                        ease: "power3.inOut"
+                    });
+                });
+            });
+        }
+        
+        // Initialize after DOM load
+        initRollingText();
+
+        // --- 8. PROJECT MODAL LOGIC ---
+        const modal = document.getElementById('project-modal');
+        const modalImg = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalGithub = document.getElementById('modal-github');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        let isModalOpen = false;
+
+        function openModal(card) {
+            if (isModalOpen) return;
+            isModalOpen = true;
+
+            // 1. Populate Data
+            modalImg.src = card.dataset.image;
+            modalTitle.innerText = card.dataset.title;
+            // Split title for rolling effect if we wanted, but clean text is fine
+            modalDesc.innerText = card.dataset.desc;
+            modalGithub.href = card.dataset.github;
+
+            // 2. Activate Modal
+            modal.style.pointerEvents = "auto";
+            modal.style.opacity = "1"; // Ensure visibility for clip-path
+            modal.classList.add('open'); // Trigger CSS clip-path transition
+
+            // 3. Animate Content (Pop in)
+            gsap.fromTo([modalImg, modalTitle, modalDesc, modalGithub], 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.3, ease: "power2.out" }
+            );
+
+            // Hide body scroll
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            if (!isModalOpen) return;
+            isModalOpen = false;
+
+            modal.classList.remove('open');
+            modal.style.pointerEvents = "none";
+            
+            // Allow exit transition to finish before hiding fully
+            setTimeout(() => {
+                modal.style.opacity = "0";
+                document.body.style.overflow = "";
+            }, 800);
+        }
+
+        // Attach listeners to Project Cards
+        document.querySelectorAll('#work .group[data-title]').forEach(card => {
+            card.addEventListener('click', () => openModal(card));
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // --- 9. CINEMATIC CONTACT FORM LOGIC ---
+        const contactBtn = document.getElementById('initiate-contact-btn');
+        const contactModal = document.getElementById('contact-form-modal');
+        const contactBackdrop = document.getElementById('contact-backdrop');
+        const contactCard = document.getElementById('contact-form-card');
+        const closeContactBtn = document.getElementById('close-contact-btn');
+        const contactTitle = document.getElementById('contact-title');
+        const contactDivider = document.getElementById('contact-divider');
+        const contactInputs = document.querySelectorAll('.contact-input-group'); // Includes button
+        
+        let isContactOpen = false;
+
+        // Timeline for Contact Modal
+        const contactTL = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+
+        // Build Timeline once
+        contactTL
+            .set(contactModal, { display: "flex" })
+            .to(contactBackdrop, { opacity: 1, duration: 0.5 })
+            .to(contactCard, { 
+                y: 0, 
+                opacity: 1, 
+                scale: 1, 
+                duration: 0.6, 
+                ease: "power2.out" 
+            }, "-=0.3")
+            .to(contactTitle, { y: 0, opacity: 1, duration: 0.5 }, "-=0.2")
+            .to(contactDivider, { width: "100%", duration: 0.6, ease: "expo.out" }, "-=0.3")
+            .to(contactInputs, { 
+                y: 0, 
+                opacity: 1, 
+                stagger: 0.1, 
+                duration: 0.5 
+            }, "-=0.4");
+
+        function openContact() {
+            if (isContactOpen) return;
+            isContactOpen = true;
+            
+            // Button Press Effect
+            gsap.to(contactBtn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
+
+            contactModal.style.pointerEvents = "auto";
+            document.body.style.overflow = "hidden"; // Lock scroll
+            contactTL.play();
+        }
+
+        function closeContact() {
+            if (!isContactOpen) return;
+            isContactOpen = false;
+
+            contactModal.style.pointerEvents = "none";
+            document.body.style.overflow = ""; // Unlock scroll
+            contactTL.reverse();
+        }
+
+        if (contactBtn) {
+            contactBtn.addEventListener('click', openContact);
+        }
+        
+        if (closeContactBtn) {
+            closeContactBtn.addEventListener('click', closeContact);
+        }
+
+        // Close on backdrop click
+        contactBackdrop.addEventListener('click', closeContact);
+
+        // Input Micro-interactions (Float Label fix via JS support or just CSS)
+        // CSS 'peer' classes handle most. We add a visual 'active' check for pre-filled data if needed.
+        // But the CSS peer-placeholder-shown handles empty state well.
+
+        // --- 10. ID CARD PHYSICS (Swinging Interaction) ---
+        const idCard = document.getElementById('id-card');
+        const idCardString = document.getElementById('id-card-string');
+        const idCardContainer = idCard ? idCard.parentElement : null;
+
+        if (idCard && idCardContainer) {
+            // Set pivot point (Already set in init, but safe to redundantly ensure if needed, though init handles it)
+            // Note: We animate BOTH string and card on mousemove for physics consistency
+            
+            idCardContainer.addEventListener('mousemove', (e) => {
+                const rect = idCardContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate Normalized Coordinates (-1 to 1)
+                const xPct = (x / rect.width - 0.5) * 2;
+                const yPct = (y / rect.height - 0.5) * 2;
+
+                // Apply Physics Rotation to BOTH
+                const targetRotX = -yPct * 6;
+                const targetRotY = xPct * 6;
+
+                gsap.to([idCard, idCardString], {
+                    rotationX: targetRotX, 
+                    rotationY: targetRotY,
+                    duration: 2, // Heavy Inertia
+                    ease: "power2.out"
+                });
+            });
+
+            idCardContainer.addEventListener('mouseleave', () => {
+                // Return to Rest
+                gsap.to([idCard, idCardString], {
+                    rotationX: 0,
+                    rotationY: 0,
+                    duration: 2.5, 
+                    ease: "power2.out"
+                });
+            });
+        }
+
+        // --- 11. ATMOSPHERIC HERO PARALLAX ---
+        const heroScene = document.getElementById('hero-scene');
+        const heroBg = document.getElementById('hero-bg-layer');
+        const heroNoise = document.getElementById('hero-noise-layer');
+        const heroFirst = document.getElementById('hero-first');
+        const heroLast = document.getElementById('hero-last');
+
+        if (heroScene) {
+            heroScene.addEventListener('mousemove', (e) => {
+                const rect = heroScene.getBoundingClientRect();
+                // Normalized coordinates (-0.5 to 0.5)
+                const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+                const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+
+                // 1. Background Blobs (Deepest) - Moves WITH cursor, very slow
+                gsap.to(heroBg, {
+                    x: xPct * 30, // Max 15px shift
+                    y: yPct * 30,
+                    duration: 1.5,
+                    ease: "power2.out"
+                });
+
+                // 2. Mid Layer (Noise) - Moves slightly faster
+                gsap.to(heroNoise, {
+                    x: xPct * 40,
+                    y: yPct * 40,
+                    duration: 1.2,
+                    ease: "power2.out"
+                });
+
+                // 3. Foreground Text - Moves AGAINST cursor (Parallax depth)
+                // Split movement for extra dimensionality
+                gsap.to(heroFirst, {
+                    x: -xPct * 12, // Max 6px shift
+                    y: -yPct * 12,
+                    duration: 1.0,
+                    ease: "power2.out"
+                });
+
+                gsap.to(heroLast, {
+                    x: -xPct * 8, // Moves slower than First name -> separation
+                    y: -yPct * 8,
+                    duration: 1.0,
+                    ease: "power2.out"
+                });
+
+                // 4. Interactive Lighting (Moving Shadow)
+                // Shadows move OPPOSITE to light source. 
+                // If cursor is Top-Left (-0.5, -0.5), Shadows should go Bottom-Right.
+                // We shift the 'depth' shadows slightly to simulate light angle change.
+                const shadowX = -xPct * 4; 
+                const shadowY = -yPct * 4;
+                
+                // Construct dynamic shadow string based on base CSS, adding the offset
+                // Base: -1px -1px (Highlight), 1px 1px (Depth 1), 2px 2px (Depth 2), Ambient
+                const highlightX = -1 + (xPct * 2); 
+                const highlightY = -1 + (yPct * 2);
+                
+                const title = document.getElementById('hero-title');
+                if (title) {
+                    gsap.to(title, {
+                        textShadow: `
+                            ${highlightX}px ${highlightY}px 1px rgba(255,255,255,0.1),
+                            ${1 + shadowX}px ${1 + shadowY}px 0px rgba(0,0,0,0.1),
+                            ${2 + shadowX}px ${2 + shadowY}px 0px rgba(0,0,0,0.05),
+                            ${shadowX * 2}px ${10 + shadowY * 2}px 30px rgba(0,0,0,0.2)
+                        `,
+                        duration: 0.5,
+                        ease: "power1.out"
+                    });
+                }
+            });
+
+            heroScene.addEventListener('mouseleave', () => {
+                // Return to neutral center
+                gsap.to([heroBg, heroNoise, heroFirst, heroLast], {
+                    x: 0,
+                    y: 0,
+                    duration: 1.5,
+                    ease: "power2.out"
+                });
+                
+                // Return Text Shadow to neutral
+                const title = document.getElementById('hero-title');
+                if (title) {
+                    gsap.to(title, {
+                        textShadow: `
+                            -1px -1px 1px rgba(255,255,255,0.1),
+                            1px 1px 0px rgba(0,0,0,0.1),
+                            2px 2px 0px rgba(0,0,0,0.05),
+                            0px 10px 30px rgba(0,0,0,0.2)
+                        `,
+                        duration: 1.5,
+                        ease: "power2.out"
+                    });
+                }
+            });
+            
+            // --- CINEMATIC ENTRY SEQUENCE ---
+            // Use 'fromTo' to guarantee initial state and avoid conflict
+            const heroEntryTL = gsap.timeline({ delay: 1.0 }); // Stage 1: Extended Stillness (1s)
+            
+            // Determine Colors based on Dark Mode
+            const isDark = document.documentElement.classList.contains('dark');
+            const startColor = isDark ? "#555555" : "#050505"; // Invisible state
+            const endColor = isDark ? "#f0f0f0" : "#1a1a1a";   // Final monument color
+            
+            // Stage 2: Deep Emergence (Slower, heavier)
+            heroEntryTL.fromTo('#hero-title', 
+                { opacity: 0, z: -50, color: startColor }, // Start: Deep, Dark/Dim
+                { 
+                    opacity: 1, 
+                    z: 0, 
+                    color: endColor, // Stage 2 color
+                    duration: 2.5, // Slow emergence
+                    ease: "power3.out"
+                }
+            )
+            // Stage 3: Light Reveal (Subtle Color/Highlight Shift)
+            .to('#hero-title', { 
+                color: endColor, // Ensure it stays correct
+                textShadow: isDark 
+                    ? "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 0px rgba(0,0,0,0.5), 2px 2px 0px rgba(0,0,0,0.3), 0px 10px 30px rgba(0,0,0,0.5)" // Dark mode shadow
+                    : "-1px -1px 1px rgba(255,255,255,0.1), 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05), 0px 10px 30px rgba(0,0,0,0.2)", // Light mode shadow
+                duration: 2.0, 
+                ease: "power2.inOut" 
+            }, "-=1.0"); // Overlap slightly
+        }
+
+        // --- 12. TRANSITION BAND LOOP ---
+        // Continuous kinetic typography
+        gsap.to(".marquee-row-1", {
+            xPercent: -50, // Move left half way (since content is doubled)
+            repeat: -1,
+            duration: 20, // Slow, controlled speed
+            ease: "none"
+        });
+
+        gsap.to(".marquee-row-2", {
+            xPercent: -50, // Move left (can inverse if set via CSS start)
+            // Ideally we want right->left. Let's start at -50% and go to 0 for reverse feel?
+            // Actually, simply reversing the direction:
+            startAt: { xPercent: -50 },
+            xPercent: 0, 
+            repeat: -1,
+            duration: 20,
+            ease: "none"
+        });
+
+        // --- 9. CONTACT FORM AJAX HANDLER ---
+        const contactForm = document.getElementById('contact-form');
+        const contactSuccess = document.getElementById('contact-success');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(contactForm);
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerText;
+                
+                // Loading State
+                submitBtn.disabled = true;
+                submitBtn.innerText = "TRANSMITTING...";
+                submitBtn.style.opacity = "0.7";
+
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: contactForm.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Success Animation
+                        gsap.to(contactForm, {
+                            height: 0,
+                            opacity: 0,
+                            duration: 0.5,
+                            overflow: 'hidden',
+                            onComplete: () => {
+                                contactForm.classList.add('hidden');
+                                contactForm.style.height = 'auto'; // Reset for next time if needed
+                                contactForm.style.opacity = '1';
+                                
+                                contactSuccess.classList.remove('hidden');
+                                gsap.fromTo(contactSuccess, 
+                                    { opacity: 0, scale: 0.9 },
+                                    { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }
+                                );
+
+                                // AUTO-CLOSE LOGIC ADDED HERE
+                                setTimeout(() => {
+                                    if (contactTL) {
+                                        contactTL.reverse(); // Close Modal
+                                    }
+                                    
+                                    // Reset UI after modal is closed (delay matching reverse duration approx)
+                                    setTimeout(() => {
+                                        resetForm();
+                                    }, 1000); 
+                                }, 2500); // Wait 2.5s for user to read message
+                            }
+                        });
+                        
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Server returned ' + response.status);
+                    }
+                } catch (error) {
+                    console.error('Submission failed:', error);
+                    alert('Transmission failed. Please try again.');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.style.opacity = "1";
+                }
+            });
+        }
+
+        function resetForm() {
+            // Hide success, show form
+            gsap.to(contactSuccess, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    contactSuccess.classList.add('hidden');
+                    contactForm.classList.remove('hidden');
+                    gsap.fromTo(contactForm,
+                        { opacity: 0, height: 0 },
+                        { opacity: 1, height: 'auto', duration: 0.5 }
+                    );
+                }
+            });
+        }
     </script>
-</body>
-</html>
+
+</body></html>

@@ -1,0 +1,68 @@
+
+    <!-- CINEMATIC CONTACT FORM MODAL -->
+    <div id="contact-form-modal" class="fixed inset-0 z-[100] flex justify-center items-center pointer-events-none" style="display: none;">
+        <!-- Backdrop -->
+        <div id="contact-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity"></div>
+        
+        <!-- Form Container -->
+        <div id="contact-form-card" class="relative bg-[#fcfcfc] dark:bg-[#1a1a1a] w-full max-w-lg p-12 md:p-16 shadow-2xl opacity-0 transform translate-y-4 scale-[0.98]">
+            <!-- Close Button -->
+            <button id="close-contact-btn" class="absolute top-6 right-6 p-2 opacity-50 hover:opacity-100 transition-opacity">
+                <span class="material-icons-outlined text-black dark:text-white text-lg">close</span>
+            </button>
+
+            <!-- Content -->
+            <div class="space-y-12">
+                <!-- Header -->
+                <div class="space-y-6 text-center">
+                    <h2 id="contact-title" class="font-display text-3xl md:text-4xl uppercase leading-tight text-black dark:text-white opacity-0 translate-y-2">
+                        Let’s Build<br>Something Exceptional.
+                    </h2>
+                    <div id="contact-divider" class="h-px bg-black/10 dark:bg-white/10 w-0 mx-auto"></div>
+                </div>
+
+                <!-- Fields -->
+                <form class="space-y-8" onsubmit="event.preventDefault();">
+                    <!-- Name Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <input type="text" id="input-name" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-black dark:text-gray-100 focus:outline-none focus:border-black dark:focus:border-white transition-colors placeholder-transparent font-body text-sm"
+                            placeholder="Name">
+                        <label for="input-name" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-black dark:peer-focus:text-white peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-black dark:peer-valid:text-white">
+                            Name
+                        </label>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <input type="email" id="input-email" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-black dark:text-gray-100 focus:outline-none focus:border-black dark:focus:border-white transition-colors placeholder-transparent font-body text-sm"
+                            placeholder="Email Address">
+                        <label for="input-email" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-black dark:peer-focus:text-white peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-black dark:peer-valid:text-white">
+                            Email Address
+                        </label>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <textarea id="input-message" rows="1" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-black dark:text-gray-100 focus:outline-none focus:border-black dark:focus:border-white transition-colors placeholder-transparent font-body text-sm resize-none"
+                            placeholder="Message"></textarea>
+                        <label for="input-message" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-black dark:peer-focus:text-white peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-black dark:peer-valid:text-white">
+                            Message
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="contact-input-group opacity-0 pt-4 flex justify-center">
+                        <button type="submit" class="px-8 py-3 bg-black dark:bg-white text-white dark:text-black uppercase text-[10px] tracking-[0.25em] font-bold hover:opacity-80 transition-opacity">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
