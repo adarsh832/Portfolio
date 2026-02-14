@@ -45,322 +45,41 @@
             },
         };
     </script>
-    <style>
-        /* Scene Spacing - Visual Silence */
-        /* Scene Spacing - Visual Silence */
-        section {
-            min-height: 120vh; /* Ensure scenes are tall enough for scrolling */
-            padding-top: 20vh;
-            padding-bottom: 20vh;
-        }
-        
-        /* OVERRIDES for tight transitions */
-        #work, #transition-band {
-            min-height: auto !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
-
-        #hero-scene {
-            height: 100vh;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Custom Cursor */
-        * {
-            cursor: none !important;
-        }
-
-        html, body {
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            margin: 0;
-            padding: 0;
-        }    
-        
-        /* Reset global section padding for the horizontal scenes */
-        #chapter-wrapper section {
-            min-height: 100vh;
-            height: 100vh;
-            padding: 0;
-        }    
-        #cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: black;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-        }
-        .dark #cursor-dot {
-            background-color: white;
-        }
-        
-        /* F1 / Architectural Utilities */
-        .text-stroke-sm {
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
-        }
-        /* Menu Overlay Styling - Heavy Inertia */
-        #menu-overlay {
-            clip-path: circle(0% at 100% 0%);
-            transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1); /* expo.out feel */
-        }
-        #menu-overlay.open {
-            clip-path: circle(150% at 100% 0%);
-        }
-        .blur-in {
-            filter: blur(10px);
-            opacity: 0;
-        }
-        
-        /* Project Divider */
-        .project-divider {
-            width: 0%;
-        }
-        
-        /* Pin Effect */
-        .pin-head {
-            opacity: 0;
-            transform: scale(0);
-        }
-        
-        /* Editorial Reveal Masks */
-        .reveal-mask {
-            overflow: hidden;
-            display: block; /* or inline-block depending on context */
-            position: relative;
-        }
-        .reveal-text {
-            display: block;
-            transform: translateY(100%);
-            opacity: 0;
-            will-change: transform, opacity;
-        }
-        
-        /* Lock-in Effect State */
-        .locked-in {
-            filter: contrast(110%);
-            font-weight: 500; /* Subtle weight shift if font supports it */
-            letter-spacing: -0.01em; /* Tighten slightly */
-            transition: all 0.5s ease-out;
-        }
-
-        /* Rolling Text Styles */
-        .roll-line {
-            display: block;
-            overflow: hidden;
-            line-height: 1;
-        }
-        .roll-word {
-            display: inline-block;
-            white-space: nowrap;
-            margin-right: 0.2em; /* Space between words */
-        }
-        .roll-char {
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-        }
-        .roll-inner {
-            display: block; /* Allows transform */
-            position: relative;
-        }
-        .roll-text {
-            display: block;
-        }
-
-        /* Modal Styles */
-        #project-modal {
-            clip-path: circle(0% at 50% 50%); /* Start closed */
-            transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        #project-modal.open {
-            clip-path: circle(150% at 50% 50%);
-        }
-
-        /* --- HERO GRID & BORDERS (Engineering Aesthetic) --- */
-        #global-grid-layer {
-            position: fixed; /* Global fixed background */
-            inset: 0;
-            z-index: 0; /* Behind everything */
-            pointer-events: none;
-            opacity: 0; /* JS handles fade in */
-            background-image: 
-                linear-gradient(rgba(100, 100, 100, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100, 100, 100, 0.08) 1px, transparent 1px); /* Darker: 0.05 -> 0.08 */
-            background-size: 50px 50px;
-            /* Reduced mask for broader visibility */
-            mask-image: radial-gradient(circle at center, black 60%, transparent 100%); 
-            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-        }
-        
-        #hero-frame {
-            position: absolute;
-            inset: 30px; /* Slight inset from edges */
-            z-index: 5;
-            pointer-events: none;
-            border: 1px solid rgba(100, 100, 100, 0.1); /* Very subtle */
-            opacity: 0; /* JS handles reveal */
-        }
-
-        /* Corner Markers */
-        .corner-marker {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-color: rgba(100, 100, 100, 0.3); /* Slightly more visible than frame */
-            border-style: solid;
-            transition: all 0.5s ease;
-        }
-        .tl { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
-        .tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
-        .bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
-        .br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
-        
-        .technical-label {
-             position: absolute;
-             font-family: 'Inter', sans-serif; /* Or monospace */
-             font-size: 0.5rem;
-             letter-spacing: 0.2em;
-             color: rgba(100, 100, 100, 0.4);
-             text-transform: uppercase;
-        }
-        .lbl-tl { top: 10px; left: 15px; }
-        .lbl-br { bottom: 10px; right: 15px; }
-
-        /* --- FLOATING ICONS LAYER --- */
-        #hero-icons-layer {
-            position: absolute;
-            inset: 0;
-            z-index: 2; /* Content is 10, Grid is 1, Frame is 5. We want these behind Frame? Or floating freely? 
-                           User said "reinforce technical identity". 
-                           Let's put them at z-index 2 (above grid, below frame/text). */
-            pointer-events: none;
-        }
-        .hero-icon {
-            position: absolute;
-            color: rgba(100, 100, 100, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0; /* JS reveal */
-        }
-        .hero-icon .material-icons-outlined {
-            font-size: 32px; /* Default base */
-            font-weight: 100; /* Thin look if font supports, strictly relying on icon style */
-        }
-        /* Positions */
-        .icon-pos-1 { top: 15%; left: 10%; } /* Top Left - Memory */
-        .icon-pos-2 { bottom: 20%; right: 12%; } /* Bottom Right - Code */
-        .icon-pos-3 { top: 30%; right: 20%; } /* Mid Right - Cloud */
-        .icon-pos-4 { bottom: 15%; left: 25%; } /* Deep Left - Laptop */
-
-        /* Styles */
-        .icon-blur { filter: blur(1.5px); opacity: 0.3 !important; } /* Distance */
-        .icon-sm { transform: scale(0.8); }
-        .icon-lg { transform: scale(1.2); }
-
-        /* --- INTERACTIVE MICRO-PANELS --- */
-        .hero-icon {
-            cursor: pointer;
-            transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-            /* Ensure pointer events are active for click */
-            pointer-events: auto !important; 
-        }
-        
-        /* Active State (Sharp, Scale) */
-        .hero-icon.active {
-            opacity: 1 !important;
-            filter: blur(0) !important;
-            transform: scale(1.05);
-            z-index: 50; /* Bring to front */
-        }
-        
-        /* Focus Mode: Dim others */
-        .hero-icon.dimmed {
-            opacity: 0.1 !important;
-            filter: blur(2px) grayscale(100%);
-        }
-
-        /* Micro Panel */
-        .micro-panel {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 12px 16px;
-            width: 200px;
-            border-radius: 4px; /* Minimal rounded */
-            opacity: 0;
-            visibility: hidden;
-            /* Positioning logic will be handled by CSS relative to icon or fixed if simpler. 
-               Let's try relative with offset. */
-            top: 50%;
-            left: 100%;
-            transform: translateY(-50%) translateX(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Extremely subtle */
-            pointer-events: none; /* Let clicks pass through if needed, but text selection might be wanted. */
-        }
-        
-        .dark .micro-panel {
-            background-color: rgba(20, 20, 20, 0.95);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Adjust position for right-side icons to push left */
-        .icon-pos-2 .micro-panel, 
-        .icon-pos-3 .micro-panel {
-            left: auto;
-            right: 100%;
-            transform: translateY(-50%) translateX(-10px);
-            text-align: right;
-        }
-
-        /* Panel Typography */
-        .panel-header {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #1a1a1a;
-            margin-bottom: 4px;
-        }
-        .dark .panel-header { color: #fff; }
-
-        .panel-line {
-            width: 100%;
-            height: 1px;
-            background-color: rgba(0,0,0,0.1);
-            margin-bottom: 6px;
-        }
-        .dark .panel-line { background-color: rgba(255,255,255,0.1); }
-
-        .panel-desc {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.55rem;
-            font-weight: 400;
-            line-height: 1.4;
-            color: #666;
-        }
-        .dark .panel-desc { color: #aaa; }
-
-    </style>
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
     <!-- Custom Cursor Element -->
     <div id="cursor-dot"></div>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-black dark:text-gray-100 font-body transition-colors duration-300 overflow-x-hidden">
+<body class="bg-white dark:bg-[#050505] text-black dark:text-white transition-colors duration-500 overflow-x-hidden antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+
+    <!-- SIGNATURE LOADING SCREEN -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#0a0a0a] text-black dark:text-white" style="display: flex;">
+        <!-- Grid Background -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none loader-grid"></div>
+
+        <!-- Signature SVG with Masked Image -->
+        <!-- Even larger size (800px) and dark mode support -->
+        <div class="relative z-10 w-96 md:w-[800px]">
+             <svg viewBox="0 0 500 250" version="1.1" xmlns="http://www.w3.org/2000/svg" class="w-full h-full overflow-visible">
+                <defs>
+                    <mask id="sign-mask">
+                         <path id="signature-mask-path" fill="none" stroke="white" stroke-width="150" stroke-linecap="round" stroke-linejoin="round"
+                              d="M 20 125 L 480 125" /> 
+                    </mask>
+                </defs>
+                
+                <!-- Actual PNG Image (Masked) -->
+                <image href="images/sign.png" x="0" y="0" width="500" height="250" mask="url(#sign-mask)" preserveAspectRatio="xMidYMid meet" class="signature-png transition-all duration-300" />
+                
+                <!-- Decorative Underline (Vector) -->
+                <path id="signature-underline" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" 
+                      d="M 50 200 Q 250 210 450 195" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="smooth-wrapper" class="opacity-0"> <!-- Hidden initially, revealed after loader -->
+        <div id="smooth-content">
 <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center text-black dark:text-white">
 <div class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80">
             Engineer / Dev
@@ -386,16 +105,16 @@
         <div id="menu-overlay" class="fixed top-0 right-0 w-[300px] h-[350px] bg-black/90 dark:bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center rounded-bl-3xl z-40 origin-top-right transform">
              <ul class="flex flex-col space-y-6 text-center">
                 <li class="overflow-hidden">
-                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#" onclick="toggleMenu()">Home</a>
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#">Home</a>
                 </li>
                 <li class="overflow-hidden">
-                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#profile" onclick="toggleMenu()">Identity</a>
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#profile">Identity</a>
                 </li>
                 <li class="overflow-hidden">
-                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#work" onclick="toggleMenu()">Projects</a>
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#work">Projects</a>
                 </li>
                 <li class="overflow-hidden">
-                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#contact" onclick="toggleMenu()">Connect</a>
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#contact">Connect</a>
                 </li>
             </ul>
         </div>
@@ -482,14 +201,38 @@
             
         </div>
 
-        <div id="hero-content-wrapper" class="flex-grow flex flex-col justify-center items-center relative z-10">
-            <h2 class="font-display text-huge leading-[0.85] uppercase tracking-tighter text-center select-none text-monument" id="hero-title" style="transform: translateZ(-50px); opacity: 0;">
-                <span class="inline-block relative" id="hero-first">Adarsh</span><br/>
-                <span class="inline-block relative" id="hero-last">Shah</span>
-            </h2>
-            <div class="mt-8 text-center opacity-0 animate-[fadeInUp_1s_ease-out_1s_forwards]" style="animation-fill-mode: forwards; animation-delay: 1s;">
-                <p class="font-display text-lg md:text-xl uppercase tracking-widest text-black dark:text-white mb-3">I design and build digital systems with precision.</p>
-                <p class="font-body text-xs md:text-sm text-gray-500 max-w-md mx-auto leading-relaxed">From applications and web platforms to intelligent automation, I engineer ideas into scalable, high-performance products.</p>
+        <div id="hero-content-wrapper" class="flex-grow flex flex-col justify-center items-center relative z-10 w-full h-full"> 
+            <!-- LAYERED COMPOSITION CONTAINER -->
+            <div id="hero-composition" class="relative w-full h-full flex items-center justify-center">
+
+                <!-- 0. STRUCTURAL DEPTH PLANES (Background Architecture) -->
+                
+                <!-- Rect 3: Vertical Structural Strip (Left Axis) -->
+                <div id="hero-plane-strip" class="absolute left-[8%] top-0 bottom-0 w-[1px] bg-black/10 dark:bg-white/10 z-0 hidden md:block"></div>
+
+                <div id="hero-plane-portrait" class="absolute bottom-[2vh] left-[42%] -translate-x-1/2 h-[80vh] w-[30vh] border border-black/10 dark:border-white/10 z-10 hidden md:block"></div>
+
+                <!-- 1. MAIN TEXT LAYER (Dominant, Solid, Above Portrait) -->
+                <div id="hero-text-back" class="absolute inset-0 z-30 flex flex-col justify-center items-center pointer-events-none select-none mix-blend-difference">
+                     <h2 class="font-display text-huge leading-[0.85] uppercase tracking-tighter text-center text-monument text-stroke-light opacity-0 translate-y-4">
+                        <span class="block">ADARSH</span>
+                        <span class="block">SHAH</span> <!-- Fully Visible, Solid -->
+                    </h2>
+                </div>
+
+                <!-- 2. PORTRAIT IMAGE LAYER (Supporting, Architectural Placement) -->
+                <!-- Moved up slightly (bottom-[3vh]), sharper edge via CSS, below text (z-20) -->
+                <div id="hero-portrait-container" class="absolute bottom-[3vh] left-[42%] -translate-x-1/2 h-[85vh] w-auto z-20 overflow-visible opacity-0">
+                    <img src="images/hero_photo.png" alt="Adarsh Shah Portrait" class="h-full w-auto object-contain -scale-x-100 filter grayscale contrast-110 brightness-95 hero-portrait-img">
+                </div>
+
+                <!-- 3. FRONT TEXT LAYER REMOVED (Clean Architectural Look) -->
+
+                <!-- Main Text Container for Screen Readers -->
+                <h1 class="sr-only">Adarsh Shah - Creative Engineer</h1>
+
+                 <!-- 4. SUBTITLE REMOVED (As requested) -->
+
             </div>
         </div>
         
@@ -556,51 +299,161 @@
                     </div>
                     
                     <!-- Barcode with Numbers -->
-                    <div class="mt-4 opacity-30">
-                         <div class="h-4 w-full bg-cover bg-repeat-x" style="background-image: repeating-linear-gradient(90deg, black 0px, black 1px, transparent 1px, transparent 3px);"></div>
-                         <div class="flex justify-between text-[0.4rem] font-mono tracking-[0.2em] mt-1 text-black">
-                            <span>001092</span>
-                            <span>839102</span>
+                <div class="mt-4 opacity-30">
+                     <div class="h-4 w-full bg-cover bg-repeat-x" style="background-image: repeating-linear-gradient(90deg, black 0px, black 1px, transparent 1px, transparent 3px);"></div>
+                     <div class="flex justify-between text-[0.4rem] font-mono tracking-[0.2em] mt-1 text-black">
+                        <span>001092</span>
+                        <span>839102</span>
+                     </div>
+                </div>
+                <div class="mt-3 text-center opacity-60">
+                    <span class="text-[0.5rem] uppercase tracking-widest text-red-500 animate-pulse font-bold flex items-center justify-center gap-1">
+                        <span class="material-icons-outlined text-[0.6rem]">touch_app</span>
+                        Click to Access
+                    </span>
+                </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-8 relative"> <!-- Added relative for positioning -->
+                
+                <!-- ORIGINAL ABOUT TEXT (Wrapped for transition) -->
+                <div id="about-text-content" class="transition-opacity duration-500">
+                    <div class="mb-8">
+                         <div class="reveal-mask">
+                            <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                                The
+                            </h2>
+                         </div>
+                         <div class="reveal-mask">
+                            <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                                Architect
+                            </h2>
+                         </div>
+                         <div class="reveal-mask">
+                            <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                                Mindset.
+                            </h2>
                          </div>
                     </div>
+                    <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300 font-light max-w-xl">
+                        <p>
+                            I don’t just write code — I build systems.
+                        </p>
+                        <p>
+                            My work sits at the intersection of creativity and engineering. I design applications, craft web experiences, and develop intelligent tools that solve real problems with clarity and structure.
+                        </p>
+                        <p class="text-sm text-gray-400 dark:text-gray-400">
+                            Every project is built with intent — scalable, maintainable, and engineered to perform.
+                        </p>
+                    </div>
+                    <div class="pt-4">
+                        <a class="inline-block border-b border-black dark:border-white text-black dark:text-white uppercase tracking-widest text-[10px] font-bold py-1 hover:opacity-60 transition-opacity" href="resume.pdf" download>
+                            DOWNLOAD CV
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="lg:col-span-7 space-y-8">
-            <div>
-                <div class="mb-8">
-                     <div class="reveal-mask">
-                        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
-                            The
-                        </h2>
-                     </div>
-                     <div class="reveal-mask">
-                        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
-                            Architect
-                        </h2>
-                     </div>
-                     <div class="reveal-mask">
-                        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
-                            Mindset.
-                        </h2>
-                     </div>
+
+                <!-- FILE SYSTEM VIEW (Initially Hidden) -->
+                <div id="file-system-view" class="absolute inset-0 hidden opacity-0 pointer-events-none flex flex-col justify-start z-20">
+                    
+                    <!-- Header Row -->
+                    <div class="flex justify-between items-center mb-6 border-b border-black/10 dark:border-white/10 pb-2">
+                        <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-gray-400">Profile Directory</span>
+                        <button id="close-directory-btn" class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-red-500 hover:text-red-600 transition-colors flex items-center gap-2 cursor-pointer">
+                            <span>Close Directory</span>
+                            <span class="material-icons-outlined text-sm">close</span>
+                        </button>
+                    </div>
+
+                    <!-- Directory List -->
+                    <div class="space-y-2" id="directory-list">
+                        
+                        <!-- Folder: Experience -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                            <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">folder</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Experience</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <!-- Expanded Content -->
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 space-y-4 font-mono leading-relaxed">
+                                    <div>
+                                        <p class="font-bold text-black dark:text-white mb-1">// FREELANCE DEVELOPER</p>
+                                        <p class="opacity-70 mb-1">2024 — Present</p>
+                                        <p>Designing and developing custom web solutions, full-stack applications, and automation scripts for diverse clients.</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-black dark:text-white mb-1">// ENGINEERING STUDENT</p>
+                                        <p class="opacity-70 mb-1">2021 — 2025</p>
+                                        <p>Focused on Systems Architecture, Algorithm Design, and AI Integration.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Folder: Projects -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                            <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">folder_open</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Active Projects</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 space-y-2 font-mono">
+                                    <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> APDATE (Android/Prod)</p>
+                                    <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> GEMINI ASSISTANT (CLI/Tool)</p>
+                                    <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> TRACKMANIA AI (Exp/Beta)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Folder: Skills -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                            <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">extension</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Tech Stack</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 grid grid-cols-2 gap-2 font-mono">
+                                    <span>Python / Django</span>
+                                    <span>JavaScript / React</span>
+                                    <span>Web Automation</span>
+                                    <span>System Architecture</span>
+                                    <span>UI / UX Design</span>
+                                    <span>Linux / Bash</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Folder: Education -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                             <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">school</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Education</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 space-y-1 font-mono">
+                                    <p class="font-bold text-black dark:text-white">Bachelor of Computer Engineering</p>
+                                    <p>Vadodara Institute of Engineering</p>
+                                    <p class="opacity-70">2021 — 2025</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300 font-light max-w-xl">
-            <p>
-                I don’t just write code — I build systems.
-            </p>
-            <p>
-                My work sits at the intersection of creativity and engineering. I design applications, craft web experiences, and develop intelligent tools that solve real problems with clarity and structure.
-            </p>
-            <p class="text-sm text-gray-400 dark:text-gray-400">
-                Every project is built with intent — scalable, maintainable, and engineered to perform.
-            </p>
-            </div>
-            <div class="pt-4">
-            <a class="inline-block border-b border-black dark:border-white text-black dark:text-white uppercase tracking-widest text-[10px] font-bold py-1 hover:opacity-60 transition-opacity" href="resume.pdf" download>
-                                    DOWNLOAD CV
-                                </a>
-            </div>
+
             </div>
         </div>
     </section>
@@ -903,1066 +756,5 @@
             </div>
         </div>
     </div>
-    <script>
-        // --- 1. CONFIGURATION & UTILS ---
-        gsap.registerPlugin(ScrollTrigger);
-
-        // CINEMATIC SCROLL CONFIG
-        const SCENE_CONFIG = {
-            scrub: 1.5, // Heavy, weighted scroll
-            ease: "power2.out"
-        };
-
-        // Custom Cursor Logic (Preserved)
-        const cursor = document.getElementById('cursor-dot');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Hover Effects (Preserved)
-        const interactiveElements = document.querySelectorAll('a, button, .group');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.width = '40px';
-                cursor.style.height = '40px';
-                cursor.style.opacity = '0.5';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.width = '8px';
-                cursor.style.height = '8px';
-                cursor.style.opacity = '1';
-            });
-        });
-
-        // --- 2. MENU LOGIC (Preserved) ---
-        const menuBtn = document.getElementById('menu-btn');
-        const menuOverlay = document.getElementById('menu-overlay');
-        const line1 = document.getElementById('line1');
-        const line2 = document.getElementById('line2');
-        const line3 = document.getElementById('line3');
-        const menuLinks = document.querySelectorAll('.menu-link');
-        let isMenuOpen = false;
-
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                menuOverlay.classList.add('open');
-                line1.style.transform = "translateY(7px) rotate(45deg)";
-                line2.style.opacity = "0";
-                line3.style.transform = "translateY(-7px) rotate(-45deg)";
-                gsap.to(menuLinks, { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "expo.out", delay: 0.4 });
-            } else {
-                menuOverlay.classList.remove('open');
-                line1.style.transform = "none";
-                line2.style.opacity = "1";
-                line3.style.transform = "none";
-                gsap.to(menuLinks, { y: 20, opacity: 0, duration: 0.3, overwrite: true });
-            }
-        }
-        menuBtn.addEventListener('click', toggleMenu);
-
-
-        // --- 3. SCENE 1 & 2: HERO -> IDENTITY (Horizontal Chapter Shift) ---
-        // Setup initial positions for "Chapter 2"
-        // --- CINEMATIC ID CARD CONFIG ---
-        // Initial "Suspended" drops state
-        // 1. Card State
-        gsap.set("#id-card", { 
-            x: 50,          
-            y: -120,        
-            rotation: 15,   
-            opacity: 0,
-            transformOrigin: "50% -100px", // Pivot from string top
-            force3D: true, // Hardware acceleration
-            rotationZ: 15 // Ensure Z axis rotation
-        });
-
-        // 2. String State (Syncs with Card)
-        gsap.set("#id-card-string", {
-            x: 50,
-            y: -120, // Moves with the system
-            rotation: 15,
-            opacity: 0,
-            transformOrigin: "top center", // Pivots at its own top
-            force3D: true,
-            rotationZ: 15
-        });
-        
-        // Helper to animate both as a rigid body
-        const physicsObj = ["#id-card", "#id-card-string"];
-
-        let idCardEntered = false;
-        function playIdCardEntry() {
-            if (idCardEntered) return;
-            idCardEntered = true;
-
-            const tl = gsap.timeline();
-
-            // 1. GRAVITY FALL (Both drop together)
-            tl.to(physicsObj, {
-                y: 0,
-                x: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "power2.inOut", // "Decelerates naturally as it approaches"
-            })
-            // 2. SWING PHASE (Synced Oscillation)
-            // First swing wider
-            .to(physicsObj, {
-                rotation: -6,  
-                rotationZ: -6,
-                duration: 0.5,
-                ease: "power1.inOut" // Natural harmonic turn
-            })
-            .to(physicsObj, {
-                rotation: 3,   
-                rotationZ: 3,
-                duration: 0.5,
-                ease: "power1.inOut"
-            })
-            .to(physicsObj, {
-                rotation: -1.5,
-                rotationZ: -1.5, 
-                duration: 0.5,
-                ease: "power1.inOut"
-            })
-            .to(physicsObj, {
-                rotation: 0.5,
-                rotationZ: 0.5, 
-                duration: 0.5,
-                ease: "power1.inOut"
-            })
-            // 3. SETTLE
-            .to(physicsObj, {
-                rotation: 0,   
-                rotationZ: 0,
-                duration: 0.8,
-                ease: "power1.out"
-            });
-        }
-
-        gsap.set(".reveal-text", { x: 200 }); // Text lags behind card
-
-        const chapterTL = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#chapter-wrapper",
-                start: "top top",
-                end: "+=150%", // Scroll distance to complete pan
-                pin: true,
-                scrub: 1,
-                anticipatePin: 1
-            }
-        });
-
-        chapterTL
-            // 1. Pan Camera Left
-            .to("#chapter-wrapper", { 
-                xPercent: -50, // Move 50% of 200vw = 100vw
-                ease: "none" // Linear movement driven by scroll
-            })
-            // 2. Hero Exit Effects (Concurrent)
-            .to("#hero-content-wrapper", { 
-                scale: 0.9, 
-                opacity: 0, 
-                x: -100, 
-                duration: 0.5 
-            }, 0) // Start at time 0
-            .to(["#hero-footer", "#scroll-indicator"], { // Include scroll indicator in exit
-                opacity: 0,
-                duration: 0.3 // Disappear quickly on scroll
-            }, 0)
-            // 3. About Entry Effects (Concurrent, slight delay for parallax)
-            .call(playIdCardEntry, null, 0.5) // Trigger Cinematic Entry upon arrival
-            .to(".reveal-text", {
-                x: 0,
-                y: 0, // Ensure vertical reveal works too
-                opacity: 1,
-                stagger: 0.1,
-                duration: 0.8,
-                ease: "power2.out"
-            }, 0.3); // Text follows card
-
-        
-        // --- HERO INTERACTION (Cinematic Hover) ---
-        const heroSection = document.querySelector('#hero-scene');
-        const heroTitleText = document.querySelector('#hero-title');
-
-        if (heroSection && heroTitleText) {
-            heroSection.addEventListener('mousemove', (e) => {
-                const rect = heroSection.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width - 0.5;
-                const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                // Reverse Parallax: Moves opposite to cursor (Weighty)
-                gsap.to(heroTitleText, {
-                    x: -x * 20, // Max 10px shift
-                    y: -y * 20,
-                    duration: 1.5,
-                    ease: "power2.out",
-                    overwrite: "auto" // Allow scroll override
-                });
-
-                // Grid Micro-Parallax (Technical depth)
-                // Moves slightly slower than text for depth separation
-                gsap.to('#global-grid-layer', {
-                    x: -x * 10,
-                    y: -y * 10,
-                    duration: 1.5,
-                    ease: "power2.out",
-                    overwrite: "auto"
-                });
-
-                // Icon Parallax (Layered Depth)
-                // Foreground moves faster, Background (blurred) moves slower
-                gsap.utils.toArray('.hero-icon').forEach(icon => {
-                    const speed = icon.classList.contains('icon-blur') ? 5 : 15;
-                    const xMove = icon.classList.contains('icon-pos-2') ? x * speed : -x * speed; // Varied direction
-                    
-                    gsap.to(icon, {
-                        x: xMove,
-                        y: -y * speed,
-                        duration: 2.0,
-                        ease: "power2.out",
-                        overwrite: "auto"
-                    });
-                });
-            });
-            
-            // --- CINEMATIC ENTRY SEQUENCE ---
-            // Use 'fromTo' to guarantee initial state and avoid conflict
-            const heroEntryTL = gsap.timeline({ delay: 0.5 }); 
-            
-            // 1. Grid Fades In (Structure first)
-            heroEntryTL.to('#global-grid-layer', {
-                opacity: 1, 
-                duration: 2.0,
-                ease: "power2.inOut"
-            })
-            // 2. Borders Draw In (Technical Reveal)
-            .fromTo('#hero-frame', 
-                { clipPath: "inset(0 50% 0 50%)", opacity: 0 }, 
-                { clipPath: "inset(0 0 0 0)", opacity: 1, duration: 1.5, ease: "expo.out" },
-                "-=1.5"
-            )
-            // 3. Hero Text Emergence (Signature)
-            .fromTo('#hero-title', 
-                { opacity: 0, z: -50, color: "#050505" }, // Start: Deep, Dark, Invisible
-                { 
-                    opacity: 1, 
-                    z: 0, 
-                    color: "#1a1a1a", // Stage 2 color
-                    duration: 2.5, // Slow emergence
-                    ease: "power3.out"
-                },
-                "-=1.0"
-            )
-            // 4. Light Reveal (Subtle Color/Highlight Shift)
-            .to('#hero-title', { 
-                color: "#111", // Final sharp color
-                textShadow: "-1px -1px 1px rgba(255,255,255,0.1), 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05), 0px 10px 30px rgba(0,0,0,0.2)",
-                duration: 2.0, 
-                ease: "power2.inOut" 
-            }, "-=1.5")
-            // 5. Icons Materialize (Technical Spacing)
-            .to('.hero-icon', {
-                opacity: 1,
-                y: "-=5", // Slight drift up
-                stagger: 0.2, // Sequential
-                duration: 2.0,
-                ease: "power2.out"
-            }, "-=2.0");
-
-            // --- FLOATING ICON LOOPS (Atmospheric) ---
-            document.querySelectorAll('.hero-icon').forEach((icon) => {
-                // Randomize float params for organic technical feel
-                const duration = 3 + Math.random() * 2; // 3-5s
-                const yDist = 5 + Math.random() * 5; // 5-10px
-                const delay = Math.random() * 2;
-
-                gsap.to(icon, {
-                    y: `+=${yDist}`,
-                    duration: duration,
-                    yoyo: true,
-                    repeat: -1,
-                    ease: "sine.inOut",
-                    delay: delay
-                });
-            });
-
-            // --- SCROLL INDICATOR REVEAL ---
-            gsap.to('#scroll-indicator', {
-                opacity: 1,
-                duration: 2.0,
-                delay: 2.5, // Appears late, after text settles
-                ease: "power2.out"
-            });
-            
-            // --- SCROLL CURSOR LOOP (Drafting Motion) ---
-            gsap.to('#scroll-cursor', {
-                y: 48, // Fall length (h-12 = 3rem = 48px approx, minus cursor height) ... actually relative % is safer
-                yPercent: 600, // 48px container / 8px cursor = 600% movement
-                duration: 2.0,
-                ease: "power2.inOut",
-                repeat: -1,
-                repeatDelay: 0.5
-            });
-        }
-
-
-
-        // --- 5. SCENE 3: WORK (The Pinned Gallery) ---
-        // Cards enter with "Museum Weight" + Pinned Logic
-        const workGroups = gsap.utils.toArray("#work .group");
-        
-        // Master Timeline for Sequential Pinning
-        // Master Timeline for Sequential Pinning
-        const galleryTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#work", // Pin the entire section
-                start: "top top", // Start when section hits top of viewport
-                end: "+=150%", // Reduced scroll distance for faster pinning
-                scrub: 0.5, // Tighter scrub for snappier feel
-                pin: true, // Lock in place
-                anticipatePin: 1
-            }
-        });
-
-        // --- INTERACTIVE SYSTEM NODES (Logic) ---
-        const icons = document.querySelectorAll('.hero-icon');
-        let activeIcon = null;
-
-        function closePanel(icon) {
-            if (!icon) return;
-            const panel = icon.querySelector('.micro-panel');
-            
-            // Animate Out
-            gsap.to(panel, {
-                autoAlpha: 0,
-                y: 0, // Return to center/down
-                duration: 0.3,
-                ease: "power2.in"
-            });
-            
-            // Reset Icon State
-            icon.classList.remove('active');
-        }
-
-        function openPanel(icon) {
-            const panel = icon.querySelector('.micro-panel');
-            
-            // Animate In
-            gsap.to(panel, {
-                autoAlpha: 1,
-                y: -6, // Slide up slightly
-                duration: 0.4,
-                ease: "power2.out"
-            });
-            
-            // Set Icon State
-            icon.classList.add('active');
-        }
-
-        function updateFocusMode(newActiveIcon) {
-            // Dim others
-            icons.forEach(icon => {
-                if (icon === newActiveIcon) {
-                    icon.classList.remove('dimmed');
-                } else {
-                    if (newActiveIcon) {
-                        icon.classList.add('dimmed');
-                    } else {
-                        icon.classList.remove('dimmed');
-                    }
-                }
-            });
-        }
-
-        icons.forEach(icon => {
-            icon.addEventListener('mouseenter', () => {
-                // Close previous if any (though hover usually means only one at a time)
-                if (activeIcon && activeIcon !== icon) closePanel(activeIcon);
-                
-                // Open new
-                openPanel(icon);
-                activeIcon = icon;
-                updateFocusMode(icon);
-            });
-
-            icon.addEventListener('mouseleave', () => {
-                // Close current
-                closePanel(icon);
-                activeIcon = null;
-                updateFocusMode(null);
-            });
-        });
-
-        // Global Click to Dismiss (Backup, though hover mostly handles it)
-        // Removed as hover handles exit naturally
-
-        // Initial setup: Hide all cards first
-        gsap.set(workGroups, { y: 100, opacity: 0, scale: 0.9, rotation: 10 });
-
-        workGroups.forEach((group, i) => {
-            const cardContent = group.querySelector('.card-content');
-            const pinHead = group.querySelector('.pin-head');
-            
-            // Sequential Reveal Timeline
-            // We use 'add' to place them in sequence on the scrub timeline
-            
-            if (cardContent && pinHead) {
-                // Pin Project Card sequence
-                const tl = gsap.timeline();
-                
-                tl.to(group, { 
-                    y: 0, 
-                    opacity: 1, 
-                    scale: 1, 
-                    rotation: i % 2 === 0 ? -2 : 2, // Slight random tilt
-                    duration: 1, 
-                    ease: "power3.out" 
-                })
-                .fromTo(pinHead, 
-                    { y: -300, opacity: 0, scale: 3 },
-                    { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "bounce.out" },
-                    "-=0.4"
-                );
-
-                galleryTimeline.add(tl, `card${i}`);
-                
-            } else {
-                // Archive / View All Card
-                galleryTimeline.to(group, { 
-                    y: 0, 
-                    opacity: 1, 
-                    scale: 1, 
-                    rotation: 0,
-                    duration: 1, 
-                    ease: "power2.out" 
-                }, "-=0.2");
-            }
-            
-            // Add a pause/spacer after each card so user can appreciate it
-            galleryTimeline.to({}, { duration: 0.5 });
-        });
-
-        // Scene Exit: Drift off-axis
-        /* REMOVED: Caused conflict with last card
-        gsap.to("#work-grid", {
-           ...
-        });
-        */
-
-
-        // --- 6. SCENE 4: CONTACT (Resolution) ---
-        // Background Shift (REMOVED to keep original palette)
-        /*
-        gsap.to("body", {
-            scrollTrigger: {
-                trigger: "#contact",
-                start: "top 60%",
-                end: "top 20%",
-                scrub: 1
-            },
-            backgroundColor: "#0b1b16", 
-            color: "white" 
-        });
-        */
-
-        // Hero Static Frame Entry
-        gsap.from("#contact h2", {
-            scrollTrigger: {
-                trigger: "#contact",
-                start: "top 70%",
-                end: "top 40%",
-                scrub: 1
-            },
-            scale: 0.9,
-            opacity: 0
-        });
-        
-        // Button Final Reveal (Visual Silence -> Action)
-        gsap.from("#contact button", {
-            scrollTrigger: {
-                trigger: "#contact",
-                start: "center 60%",
-                scrub: false // Snap reveal
-            },
-            opacity: 0,
-            duration: 1.5,
-            ease: "power2.out"
-        });
-
-        // --- PRE-INIT DARK MODE LOGIC ---
-        // Verify current state on load
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-
-        // --- THEME TOGGLE LOGIC ---
-        const themeToogleBtn = document.getElementById('theme-toggle');
-        
-        function toggleTheme() {
-            // Toggle Class
-            const isNowDark = !document.documentElement.classList.contains('dark');
-            
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-            }
-
-            // Animate Hero Text to match new theme
-            const heroTitle = document.getElementById('hero-title');
-            if (heroTitle) {
-                const targetColor = isNowDark ? "#f0f0f0" : "#1a1a1a";
-                const targetShadow = isNowDark 
-                    ? "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 0px rgba(0,0,0,0.5), 2px 2px 0px rgba(0,0,0,0.3), 0px 10px 30px rgba(0,0,0,0.5)" 
-                    : "-1px -1px 1px rgba(255,255,255,0.1), 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05), 0px 10px 30px rgba(0,0,0,0.2)";
-                
-                gsap.to(heroTitle, {
-                    color: targetColor,
-                    textShadow: targetShadow,
-                    duration: 0.5,
-                    ease: "power2.out"
-                });
-            }
-        }
-
-        if (themeToogleBtn) {
-            themeToogleBtn.addEventListener('click', toggleTheme);
-        }
-
-        // --- CINEMATIC CONTACT FRAME (Compositional Boundary) ---
-        const contactFrameTL = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#contact",
-                start: "top 60%", // Starts as section enters focus
-                toggleActions: "play reverse play reverse" // Fade in/out naturally
-            }
-        });
-
-        // 1. Top Border Draws (Left -> Right)
-        contactFrameTL
-            .to("#cf-top", { scaleX: 1, duration: 1.2, ease: "power2.inOut" })
-            
-            // 2. Side Borders Drop (Top -> Bottom) - Slight overlap
-            .to(["#cf-right", "#cf-left"], { 
-                scaleY: 1, 
-                duration: 1.0, 
-                ease: "power2.out",
-                stagger: 0.2 
-            }, "-=0.4")
-            
-            // 3. Bottom Border Completes (Left -> Right to close loop)
-            .to("#cf-bottom", { 
-                scaleX: 1, 
-                duration: 1.2, 
-                ease: "power2.out" 
-            }, "-=0.6")
-
-            // 4. Atmosphere Shift (Depth & Focus)
-            .to("#contact-depth-overlay", { opacity: 1, duration: 1.5 }, 0)
-            .to("#initiate-contact-btn", { 
-                filter: "contrast(110%) drop-shadow(0 0 10px rgba(255,255,255,0.2))", // Subtle "Hot" Focus
-                duration: 1.5 
-            }, 0.5);
-
-        // --- 7. ROLLING TEXT ANIMATION ---
-        function initRollingText() {
-            const rollingElements = document.querySelectorAll('.rolling-text');
-            
-            rollingElements.forEach(el => {
-                const originalContent = el.innerHTML;
-                const lines = originalContent.split(/<br\s*\/?>/i);
-                
-                el.innerHTML = ''; // Clear container
-                
-                const allChars = []; // Store all char elements for staggering
-
-                lines.forEach((lineContent, lineIndex) => {
-                    const cleanLine = lineContent.trim();
-                    if (!cleanLine) return;
-
-                    const lineWrapper = document.createElement('div');
-                    lineWrapper.className = 'roll-line';
-                    
-                    // Split into words to preserve spacing structure
-                    const words = cleanLine.split(/\s+/);
-                    
-                    words.forEach((word, wordIndex) => {
-                        const wordWrapper = document.createElement('span');
-                        wordWrapper.className = 'roll-word';
-                        
-                        // Split word into characters
-                        const chars = word.split('');
-                        
-                        chars.forEach(char => {
-                            const charWrapper = document.createElement('span');
-                            charWrapper.className = 'roll-char';
-                            
-                            const inner = document.createElement('span');
-                            inner.className = 'roll-inner';
-                            
-                            const text1 = document.createElement('span');
-                            text1.className = 'roll-text';
-                            text1.innerHTML = char;
-                            
-                            const text2 = document.createElement('span');
-                            text2.className = 'roll-text absolute top-full left-0 w-full';
-                            text2.innerHTML = char;
-                            text2.ariaHidden = "true";
-
-                            inner.appendChild(text1);
-                            inner.appendChild(text2);
-                            charWrapper.appendChild(inner);
-                            wordWrapper.appendChild(charWrapper);
-                            
-                            allChars.push(inner);
-                        });
-                        
-                        lineWrapper.appendChild(wordWrapper);
-                    });
-                    
-                    el.appendChild(lineWrapper);
-                });
-
-                // Hover Interaction
-                el.addEventListener('mouseenter', () => {
-                    gsap.to(allChars, {
-                        y: "-100%",
-                        duration: 0.6,
-                        stagger: 0.02,
-                        ease: "power3.inOut"
-                    });
-                });
-
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(allChars, {
-                        y: "0%",
-                        duration: 0.6,
-                        stagger: {
-                            each: 0.02,
-                            from: "end" // Reverse stagger on exit
-                        },
-                        ease: "power3.inOut"
-                    });
-                });
-            });
-        }
-        
-        // Initialize after DOM load
-        initRollingText();
-
-        // --- 8. PROJECT MODAL LOGIC ---
-        const modal = document.getElementById('project-modal');
-        const modalImg = document.getElementById('modal-image');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDesc = document.getElementById('modal-desc');
-        const modalGithub = document.getElementById('modal-github');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        let isModalOpen = false;
-
-        function openModal(card) {
-            if (isModalOpen) return;
-            isModalOpen = true;
-
-            // 1. Populate Data
-            modalImg.src = card.dataset.image;
-            modalTitle.innerText = card.dataset.title;
-            // Split title for rolling effect if we wanted, but clean text is fine
-            modalDesc.innerText = card.dataset.desc;
-            modalGithub.href = card.dataset.github;
-
-            // 2. Activate Modal
-            modal.style.pointerEvents = "auto";
-            modal.style.opacity = "1"; // Ensure visibility for clip-path
-            modal.classList.add('open'); // Trigger CSS clip-path transition
-
-            // 3. Animate Content (Pop in)
-            gsap.fromTo([modalImg, modalTitle, modalDesc, modalGithub], 
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.3, ease: "power2.out" }
-            );
-
-            // Hide body scroll
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeModal() {
-            if (!isModalOpen) return;
-            isModalOpen = false;
-
-            modal.classList.remove('open');
-            modal.style.pointerEvents = "none";
-            
-            // Allow exit transition to finish before hiding fully
-            setTimeout(() => {
-                modal.style.opacity = "0";
-                document.body.style.overflow = "";
-            }, 800);
-        }
-
-        // Attach listeners to Project Cards
-        document.querySelectorAll('#work .group[data-title]').forEach(card => {
-            card.addEventListener('click', () => openModal(card));
-        });
-
-        closeModalBtn.addEventListener('click', closeModal);
-
-        // --- 9. CINEMATIC CONTACT FORM LOGIC ---
-        const contactBtn = document.getElementById('initiate-contact-btn');
-        const contactModal = document.getElementById('contact-form-modal');
-        const contactBackdrop = document.getElementById('contact-backdrop');
-        const contactCard = document.getElementById('contact-form-card');
-        const closeContactBtn = document.getElementById('close-contact-btn');
-        const contactTitle = document.getElementById('contact-title');
-        const contactDivider = document.getElementById('contact-divider');
-        const contactInputs = document.querySelectorAll('.contact-input-group'); // Includes button
-        
-        let isContactOpen = false;
-
-        // Timeline for Contact Modal
-        const contactTL = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
-
-        // Build Timeline once
-        contactTL
-            .set(contactModal, { display: "flex" })
-            .to(contactBackdrop, { opacity: 1, duration: 0.5 })
-            .to(contactCard, { 
-                y: 0, 
-                opacity: 1, 
-                scale: 1, 
-                duration: 0.6, 
-                ease: "power2.out" 
-            }, "-=0.3")
-            .to(contactTitle, { y: 0, opacity: 1, duration: 0.5 }, "-=0.2")
-            .to(contactDivider, { width: "100%", duration: 0.6, ease: "expo.out" }, "-=0.3")
-            .to(contactInputs, { 
-                y: 0, 
-                opacity: 1, 
-                stagger: 0.1, 
-                duration: 0.5 
-            }, "-=0.4");
-
-        function openContact() {
-            if (isContactOpen) return;
-            isContactOpen = true;
-            
-            // Button Press Effect
-            gsap.to(contactBtn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
-
-            contactModal.style.pointerEvents = "auto";
-            document.body.style.overflow = "hidden"; // Lock scroll
-            contactTL.play();
-        }
-
-        function closeContact() {
-            if (!isContactOpen) return;
-            isContactOpen = false;
-
-            contactModal.style.pointerEvents = "none";
-            document.body.style.overflow = ""; // Unlock scroll
-            contactTL.reverse();
-        }
-
-        if (contactBtn) {
-            contactBtn.addEventListener('click', openContact);
-        }
-        
-        if (closeContactBtn) {
-            closeContactBtn.addEventListener('click', closeContact);
-        }
-
-        // Close on backdrop click
-        contactBackdrop.addEventListener('click', closeContact);
-
-        // Input Micro-interactions (Float Label fix via JS support or just CSS)
-        // CSS 'peer' classes handle most. We add a visual 'active' check for pre-filled data if needed.
-        // But the CSS peer-placeholder-shown handles empty state well.
-
-        // --- 10. ID CARD PHYSICS (Swinging Interaction) ---
-        const idCard = document.getElementById('id-card');
-        const idCardString = document.getElementById('id-card-string');
-        const idCardContainer = idCard ? idCard.parentElement : null;
-
-        if (idCard && idCardContainer) {
-            // Set pivot point (Already set in init, but safe to redundantly ensure if needed, though init handles it)
-            // Note: We animate BOTH string and card on mousemove for physics consistency
-            
-            idCardContainer.addEventListener('mousemove', (e) => {
-                const rect = idCardContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Calculate Normalized Coordinates (-1 to 1)
-                const xPct = (x / rect.width - 0.5) * 2;
-                const yPct = (y / rect.height - 0.5) * 2;
-
-                // Apply Physics Rotation to BOTH
-                const targetRotX = -yPct * 6;
-                const targetRotY = xPct * 6;
-
-                gsap.to([idCard, idCardString], {
-                    rotationX: targetRotX, 
-                    rotationY: targetRotY,
-                    duration: 2, // Heavy Inertia
-                    ease: "power2.out"
-                });
-            });
-
-            idCardContainer.addEventListener('mouseleave', () => {
-                // Return to Rest
-                gsap.to([idCard, idCardString], {
-                    rotationX: 0,
-                    rotationY: 0,
-                    duration: 2.5, 
-                    ease: "power2.out"
-                });
-            });
-        }
-
-        // --- 11. ATMOSPHERIC HERO PARALLAX ---
-        const heroScene = document.getElementById('hero-scene');
-        const heroBg = document.getElementById('hero-bg-layer');
-        const heroNoise = document.getElementById('hero-noise-layer');
-        const heroFirst = document.getElementById('hero-first');
-        const heroLast = document.getElementById('hero-last');
-
-        if (heroScene) {
-            heroScene.addEventListener('mousemove', (e) => {
-                const rect = heroScene.getBoundingClientRect();
-                // Normalized coordinates (-0.5 to 0.5)
-                const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-                const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-
-                // 1. Background Blobs (Deepest) - Moves WITH cursor, very slow
-                gsap.to(heroBg, {
-                    x: xPct * 30, // Max 15px shift
-                    y: yPct * 30,
-                    duration: 1.5,
-                    ease: "power2.out"
-                });
-
-                // 2. Mid Layer (Noise) - Moves slightly faster
-                gsap.to(heroNoise, {
-                    x: xPct * 40,
-                    y: yPct * 40,
-                    duration: 1.2,
-                    ease: "power2.out"
-                });
-
-                // 3. Foreground Text - Moves AGAINST cursor (Parallax depth)
-                // Split movement for extra dimensionality
-                gsap.to(heroFirst, {
-                    x: -xPct * 12, // Max 6px shift
-                    y: -yPct * 12,
-                    duration: 1.0,
-                    ease: "power2.out"
-                });
-
-                gsap.to(heroLast, {
-                    x: -xPct * 8, // Moves slower than First name -> separation
-                    y: -yPct * 8,
-                    duration: 1.0,
-                    ease: "power2.out"
-                });
-
-                // 4. Interactive Lighting (Moving Shadow)
-                // Shadows move OPPOSITE to light source. 
-                // If cursor is Top-Left (-0.5, -0.5), Shadows should go Bottom-Right.
-                // We shift the 'depth' shadows slightly to simulate light angle change.
-                const shadowX = -xPct * 4; 
-                const shadowY = -yPct * 4;
-                
-                // Construct dynamic shadow string based on base CSS, adding the offset
-                // Base: -1px -1px (Highlight), 1px 1px (Depth 1), 2px 2px (Depth 2), Ambient
-                const highlightX = -1 + (xPct * 2); 
-                const highlightY = -1 + (yPct * 2);
-                
-                const title = document.getElementById('hero-title');
-                if (title) {
-                    gsap.to(title, {
-                        textShadow: `
-                            ${highlightX}px ${highlightY}px 1px rgba(255,255,255,0.1),
-                            ${1 + shadowX}px ${1 + shadowY}px 0px rgba(0,0,0,0.1),
-                            ${2 + shadowX}px ${2 + shadowY}px 0px rgba(0,0,0,0.05),
-                            ${shadowX * 2}px ${10 + shadowY * 2}px 30px rgba(0,0,0,0.2)
-                        `,
-                        duration: 0.5,
-                        ease: "power1.out"
-                    });
-                }
-            });
-
-            heroScene.addEventListener('mouseleave', () => {
-                // Return to neutral center
-                gsap.to([heroBg, heroNoise, heroFirst, heroLast], {
-                    x: 0,
-                    y: 0,
-                    duration: 1.5,
-                    ease: "power2.out"
-                });
-                
-                // Return Text Shadow to neutral
-                const title = document.getElementById('hero-title');
-                if (title) {
-                    gsap.to(title, {
-                        textShadow: `
-                            -1px -1px 1px rgba(255,255,255,0.1),
-                            1px 1px 0px rgba(0,0,0,0.1),
-                            2px 2px 0px rgba(0,0,0,0.05),
-                            0px 10px 30px rgba(0,0,0,0.2)
-                        `,
-                        duration: 1.5,
-                        ease: "power2.out"
-                    });
-                }
-            });
-            
-            // --- CINEMATIC ENTRY SEQUENCE ---
-            // Use 'fromTo' to guarantee initial state and avoid conflict
-            const heroEntryTL = gsap.timeline({ delay: 1.0 }); // Stage 1: Extended Stillness (1s)
-            
-            // Determine Colors based on Dark Mode
-            const isDark = document.documentElement.classList.contains('dark');
-            const startColor = isDark ? "#555555" : "#050505"; // Invisible state
-            const endColor = isDark ? "#f0f0f0" : "#1a1a1a";   // Final monument color
-            
-            // Stage 2: Deep Emergence (Slower, heavier)
-            heroEntryTL.fromTo('#hero-title', 
-                { opacity: 0, z: -50, color: startColor }, // Start: Deep, Dark/Dim
-                { 
-                    opacity: 1, 
-                    z: 0, 
-                    color: endColor, // Stage 2 color
-                    duration: 2.5, // Slow emergence
-                    ease: "power3.out"
-                }
-            )
-            // Stage 3: Light Reveal (Subtle Color/Highlight Shift)
-            .to('#hero-title', { 
-                color: endColor, // Ensure it stays correct
-                textShadow: isDark 
-                    ? "-1px -1px 1px rgba(255,255,255,0.2), 1px 1px 0px rgba(0,0,0,0.5), 2px 2px 0px rgba(0,0,0,0.3), 0px 10px 30px rgba(0,0,0,0.5)" // Dark mode shadow
-                    : "-1px -1px 1px rgba(255,255,255,0.1), 1px 1px 0px rgba(0,0,0,0.1), 2px 2px 0px rgba(0,0,0,0.05), 0px 10px 30px rgba(0,0,0,0.2)", // Light mode shadow
-                duration: 2.0, 
-                ease: "power2.inOut" 
-            }, "-=1.0"); // Overlap slightly
-        }
-
-        // --- 12. TRANSITION BAND LOOP ---
-        // Continuous kinetic typography
-        gsap.to(".marquee-row-1", {
-            xPercent: -50, // Move left half way (since content is doubled)
-            repeat: -1,
-            duration: 20, // Slow, controlled speed
-            ease: "none"
-        });
-
-        gsap.to(".marquee-row-2", {
-            xPercent: -50, // Move left (can inverse if set via CSS start)
-            // Ideally we want right->left. Let's start at -50% and go to 0 for reverse feel?
-            // Actually, simply reversing the direction:
-            startAt: { xPercent: -50 },
-            xPercent: 0, 
-            repeat: -1,
-            duration: 20,
-            ease: "none"
-        });
-
-        // --- 9. CONTACT FORM AJAX HANDLER ---
-        const contactForm = document.getElementById('contact-form');
-        const contactSuccess = document.getElementById('contact-success');
-
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(contactForm);
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                const originalBtnText = submitBtn.innerText;
-                
-                // Loading State
-                submitBtn.disabled = true;
-                submitBtn.innerText = "TRANSMITTING...";
-                submitBtn.style.opacity = "0.7";
-
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: contactForm.method,
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        // Success Animation
-                        gsap.to(contactForm, {
-                            height: 0,
-                            opacity: 0,
-                            duration: 0.5,
-                            overflow: 'hidden',
-                            onComplete: () => {
-                                contactForm.classList.add('hidden');
-                                contactForm.style.height = 'auto'; // Reset for next time if needed
-                                contactForm.style.opacity = '1';
-                                
-                                contactSuccess.classList.remove('hidden');
-                                gsap.fromTo(contactSuccess, 
-                                    { opacity: 0, scale: 0.9 },
-                                    { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }
-                                );
-
-                                // AUTO-CLOSE LOGIC ADDED HERE
-                                setTimeout(() => {
-                                    if (contactTL) {
-                                        contactTL.reverse(); // Close Modal
-                                    }
-                                    
-                                    // Reset UI after modal is closed (delay matching reverse duration approx)
-                                    setTimeout(() => {
-                                        resetForm();
-                                    }, 1000); 
-                                }, 2500); // Wait 2.5s for user to read message
-                            }
-                        });
-                        
-                        contactForm.reset();
-                    } else {
-                        throw new Error('Server returned ' + response.status);
-                    }
-                } catch (error) {
-                    console.error('Submission failed:', error);
-                    alert('Transmission failed. Please try again.');
-                } finally {
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = originalBtnText;
-                    submitBtn.style.opacity = "1";
-                }
-            });
-        }
-
-        function resetForm() {
-            // Hide success, show form
-            gsap.to(contactSuccess, {
-                opacity: 0,
-                duration: 0.3,
-                onComplete: () => {
-                    contactSuccess.classList.add('hidden');
-                    contactForm.classList.remove('hidden');
-                    gsap.fromTo(contactForm,
-                        { opacity: 0, height: 0 },
-                        { opacity: 1, height: 'auto', duration: 0.5 }
-                    );
-                }
-            });
-        }
-    </script>
-
+    <script src="js/main.js"></script>
 </body></html>
