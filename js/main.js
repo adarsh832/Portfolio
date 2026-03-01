@@ -95,7 +95,6 @@ function initLoader() {
 }
 
 function initApp() {
-<<<<<<< HEAD
     // --- GLOBAL MOTION CONFIGURATION ---
     const GLOBAL_EASE = "power3.out";
     const GLOBAL_DUR = 0.8;
@@ -109,12 +108,6 @@ function initApp() {
     const SCENE_CONFIG = {
         scrub: 1.5, // Heavy, weighted scroll
         ease: GLOBAL_EASE
-=======
-    // CINEMATIC SCROLL CONFIG
-    const SCENE_CONFIG = {
-        scrub: 1.5, // Heavy, weighted scroll
-        ease: "power2.out"
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
     };
 
     // Custom Cursor Logic (Preserved)
@@ -265,7 +258,6 @@ function initApp() {
         });
     }
 
-<<<<<<< HEAD
     gsap.set(".reveal-text", { y: 0, opacity: 1 }); // Reset old reveal-text CSS since we use story-blocks now
 
     // Storytelling scroll block setups
@@ -276,23 +268,14 @@ function initApp() {
         scale: 0.98,
         filter: "brightness(1) drop-shadow(0px 0px 0px rgba(0,0,0,0))"
     });
-=======
-    gsap.set(".reveal-text", { x: 200 }); // Text lags behind card
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
 
     const chapterTL = gsap.timeline({
         scrollTrigger: {
             trigger: "#chapter-wrapper",
             start: "top top",
-<<<<<<< HEAD
             end: "+=400%", // Increased scroll distance for storytelling
             pin: true,
             scrub: 1.5, // Smooth scrub
-=======
-            end: "+=150%", // Scroll distance to complete pan
-            pin: true,
-            scrub: 1,
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
             anticipatePin: 1
         }
     });
@@ -300,7 +283,6 @@ function initApp() {
     chapterTL
         // 1. Pan Camera Left
         .to("#chapter-wrapper", { 
-<<<<<<< HEAD
             xPercent: -50, 
             ease: "none",
             duration: 3 // Normalize pan to duration 3
@@ -391,32 +373,6 @@ function initApp() {
         yoyo: true,
         ease: "sine.inOut"
     });
-=======
-            xPercent: -50, // Move 50% of 200vw = 100vw
-            ease: "none" // Linear movement driven by scroll
-        })
-        // 2. Hero Exit Effects (Concurrent)
-        .to("#hero-content-wrapper", { 
-            scale: 0.9, 
-            opacity: 0, 
-            x: -100, 
-            duration: 0.5 
-        }, 0) // Start at time 0
-        .to(["#hero-footer", "#scroll-indicator"], { // Include scroll indicator in exit
-            opacity: 0,
-            duration: 0.3 // Disappear quickly on scroll
-        }, 0)
-        // 3. About Entry Effects (Concurrent, slight delay for parallax)
-        .call(playIdCardEntry, null, 0.5) // Trigger Cinematic Entry upon arrival
-        .to(".reveal-text", {
-            x: 0,
-            y: 0, // Ensure vertical reveal works too
-            opacity: 1,
-            stagger: 0.1,
-            duration: 0.8,
-            ease: "power2.out"
-        }, 0.3); // Text follows card
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
 
 
     // --- HERO INTERACTION (Cinematic Hover) ---
@@ -430,7 +386,6 @@ function initApp() {
 
             // Subtle Parallax for Layers (Depth: Back < Portrait < Front)
             
-<<<<<<< HEAD
             // 1. Background Moves Slower
             gsap.to('#hero-bg-layer', {
                 x: -x * 5, 
@@ -444,37 +399,15 @@ function initApp() {
             gsap.to('#hero-text-back', {
                 x: -x * 12, 
                 y: -y * 12,
-=======
-            // 1. Back Text (Deepest) - Moves least
-            gsap.to('#hero-text-back', {
-                x: -x * 5, 
-                y: -y * 5,
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
                 duration: 1.5,
                 ease: "power2.out",
                 overwrite: "auto"
             });
 
-<<<<<<< HEAD
             // 3. Portrait (Foreground) - Moves most
             gsap.to('#hero-portrait-container', {
                 x: -x * 20,
                 y: -y * 20,
-=======
-            // 2. Portrait (Mid) - Moves slightly more
-            gsap.to('#hero-portrait-container', {
-                x: -x * 10,
-                y: -y * 10,
-                duration: 1.5,
-                ease: "power2.out",
-                overwrite: "auto"
-            });
-
-            // 3. Front Text (Closest) - Moves most
-            gsap.to('#hero-text-front', {
-                x: -x * 15,
-                y: -y * 15,
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
                 duration: 1.5,
                 ease: "power2.out",
                 overwrite: "auto"
@@ -507,7 +440,6 @@ function initApp() {
         // --- CINEMATIC ENTRY SEQUENCE (Revised for Layers) ---
         // Architectural Alignment: Relies on CSS positioning (Bottom-Left)
         
-<<<<<<< HEAD
         // --- CINEMATIC ENTRY SEQUENCE WITH GSAP TEXT SPLIT ---
         // Splitting main heading text
         const heroTitleBlocks = document.querySelectorAll('#hero-text-back h2 .block');
@@ -556,11 +488,6 @@ function initApp() {
         }); 
         
         // 1. Grid Fades In
-=======
-        const heroEntryTL = gsap.timeline({ delay: 0.5 }); 
-        
-        // 1. Grid Fades In (Structure first)
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
         heroEntryTL.to('#global-grid-layer', {
             opacity: 1, 
             duration: 2.0,
@@ -572,7 +499,6 @@ function initApp() {
             { clipPath: "inset(0 0 0 0)", opacity: 1, duration: 1.5, ease: "expo.out" },
             "-=1.5"
         )
-<<<<<<< HEAD
         // 3. Portrait Appears
         .fromTo('#hero-portrait-container', 
             { opacity: 0, x: -20, y: 20 }, 
@@ -621,39 +547,6 @@ function initApp() {
             { opacity: 1, y: 0, stagger: 0.1, duration: 1.0, ease: GLOBAL_EASE },
             "-=1.0"
         );
-=======
-        // 3. Portrait Appears (Architectural Placement) - Subtle Fade & Slide
-        .fromTo('#hero-portrait-container', 
-            { opacity: 0, x: -20 }, // Slight drift from left
-            { opacity: 1, x: 0, duration: 2.0, ease: "power2.out" }, // Gentle arrival
-            "-=1.0"
-        )
-        // 4. Main Text (Solid, Dominant)
-        .to('#hero-text-back h2', {
-            opacity: 1,
-            y: 0,
-            duration: 1.5,
-            ease: "power2.out"
-        }, "-=1.2")
-        // 6. Structural Depth Planes (Engineered Arrival)
-        .fromTo('#hero-plane-portrait', 
-            { opacity: 0, x: -10 }, 
-            { opacity: 1, x: 0, duration: 1.5, ease: "power2.out" }, 
-            "-=1.2")
-        .fromTo('#hero-plane-strip', 
-            { scaleY: 0, transformOrigin: "top center" }, 
-            { scaleY: 1, duration: 2.0, ease: "expo.out" }, 
-            "-=1.8")
-
-        // 7. Icons Materialize
-        .to('.hero-icon', {
-            opacity: 1,
-            y: "-=5", 
-            stagger: 0.2, 
-            duration: 2.0,
-            ease: "power2.out"
-        }, "-=1.5");
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
 
         // --- FLOATING ICON LOOPS ---
         document.querySelectorAll('.hero-icon').forEach((icon) => {
@@ -691,7 +584,6 @@ function initApp() {
     }
 
 
-<<<<<<< HEAD
     // --- 5. SCENE 3: WORK ---
     const workGroups = gsap.utils.toArray("#work .group");
 
@@ -700,22 +592,6 @@ function initApp() {
         group.style.transition = "none";
         const content = group.querySelector('.card-content');
         if (content) content.style.transition = "none";
-=======
-    // --- 5. SCENE 3: WORK (The Pinned Gallery) ---
-    // Cards enter with "Museum Weight" + Pinned Logic
-    const workGroups = gsap.utils.toArray("#work .group");
-
-    // Master Timeline for Sequential Pinning
-    const galleryTimeline = gsap.timeline({
-        scrollTrigger: {
-            trigger: "#work", // Pin the entire section
-            start: "top top", // Start when section hits top of viewport
-            end: "+=150%", // Reduced scroll distance for faster pinning
-            scrub: 0.5, // Tighter scrub for snappier feel
-            pin: true, // Lock in place
-            anticipatePin: 1
-        }
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
     });
 
     // --- INTERACTIVE SYSTEM NODES (Logic) ---
@@ -787,7 +663,6 @@ function initApp() {
         });
     });
 
-<<<<<<< HEAD
     // 1. Entrance Animation
     // Hide initially (Add Z depth push)
     gsap.set(workGroups, { y: 70, opacity: 0, scale: 0.96, z: -30 });
@@ -1090,80 +965,6 @@ function initApp() {
             ease: "power1.inOut"
         });
     }
-=======
-    // Initial setup: Hide all cards first
-    gsap.set(workGroups, { y: 100, opacity: 0, scale: 0.9, rotation: 10 });
-
-    workGroups.forEach((group, i) => {
-        const cardContent = group.querySelector('.card-content');
-        const pinHead = group.querySelector('.pin-head');
-        
-        // Sequential Reveal Timeline
-        // We use 'add' to place them in sequence on the scrub timeline
-        
-        if (cardContent && pinHead) {
-            // Pin Project Card sequence
-            const tl = gsap.timeline();
-            
-            tl.to(group, { 
-                y: 0, 
-                opacity: 1, 
-                scale: 1, 
-                rotation: i % 2 === 0 ? -2 : 2, // Slight random tilt
-                duration: 1, 
-                ease: "power3.out" 
-            })
-            .fromTo(pinHead, 
-                { y: -300, opacity: 0, scale: 3 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "bounce.out" },
-                "-=0.4"
-            );
-
-            galleryTimeline.add(tl, `card${i}`);
-            
-        } else {
-            // Archive / View All Card
-            galleryTimeline.to(group, { 
-                y: 0, 
-                opacity: 1, 
-                scale: 1, 
-                rotation: 0,
-                duration: 1, 
-                ease: "power2.out" 
-            }, "-=0.2");
-        }
-        
-        // Add a pause/spacer after each card so user can appreciate it
-        galleryTimeline.to({}, { duration: 0.5 });
-    });
-
-
-    // --- 6. SCENE 4: CONTACT (Resolution) ---
-
-    // Hero Static Frame Entry
-    gsap.from("#contact h2", {
-        scrollTrigger: {
-            trigger: "#contact",
-            start: "top 70%",
-            end: "top 40%",
-            scrub: 1
-        },
-        scale: 0.9,
-        opacity: 0
-    });
-
-    // Button Final Reveal (Visual Silence -> Action)
-    gsap.from("#contact button", {
-        scrollTrigger: {
-            trigger: "#contact",
-            start: "center 60%",
-            scrub: false // Snap reveal
-        },
-        opacity: 0,
-        duration: 1.5,
-        ease: "power2.out"
-    });
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
 
     // --- THEME TOGGLE LOGIC ---
     const themeToogleBtn = document.getElementById('theme-toggle');
@@ -1394,11 +1195,7 @@ function initApp() {
     }
 
     // --- 9. CINEMATIC CONTACT FORM LOGIC ---
-<<<<<<< HEAD
     const contactModalBtn = document.getElementById('initiate-contact-btn');
-=======
-    const contactBtn = document.getElementById('initiate-contact-btn');
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
     const contactModal = document.getElementById('contact-form-modal');
     const contactBackdrop = document.getElementById('contact-backdrop');
     const contactCard = document.getElementById('contact-form-card');
@@ -1437,11 +1234,7 @@ function initApp() {
         isContactOpen = true;
         
         // Button Press Effect
-<<<<<<< HEAD
         gsap.to(contactModalBtn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
-=======
-        gsap.to(contactBtn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
 
         contactModal.style.pointerEvents = "auto";
         document.body.style.overflow = "hidden"; // Lock scroll
@@ -1457,13 +1250,8 @@ function initApp() {
         contactTL.reverse();
     }
 
-<<<<<<< HEAD
     if (contactModalBtn) {
         contactModalBtn.addEventListener('click', openContact);
-=======
-    if (contactBtn) {
-        contactBtn.addEventListener('click', openContact);
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
     }
 
     if (closeContactBtn) {
@@ -1739,7 +1527,6 @@ function initApp() {
     // We already have a 'heroScene' listener at the top.
     // The physics for ID card are separate.
 
-<<<<<<< HEAD
     // --- 14. TRANSITION BAND SCRUB ---
     // Scroll-driven kinetic typography
     gsap.to(".marquee-row", {
@@ -1751,23 +1538,6 @@ function initApp() {
             end: "bottom top",
             scrub: 1 // Moves smoothly with scroll
         }
-=======
-    // --- 14. TRANSITION BAND LOOP (The Fix) ---
-    // Continuous kinetic typography
-    gsap.to(".marquee-row-1", {
-        xPercent: -50, // Move left half way (since content is doubled)
-        repeat: -1,
-        duration: 20, // Slow, controlled speed
-        ease: "none"
-    });
-
-    gsap.to(".marquee-row-2", {
-        startAt: { xPercent: -50 },
-        xPercent: 0, // Move right
-        repeat: -1,
-        duration: 20,
-        ease: "none"
->>>>>>> 503aab1913365df4710692d1926db6dddef1183d
     });
 }
 document.addEventListener("DOMContentLoaded", initLoader);
