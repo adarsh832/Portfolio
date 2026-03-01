@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#050505;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#g1)"/>
+  
+  <!-- Subtle Grid -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#222" stroke-width="1"/>
+  </pattern>
+  <rect width="800" height="600" fill="url(#grid)"/>
+
+  <!-- Phone Frame -->
+  <g transform="translate(250, 50)" filter="url(#shadow)">
+    <!-- Body -->
+    <rect x="0" y="0" width="300" height="500" rx="30" fill="#121212" stroke="#333" stroke-width="3"/>
+    <!-- Screen (White as per reference) -->
+    <rect x="10" y="10" width="280" height="480" rx="20" fill="#ffffff"/>
+    
+    <!-- Notch -->
+    <path d="M 90 10 h 120 v 20 a 10 10 0 0 1 -10 10 h -100 a 10 10 0 0 1 -10 -10 z" fill="#121212"/>
+
+    <!-- App UI -->
+    <g transform="translate(30, 60)">
+        <!-- Header -->
+        <text x="0" y="20" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="black">Apdate</text>
+        <text x="0" y="55" font-family="Arial, sans-serif" font-weight="bold" font-size="16" fill="black">News</text>
+        <!-- Bookmark Icon -->
+        <path d="M 50 43 v 10 l 4 -3 l 4 3 v -10 h -8" fill="black"/>
+
+        <!-- Illustration Placeholder (Stylized Figure) -->
+        <g transform="translate(150, 0)">
+             <!-- Abstract Doodle -->
+             <path d="M 20 50 Q 50 10 80 50 T 110 50" stroke="black" stroke-width="3" fill="none"/>
+             <circle cx="90" cy="20" r="10" fill="black"/>
+             <rect x="60" y="30" width="40" height="20" fill="black" rx="5"/>
+        </g>
+
+        <!-- News Card -->
+        <g transform="translate(0, 80)">
+             <rect width="240" height="300" rx="15" fill="white" stroke="black" stroke-width="1.5"/>
+             
+             <!-- Article Image (Robots colors) -->
+             <rect x="15" y="15" width="210" height="110" rx="10" fill="#ffbd2e"/> <!-- Orange BG -->
+             <rect x="40" y="40" width="40" height="60" fill="#2d7eff"/> <!-- Blue Robot -->
+             <rect x="140" y="40" width="40" height="60" fill="#ff7043"/> <!-- Orange Robot -->
+             <circle cx="50" cy="50" r="5" fill="white"/>
+             <circle cx="70" cy="50" r="5" fill="white"/>
+             <circle cx="150" cy="50" r="5" fill="white"/>
+             <circle cx="170" cy="50" r="5" fill="white"/>
+             
+             <!-- Headline -->
+             <text x="15" y="150" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="black">Anthropic Study</text>
+             <text x="15" y="168" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="black">Reveals Political Bias</text>
+             
+             <!-- Text Snippet -->
+             <text x="15" y="195" font-family="Arial, sans-serif" font-size="9" fill="#555">An open-source study by</text>
+             <text x="15" y="210" font-family="Arial, sans-serif" font-size="9" fill="#555">Anthropic assessed the political</text>
+             <text x="15" y="225" font-family="Arial, sans-serif" font-size="9" fill="#555">neutrality of six major AI models.</text>
+
+             <!-- Read More Btn -->
+             <rect x="15" y="250" width="120" height="30" rx="15" fill="black"/>
+             <text x="75" y="269" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="bold">Read More</text>
+             
+             <!-- Card Bookmark -->
+             <path d="M 210 255 v 14 l 5 -4 l 5 4 v -14 h -10" fill="black"/>
+        </g>
+    </g>
+    
+  </g>
+</svg>

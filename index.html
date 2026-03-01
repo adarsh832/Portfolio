@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Adarsh Shah — Creative Engineer building applications, web platforms, and intelligent systems with precision and performance-driven design.">
+<title>Adarsh Shah | Engineer &amp; Developer</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background-light": "#f2f0ea",
+                        "background-dark": "#121212",
+                        "primary": "#102a22", // Racing Green
+                        "accent-dark": "#0f172a",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1e1e1e",
+                    },
+                    fontFamily: {
+                        display: ["'Archivo Black'", "sans-serif"],
+                        body: ["'Inter'", "sans-serif"],
+                    },
+                    fontSize: {
+                        'huge': '14vw',
+                    },
+                    animation: {
+                        'swing': 'swing 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        swing: {
+                            '0%, 100%': { transform: 'rotate(1deg)' },
+                            '50%': { transform: 'rotate(-1deg)' },
+                        }
+                    }
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Custom Cursor Element -->
+    <div id="cursor-dot"></div>
+</head>
+<body class="bg-white dark:bg-[#050505] text-black dark:text-white transition-colors duration-500 overflow-x-hidden antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+
+    <!-- SIGNATURE LOADING SCREEN -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#0a0a0a] text-black dark:text-white" style="display: flex;">
+        <!-- Grid Background -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none loader-grid"></div>
+
+        <!-- Signature SVG with Masked Image -->
+        <!-- Even larger size (800px) and dark mode support -->
+        <div class="relative z-10 w-96 md:w-[800px]">
+             <svg viewBox="0 0 500 250" version="1.1" xmlns="http://www.w3.org/2000/svg" class="w-full h-full overflow-visible">
+                <defs>
+                    <mask id="sign-mask">
+                         <path id="signature-mask-path" fill="none" stroke="white" stroke-width="150" stroke-linecap="round" stroke-linejoin="round"
+                              d="M 20 125 L 480 125" /> 
+                    </mask>
+                </defs>
+                
+                <!-- Actual PNG Image (Masked) -->
+                <image href="images/sign.png" x="0" y="0" width="500" height="250" mask="url(#sign-mask)" preserveAspectRatio="xMidYMid meet" class="signature-png transition-all duration-300" />
+                
+                <!-- Decorative Underline (Vector) -->
+                <path id="signature-underline" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" 
+                      d="M 50 200 Q 250 210 450 195" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="smooth-wrapper" class="opacity-0"> <!-- Hidden initially, revealed after loader -->
+        <div id="smooth-content">
+<nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center text-black dark:text-white">
+<div class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80">
+            Engineer / Dev
+        </div>
+    <div class="relative z-50 flex items-center gap-4">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="w-10 h-10 border border-black dark:border-white flex items-center justify-center cursor-pointer group bg-white dark:bg-black hover:opacity-80 transition-opacity" aria-label="Toggle Theme">
+            <!-- Sun Icon (Default/Light) -->
+            <svg id="theme-sun" class="w-5 h-5 hidden dark:block text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <!-- Moon Icon (Dark/Active) -->
+            <svg id="theme-moon" class="w-5 h-5 block dark:hidden text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+        <!-- Hamburger Button -->
+        <div id="menu-btn" class="w-10 h-10 border border-black dark:border-white flex items-center justify-center cursor-pointer group bg-white dark:bg-black transition-transform hover:scale-110">
+            <div class="relative w-5 h-5 flex flex-col justify-between items-center transition-all duration-300">
+                <span id="line1" class="w-full h-0.5 bg-black dark:bg-white transition-all duration-300 origin-center"></span>
+                <span id="line2" class="w-full h-0.5 bg-black dark:bg-white transition-all duration-300"></span>
+                <span id="line3" class="w-full h-0.5 bg-black dark:bg-white transition-all duration-300 origin-center"></span>
+            </div>
+        </div>
+
+        <!-- Menu Pop-up (Square on corner) -->
+        <div id="menu-overlay" class="fixed top-0 right-0 w-[300px] h-[350px] bg-black/90 dark:bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center rounded-bl-3xl z-40 origin-top-right transform">
+             <ul class="flex flex-col space-y-6 text-center">
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#">Home</a>
+                </li>
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#profile">Identity</a>
+                </li>
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#work">Projects</a>
+                </li>
+                <li class="overflow-hidden">
+                    <a class="menu-link block text-2xl font-display uppercase text-white dark:text-black hover:text-gray-400 dark:hover:text-gray-600 transition-colors transform translate-y-10 opacity-0" href="#contact">Connect</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Global Engineering Grid (Moved outside sections) -->
+<div id="global-grid-layer"></div>
+
+<div id="chapter-wrapper" class="flex flex-nowrap w-[200vw] overflow-x-hidden">
+    <section id="hero-scene" class="relative group w-screen h-screen flex-shrink-0 flex items-center justify-center p-0 overflow-hidden">
+        <!-- 1. Deep Background Layer -->
+        <div id="hero-bg-layer" class="absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000 opacity-40 group-hover:opacity-60">
+            <div class="absolute top-[20%] left-[20%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-pulse-slow"></div>
+            <div class="absolute bottom-[20%] right-[20%] w-[35vw] h-[35vw] bg-gray-400/20 dark:bg-gray-600/20 rounded-full blur-[80px]"></div>
+        </div>
+
+        <!-- 2. Mid Layer (Atmosphere) -->
+        <div id="hero-noise-layer" class="absolute inset-0 z-1 pointer-events-none opacity-20 mix-blend-overlay">
+             <svg class="w-full h-full opacity-50" xmlns="http://www.w3.org/2000/svg">
+                <filter id="noiseFilter">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                </filter>
+                <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+            </svg>
+            <div class="absolute inset-0 bg-gradient-radial from-transparent to-black/20"></div>
+        </div>
+
+        <!-- 3. Engineering Grid Layer (REMOVED - Moved to Global) -->
+
+        <!-- 4. Framing Borders -->
+        <div id="hero-frame">
+            <div class="corner-marker tl"></div>
+            <div class="corner-marker tr"></div>
+            <div class="corner-marker bl"></div>
+            <div class="corner-marker br"></div>
+            <span class="technical-label lbl-tl">SYS.REF // 2024</span>
+            <span class="technical-label lbl-br">ENG.MODE // ACT</span>
+        </div>
+
+        <!-- 5. Floating Icons Layer -->
+        <!-- Added structure for interactivity -->
+        <div id="hero-icons-layer">
+            
+            <!-- Icon 1: Memory -->
+            <div class="hero-icon icon-pos-1 icon-lg" data-id="1">
+                <span class="material-icons-outlined">memory</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">APPLICATIONS</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Building scalable digital products from concept to deployment.</p>
+                </div>
+            </div>
+
+            <!-- Icon 2: Terminal -->
+            <div class="hero-icon icon-pos-2" data-id="2">
+                <span class="material-icons-outlined">terminal</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">WEB SYSTEMS</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Crafting structured, high-performance web experiences.</p>
+                </div>
+            </div>
+
+            <!-- Icon 3: Cloud -->
+            <div class="hero-icon icon-pos-3 icon-sm" data-id="3">
+                <span class="material-icons-outlined">cloud_queue</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">AUTOMATION</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Engineering tools that streamline workflows and increase efficiency.</p>
+                </div>
+            </div>
+
+            <!-- Icon 4: Laptop (Blurred) -->
+            <div class="hero-icon icon-pos-4 icon-blur" data-id="4">
+                <span class="material-icons-outlined">laptop_mac</span>
+                <div class="micro-panel">
+                    <h4 class="panel-header">INTELLIGENT LOGIC</h4>
+                    <div class="panel-line"></div>
+                    <p class="panel-desc">Integrating advanced systems where they create real impact.</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="hero-content-wrapper" class="flex-grow flex flex-col justify-center items-center relative z-10 w-full h-full"> 
+            <!-- LAYERED COMPOSITION CONTAINER -->
+            <div id="hero-composition" class="relative w-full h-full flex items-center justify-center">
+
+                <!-- 0. STRUCTURAL DEPTH PLANES (Background Architecture) -->
+                
+                <!-- Rect 3: Vertical Structural Strip (Left Axis) -->
+                <div id="hero-plane-strip" class="absolute left-[8%] top-0 bottom-0 w-[1px] bg-black/10 dark:bg-white/10 z-0 hidden md:block"></div>
+
+                <div id="hero-plane-portrait" class="absolute bottom-[2vh] left-[42%] -translate-x-1/2 h-[80vh] w-[30vh] border border-black/10 dark:border-white/10 z-10 hidden md:block"></div>
+
+                <!-- 1. MAIN TEXT LAYER (Dominant, Solid, Above Portrait) -->
+                <div id="hero-text-back" class="absolute inset-0 z-30 flex flex-col justify-center items-center pointer-events-none select-none mix-blend-difference">
+                     <h2 class="font-display text-huge leading-[0.85] uppercase tracking-tighter text-center text-monument text-stroke-light opacity-0 translate-y-4">
+                        <span class="block">ADARSH</span>
+                        <span class="block">SHAH</span> <!-- Fully Visible, Solid -->
+                    </h2>
+                </div>
+
+                <!-- 2. PORTRAIT IMAGE LAYER (Supporting, Architectural Placement) -->
+                <!-- Moved up slightly (bottom-[3vh]), sharper edge via CSS, below text (z-20) -->
+                <div id="hero-portrait-container" class="absolute bottom-[3vh] left-[42%] -translate-x-1/2 h-[85vh] w-auto z-20 overflow-visible opacity-0">
+                    <img src="images/hero_photo.png" alt="Adarsh Shah Portrait" class="h-full w-auto object-contain -scale-x-100 filter grayscale contrast-110 brightness-95 hero-portrait-img">
+                </div>
+
+                <!-- 3. FRONT TEXT LAYER REMOVED (Clean Architectural Look) -->
+
+                <!-- Main Text Container for Screen Readers -->
+                <h1 class="sr-only">Adarsh Shah - Creative Engineer</h1>
+
+                 <!-- 4. SUBTITLE REMOVED (As requested) -->
+
+            </div>
+        </div>
+        
+        <!-- Architectural Scroll Indicator -->
+        <div id="scroll-indicator" class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 pointer-events-none opacity-0 mix-blend-difference" style="opacity: 0;">
+             <!-- Guide Line -->
+             <div class="relative w-px h-12 bg-black/10 dark:bg-white/10 overflow-hidden">
+                <!-- Moving Cursor -->
+                <div id="scroll-cursor" class="absolute top-0 left-0 w-full h-2 bg-black dark:bg-white"></div>
+             </div>
+        </div>
+
+        <div class="absolute bottom-12 w-full flex flex-col md:flex-row justify-between items-center text-[10px] font-bold tracking-[0.3em] uppercase text-black/60 dark:text-gray-400 px-6 gap-4" id="hero-footer">
+            <span>Est. 2024</span>
+            <span>Computer Engineering</span>
+            <span>Vadodara, IN</span>
+        </div>
+    </section>
+    
+    <section class="w-screen h-screen flex-shrink-0 flex items-center justify-center px-6 md:px-12 lg:px-24 max-w-7xl mx-auto" id="profile">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 w-full items-center">
+            <div class="lg:col-span-5 relative h-[500px] flex justify-center items-center" style="perspective: 1000px;"> <!-- Added perspective -->
+                <!-- String -->
+                <div id="id-card-string" class="absolute top-0 left-1/2 w-px h-32 bg-gray-400 dark:bg-gray-500 z-10 origin-top"></div>
+                
+                <!-- Enhanced Card -->
+                <div id="id-card" class="relative mt-24 w-72 bg-white dark:bg-neutral-100 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] p-5 origin-top rounded-2xl border border-white/50 dark:border-white/20"> 
+                    
+                    <!-- Realistic Slot Punch -->
+                    <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 shadow-inner z-20 border border-black/5"></div>
+                    
+                    <!-- Header -->
+                    <div class="flex justify-between items-start mb-4 border-b border-gray-200 dark:border-gray-300 pb-3">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xs ring-4 ring-gray-50 dark:ring-gray-200/50">AS</div>
+                        <div class="text-right">
+                            <span class="block text-[0.55rem] text-gray-400 uppercase tracking-widest">Identity</span>
+                            <span class="block text-sm font-black text-black font-display uppercase tracking-tight">Eng. Level 4</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Photo with Holographic Detail -->
+                    <div class="aspect-[4/5] bg-gray-100 mb-4 overflow-hidden grayscale relative rounded-xl shadow-inner group">
+                        <img alt="Profile Portrait" class="w-full h-full object-cover opacity-90 mix-blend-multiply transition-transform duration-700 group-hover:scale-105" src="images/pp.jpeg"/>
+                        
+                        <!-- Active Status Badge -->
+                        <div class="absolute bottom-2 left-2 bg-white/90 backdrop-blur-md px-2 py-0.5 text-[0.5rem] font-bold uppercase tracking-wider text-black border border-black/10 rounded-md shadow-sm">
+                            Active Status
+                        </div>
+
+                        <!-- Holographic Sticker -->
+                        <div class="absolute top-2 right-2 w-8 h-8 rounded-full opacity-60 mix-blend-overlay bg-gradient-to-tr from-cyan-400 via-white to-purple-400 shadow-lg animate-pulse"></div>
+                    </div>
+                    
+                    <!-- Details -->
+                    <div class="grid grid-cols-2 gap-4 text-black border-t border-gray-100 dark:border-gray-300 pt-3">
+                        <div>
+                            <span class="block text-[0.5rem] text-gray-400 uppercase tracking-wider">Role</span>
+                            <span class="block text-xs font-bold text-gray-800">Developer</span>
+                        </div>
+                        <div>
+                            <span class="block text-[0.5rem] text-gray-400 uppercase tracking-wider">Spec</span>
+                            <span class="block text-xs font-bold text-gray-800">Full Stack</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Barcode with Numbers -->
+                <div class="mt-4 opacity-30">
+                     <div class="h-4 w-full bg-cover bg-repeat-x" style="background-image: repeating-linear-gradient(90deg, black 0px, black 1px, transparent 1px, transparent 3px);"></div>
+                     <div class="flex justify-between text-[0.4rem] font-mono tracking-[0.2em] mt-1 text-black">
+                        <span>001092</span>
+                        <span>839102</span>
+                     </div>
+                </div>
+                <div class="mt-3 text-center opacity-60">
+                    <span class="text-[0.5rem] uppercase tracking-widest text-red-500 animate-pulse font-bold flex items-center justify-center gap-1">
+                        <span class="material-icons-outlined text-[0.6rem]">touch_app</span>
+                        Click to Access
+                    </span>
+                </div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 space-y-8 relative"> <!-- Added relative for positioning -->
+                
+                <!-- ORIGINAL ABOUT TEXT (Wrapped for transition) -->
+                <div id="about-text-content" class="transition-opacity duration-500 relative">
+                    <div class="mb-8 story-block">
+                         <div class="reveal-mask">
+                            <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                                The
+                            </h2>
+                         </div>
+                         <div class="reveal-mask">
+                            <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                                Architect
+                            </h2>
+                         </div>
+                         <div class="reveal-mask">
+                            <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase leading-[0.9] text-[#1a2e2a] dark:text-gray-100">
+                                Mindset.
+                            </h2>
+                         </div>
+                    </div>
+                    <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300 font-light max-w-xl">
+                        <p class="story-block">
+                            I don’t just write code — I build systems.
+                        </p>
+                        <p class="story-block">
+                            My work sits at the intersection of creativity and engineering. I design applications, craft web experiences, and develop intelligent tools that solve real problems with clarity and structure.
+                        </p>
+                        <p class="text-sm text-gray-400 dark:text-gray-400 story-block">
+                            Every project is built with intent — scalable, maintainable, and engineered to perform.
+                        </p>
+                    </div>
+                    <div class="pt-4 story-block">
+                        <a class="inline-block border-b border-black dark:border-white text-black dark:text-white uppercase tracking-widest text-[10px] font-bold py-1 hover:opacity-60 transition-opacity" href="resume.pdf" download>
+                            DOWNLOAD CV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- FILE SYSTEM VIEW (Initially Hidden) -->
+                <div id="file-system-view" class="absolute inset-0 hidden opacity-0 pointer-events-none flex flex-col justify-start z-20">
+                    
+                    <!-- Header Row -->
+                    <div class="flex justify-between items-center mb-6 border-b border-black/10 dark:border-white/10 pb-2">
+                        <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-gray-400">Profile Directory</span>
+                        <button id="close-directory-btn" class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-red-500 hover:text-red-600 transition-colors flex items-center gap-2 cursor-pointer">
+                            <span>Close Directory</span>
+                            <span class="material-icons-outlined text-sm">close</span>
+                        </button>
+                    </div>
+
+                    <!-- Directory List -->
+                    <div class="space-y-2" id="directory-list">
+                        
+                        <!-- Folder: Experience -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                            <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">folder</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Experience</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <!-- Expanded Content -->
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 space-y-4 font-mono leading-relaxed">
+                                    <div>
+                                        <p class="font-bold text-black dark:text-white mb-1">// FREELANCE DEVELOPER</p>
+                                        <p class="opacity-70 mb-1">2024 — Present</p>
+                                        <p>Designing and developing custom web solutions, full-stack applications, and automation scripts for diverse clients.</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-black dark:text-white mb-1">// ENGINEERING STUDENT</p>
+                                        <p class="opacity-70 mb-1">2021 — 2025</p>
+                                        <p>Focused on Systems Architecture, Algorithm Design, and AI Integration.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Folder: Projects -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                            <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">folder_open</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Active Projects</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 space-y-2 font-mono">
+                                    <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> APDATE (Android/Prod)</p>
+                                    <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> GEMINI ASSISTANT (CLI/Tool)</p>
+                                    <p class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> TRACKMANIA AI (Exp/Beta)</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Folder: Skills -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                            <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">extension</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Tech Stack</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 grid grid-cols-2 gap-2 font-mono">
+                                    <span>Python / Django</span>
+                                    <span>JavaScript / React</span>
+                                    <span>Web Automation</span>
+                                    <span>System Architecture</span>
+                                    <span>UI / UX Design</span>
+                                    <span>Linux / Bash</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Folder: Education -->
+                        <div class="directory-folder group border border-black/5 dark:border-white/5 rounded px-4 py-3 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300">
+                             <div class="folder-header flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-icons-outlined text-gray-400 group-hover:text-primary dark:group-hover:text-white transition-colors text-lg">school</span>
+                                    <span class="font-display text-sm uppercase tracking-wider text-black dark:text-white">Education</span>
+                                </div>
+                                <span class="material-icons-outlined text-gray-300 text-sm transform transition-transform duration-300 folder-arrow">chevron_right</span>
+                            </div>
+                            <div class="folder-content overflow-hidden h-0 opacity-0 transition-all duration-300">
+                                <div class="pt-4 pl-8 text-xs text-gray-600 dark:text-gray-300 space-y-1 font-mono">
+                                    <p class="font-bold text-black dark:text-white">Bachelor of Computer Engineering</p>
+                                    <p>Vadodara Institute of Engineering</p>
+                                    <p class="opacity-70">2021 — 2025</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<section id="transition-band" class="relative z-20 w-full py-6 -mt-24 overflow-hidden bg-transparent select-none pointer-events-none fade-mask">
+    <div class="flex flex-col gap-4 transform -rotate-1 origin-center">
+        <!-- Row 1: Left to Right -->
+        <div class="marquee-row flex whitespace-nowrap">
+             <span class="text-[6vw] font-display font-black uppercase tracking-widest text-primary dark:text-white px-4">
+                Precision • Systems • Scale • Performance • Python • Architecture • Cloud • Design • Precision • Systems • Scale • Performance • Python • Architecture • Cloud • Design •
+             </span>
+             <span class="text-[6vw] font-display font-black uppercase tracking-widest text-primary dark:text-white px-4">
+                Precision • Systems • Scale • Performance • Python • Architecture • Cloud • Design • Precision • Systems • Scale • Performance • Python • Architecture • Cloud • Design •
+             </span>
+        </div>
+    </div>
+</section>
+<style>
+    .text-stroke-light { -webkit-text-stroke: 1px rgba(0,0,0,0.1); color: transparent; }
+    .text-stroke-dark { -webkit-text-stroke: 1px rgba(255,255,255,0.1); color: transparent; }
+    .fade-mask { mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); }
+    
+    /* SCULPTURAL TYPOGRAPHY */
+    .text-monument {
+        color: #1a1a1a; /* Off-black for dark depth */
+        text-shadow: 
+            -1px -1px 1px rgba(255,255,255,0.1), /* Top-Left Highlight */
+            1px 1px 0px rgba(0,0,0,0.1),         /* Depth Layer 1 */
+            2px 2px 0px rgba(0,0,0,0.05),        /* Depth Layer 2 */
+            0px 10px 30px rgba(0,0,0,0.2);       /* Ambient Shadow */
+        will-change: transform, opacity, text-shadow;
+    }
+    .dark .text-monument {
+        color: #f0f0f0; /* Off-white */
+        text-shadow: 
+            -1px -1px 1px rgba(255,255,255,0.2), 
+            1px 1px 0px rgba(0,0,0,0.5),
+            2px 2px 0px rgba(0,0,0,0.3),
+            0px 10px 30px rgba(0,0,0,0.5);
+    }
+</style>
+<section class="pb-24 pt-24 px-6 md:px-12 lg:px-24" id="work">
+<div class="mb-20">
+<div class="mb-20">
+    <div class="reveal-mask">
+        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase mb-6 text-black dark:text-white">
+            Selected<br/>Works
+        </h2>
+    </div>
+<div class="flex items-center justify-between border-t border-black/10 dark:border-white/10 pt-4">
+<div class="h-px bg-black dark:bg-white w-full mr-4 opacity-10 project-divider"></div>
+<div class="text-right">
+<span class="block font-display text-xl text-gray-400 dark:text-gray-500">01 —</span>
+<span class="block font-display text-xl text-gray-400 dark:text-gray-500">04</span>
+</div>
+</div>
+</div>
+<div id="work-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-4 lg:gap-8 items-start">
+<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform -rotate-1 transition-all duration-300 cursor-pointer" 
+    data-title="APDATE" 
+    data-desc="A smart productivity application deployed on the Google Play Store. Built to transform user intent into structured actions through carefully designed system logic and performance-focused engineering." 
+    data-image="images/project_apdate.svg"
+    data-github="https://play.google.com/store/apps/details?id=com.apdate.apdate&pcampaignid=web_share">
+    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
+    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
+            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_apdate.svg"/>
+        </div>
+        <div class="px-2">
+            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
+                <span>Intelligent Productivity App</span>
+            </div>
+            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">APDATE</h3>
+            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">A smart productivity application deployed on the Google Play Store.</p>
+            <div class="flex justify-end">
+                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <span class="material-icons-outlined text-xs">north_east</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform rotate-2 md:mt-12 transition-all duration-300 cursor-pointer"
+    data-title="TRACKMANIA_AI"
+    data-desc="An experimental automation project exploring real-time interaction and decision-based system design. Built as a creative engineering challenge focused on behavior and structure."
+    data-image="images/project_trackmania.svg"
+    data-github="https://github.com/adarsh832">
+    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
+    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
+            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_trackmania.svg"/>
+        </div>
+        <div class="px-2">
+            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
+                <span>Automation & System Experiment</span>
+            </div>
+            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">TRACKMANIA_AI</h3>
+            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">An experimental automation project exploring real-time interaction.</p>
+            <div class="flex justify-end">
+                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <span class="material-icons-outlined text-xs">north_east</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform -rotate-1 transition-all duration-300 cursor-pointer"
+    data-title="GEMINI LINUX ASSISTANT"
+    data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
+    data-image="images/project_gemini.svg"
+    data-github="https://github.com/adarsh832">
+    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
+    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
+        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
+            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_gemini.svg"/>
+        </div>
+        <div class="px-2">
+            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
+                <span>Developer Automation Tool</span>
+            </div>
+            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">GEMINI<br/>LINUX ASSISTANT</h3>
+            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">A command-line assistant that converts natural language into executable system commands.</p>
+            <div class="flex justify-end">
+                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                    <span class="material-icons-outlined text-xs">north_east</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="relative aspect-[3/4] bg-transparent border border-dashed border-gray-400 dark:border-gray-600 p-8 flex flex-col justify-center items-center text-center hover:bg-white/50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="space-y-2">
+<h3 class="font-display text-2xl uppercase text-black dark:text-white">Archive</h3>
+<p class="text-[0.5rem] uppercase tracking-[0.3em] text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">View All Projects</p>
+</div>
+</div>
+</div>
+</section>
+
+    <!-- PROJECT DETAIL MODAL -->
+    <div id="project-modal" class="fixed inset-0 z-[100] bg-white dark:bg-black text-black dark:text-white flex justify-center items-center pointer-events-none opacity-0">
+        <div class="absolute inset-0 bg-gray-100 dark:bg-neutral-900 opacity-90 backdrop-blur-xl"></div>
+        
+        <!-- Close Button -->
+        <button id="close-modal-btn" class="absolute top-8 right-8 w-12 h-12 flex justify-center items-center rounded-full border border-black/10 dark:border-white/10 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all z-20">
+            <span class="material-icons-outlined">close</span>
+        </button>
+
+        <div class="relative z-10 w-full max-w-5xl p-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+             <!-- Image -->
+             <div class="aspect-[4/3] bg-gray-200 overflow-hidden shadow-2xl relative group">
+                <img id="modal-image" src="" alt="Project Detail" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+             </div>
+
+             <!-- Content -->
+             <div class="space-y-8">
+                 <h2 id="modal-title" class="font-display text-5xl md:text-7xl uppercase leading-none"></h2>
+                 <p id="modal-desc" class="text-lg md:text-xl font-light text-gray-500 max-w-md"></p>
+                 
+                 <a id="modal-github" href="#" target="_blank" class="inline-flex items-center gap-3 px-8 py-4 bg-black dark:bg-white text-white dark:text-black uppercase tracking-widest text-xs font-bold hover:gap-6 transition-all duration-300">
+                    <span>Visit Github</span>
+                    <span class="material-icons-outlined text-sm">arrow_forward</span>
+                 </a>
+             </div>
+        </div>
+    </div>
+<section class="bg-[#0b1b16] relative overflow-hidden text-white py-32 px-6" id="contact">
+    <div class="absolute inset-0 flex items-end justify-center pointer-events-none select-none z-0">
+        <h1 class="font-display text-[35vw] leading-none text-white opacity-[0.03] translate-y-[20%]">SHAH</h1>
+    </div>
+    
+    <!-- AUDIO VISUAL FRAME LAYER -->
+    <div id="contact-frame-layer" class="absolute inset-[30px] md:inset-[50px] pointer-events-none z-20 mix-blend-overlay">
+        <div id="cf-top" class="absolute top-0 left-0 w-full h-px bg-white/20 origin-left scale-x-0"></div>
+        <div id="cf-right" class="absolute top-0 right-0 w-px h-full bg-white/20 origin-top scale-y-0"></div>
+        <div id="cf-bottom" class="absolute bottom-0 left-0 w-full h-px bg-white/20 origin-left scale-x-0"></div>
+        <div id="cf-left" class="absolute top-0 left-0 w-px h-full bg-white/20 origin-top scale-y-0"></div>
+    </div>
+    
+    <!-- DEPTH OVERLAY -->
+    <div id="contact-depth-overlay" class="absolute inset-0 bg-black/40 pointer-events-none z-0 opacity-0 transition-opacity duration-1000"></div>
+<div class="relative z-10 max-w-4xl mx-auto text-center">
+<p class="text-[0.6rem] uppercase tracking-[0.4em] mb-10 text-gray-500 opacity-0">Start</p>
+<h2 class="rolling-text font-display text-5xl md:text-7xl lg:text-[80px] uppercase leading-[0.9] mb-4">
+                READY TO BUILD<br/>SOMETHING<br/>MEANINGFUL?
+            </h2>
+<p class="font-body text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">Let’s turn ideas into thoughtfully engineered digital products.</p>
+<button id="initiate-contact-btn" class="px-10 py-4 border border-white/20 hover:bg-white hover:text-primary transition-all duration-300 text-[10px] uppercase tracking-[0.2em] font-bold">
+                Initiate Collaboration
+            </button>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto mt-40 border-t border-white/5 pt-12 grid grid-cols-1 md:grid-cols-3 text-[10px] uppercase tracking-[0.3em] text-gray-500 gap-12">
+<div class="flex flex-col gap-4">
+<span class="text-white/30">Social</span>
+<div class="flex gap-6 text-white/70">
+<a class="hover:text-white transition-colors" href="https://www.linkedin.com/in/adarsh-shah-3b713122a">LinkedIn</a>
+<a class="hover:text-white transition-colors" href="https://github.com/adarsh832">GitHub</a>
+<a class="hover:text-white transition-colors" href="https://play.google.com/store/apps/details?id=com.apdate.apdate&pcampaignid=web_share">Play Store</a>
+<a class="hover:text-white transition-colors" href="https://adarsh-shah.netlify.app/">Portfolio</a>
+</div>
+</div>
+<div class="flex flex-col gap-4 md:items-center">
+<span class="text-white/30">Location</span>
+<span class="text-white/70">Vadodara, Gujarat, India</span>
+</div>
+<div class="flex flex-col gap-4 md:items-end">
+<span class="text-white/30">Copyright</span>
+<span class="text-white/70">© 2026 Adarsh Shah</span>
+</div>
+</div>
+</section>
+
+    <!-- CINEMATIC CONTACT FORM MODAL -->
+    <div id="contact-form-modal" class="fixed inset-0 z-[100] flex justify-center items-center pointer-events-none" style="display: none;">
+        <!-- Backdrop -->
+        <div id="contact-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity"></div>
+        
+        <!-- Form Container -->
+        <div id="contact-form-card" class="relative bg-background-light dark:bg-card-dark w-full max-w-lg p-12 md:p-16 shadow-2xl rounded-lg opacity-0 transform translate-y-4 scale-[0.98]">
+            <!-- Close Button -->
+            <button id="close-contact-btn" class="absolute top-6 right-6 p-2 opacity-50 hover:opacity-100 transition-opacity">
+                <span class="material-icons-outlined text-primary dark:text-background-light text-lg">close</span>
+            </button>
+
+            <!-- Content -->
+            <div class="space-y-12">
+                <!-- Header -->
+                <div class="space-y-6 text-center">
+                    <h2 id="contact-title" class="font-display text-3xl md:text-4xl uppercase leading-tight text-primary dark:text-background-light opacity-0 translate-y-2">
+                        Let’s Build<br>Something Exceptional.
+                    </h2>
+                    <div id="contact-divider" class="h-px bg-primary/10 dark:bg-background-light/10 w-0 mx-auto"></div>
+                </div>
+
+                <!-- Fields -->
+                <form id="contact-form" class="space-y-8" action="https://formspree.io/f/xnjbqnlp" method="POST">
+                    <!-- Name Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <input type="text" id="input-name" name="name" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-primary dark:text-background-light focus:outline-none focus:border-primary dark:focus:border-background-light transition-colors placeholder-transparent font-body text-sm"
+                            placeholder="Name">
+                        <label for="input-name" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-primary dark:peer-focus:text-background-light peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-primary dark:peer-valid:text-background-light">
+                            Name
+                        </label>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <input type="email" id="input-email" name="email" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-primary dark:text-background-light focus:outline-none focus:border-primary dark:focus:border-background-light transition-colors placeholder-transparent font-body text-sm"
+                            placeholder="Email Address">
+                        <label for="input-email" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-primary dark:peer-focus:text-background-light peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-primary dark:peer-valid:text-background-light">
+                            Email Address
+                        </label>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="contact-input-group relative opacity-0 translate-y-2">
+                        <textarea id="input-message" name="message" rows="1" required 
+                            class="peer w-full bg-transparent border-b border-gray-300 dark:border-gray-700 py-3 text-primary dark:text-background-light focus:outline-none focus:border-primary dark:focus:border-background-light transition-colors placeholder-transparent font-body text-sm resize-none"
+                            placeholder="Message"></textarea>
+                        <label for="input-message" 
+                            class="absolute left-0 top-3 text-gray-400 text-xs uppercase tracking-widest pointer-events-none transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:top-[-20px] peer-focus:text-[0.6rem] peer-focus:text-primary dark:peer-focus:text-background-light peer-valid:top-[-20px] peer-valid:text-[0.6rem] peer-valid:text-primary dark:peer-valid:text-background-light">
+                            Message
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="contact-input-group opacity-0 pt-4 flex justify-center">
+                        <button type="submit" class="px-8 py-3 bg-primary dark:bg-background-light text-white dark:text-primary uppercase text-[10px] tracking-[0.25em] font-bold hover:opacity-90 transition-opacity rounded-sm">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success Message (Ajax) -->
+                <div id="contact-success" class="hidden text-center space-y-6 py-12">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 mb-4 border border-green-200 dark:border-green-800">
+                        <span class="material-icons-outlined text-green-600 dark:text-green-400 text-4xl">check</span>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-2xl uppercase text-primary dark:text-background-light mb-2">Message Transmitted</h3>
+                        <p class="font-body text-sm text-gray-500">We will establish connection shortly.</p>
+                    </div>
+                    <button onclick="resetForm()" class="text-[10px] uppercase tracking-widest text-black dark:text-white border-b border-black dark:border-white hover:opacity-50 transition-opacity">
+                        Send Another Signal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body></html>

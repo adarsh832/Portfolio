@@ -1,0 +1,550 @@
+/* Scene Spacing - Visual Silence */
+/* Scene Spacing - Visual Silence */
+section {
+    min-height: 120vh;
+    /* Ensure scenes are tall enough for scrolling */
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+}
+
+/* OVERRIDES for tight transitions */
+#work,
+#transition-band {
+    min-height: auto !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#hero-scene {
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    z-index: 10;
+}
+
+/* Custom Cursor */
+* {
+    cursor: none !important;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    margin: 0;
+    padding: 0;
+}
+
+/* Reset global section padding for the horizontal scenes */
+#chapter-wrapper section {
+    min-height: 100vh;
+    height: 100vh;
+    padding: 0;
+}
+
+#cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: black;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.dark #cursor-dot {
+    background-color: white;
+}
+
+/* F1 / Architectural Utilities */
+.text-stroke-sm {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Menu Overlay Styling - Heavy Inertia */
+#menu-overlay {
+    clip-path: circle(0% at 100% 0%);
+    transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    /* expo.out feel */
+}
+
+#menu-overlay.open {
+    clip-path: circle(150% at 100% 0%);
+}
+
+.blur-in {
+    filter: blur(10px);
+    opacity: 0;
+}
+
+/* Project Divider */
+.project-divider {
+    width: 0%;
+}
+
+/* Pin Effect */
+.pin-head {
+    opacity: 0;
+    transform: scale(0);
+}
+
+/* Signature Loader Styles */
+.loader-grid {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.dark .loader-grid {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+.signature-png {
+    filter: none;
+}
+
+.dark .signature-png {
+    filter: invert(1) brightness(1.2);
+}
+
+/* Editorial Reveal Masks */
+.reveal-mask {
+    overflow: hidden;
+    display: block;
+    /* or inline-block depending on context */
+    position: relative;
+}
+
+.reveal-text {
+    display: block;
+    transform: translateY(100%);
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+/* Lock-in Effect State */
+.locked-in {
+    filter: contrast(110%);
+    font-weight: 500;
+    /* Subtle weight shift if font supports it */
+    letter-spacing: -0.01em;
+    /* Tighten slightly */
+    transition: all 0.5s ease-out;
+}
+
+/* Rolling Text Styles */
+.roll-line {
+    display: block;
+    overflow: hidden;
+    line-height: 1;
+}
+
+.roll-word {
+    display: inline-block;
+    white-space: nowrap;
+    margin-right: 0.2em;
+    /* Space between words */
+}
+
+.roll-char {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.roll-inner {
+    display: block;
+    /* Allows transform */
+    position: relative;
+}
+
+.roll-text {
+    display: block;
+}
+
+/* Modal Styles */
+#project-modal {
+    clip-path: circle(0% at 50% 50%);
+    /* Start closed */
+    transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+#project-modal.open {
+    clip-path: circle(150% at 50% 50%);
+}
+
+/* --- HERO GRID & BORDERS (Engineering Aesthetic) --- */
+#global-grid-layer {
+    position: fixed;
+    /* Global fixed background */
+    inset: 0;
+    z-index: 0;
+    /* Behind everything */
+    pointer-events: none;
+    opacity: 0;
+    /* JS handles fade in */
+    background-image:
+        linear-gradient(rgba(100, 100, 100, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 100, 100, 0.08) 1px, transparent 1px);
+    /* Darker: 0.05 -> 0.08 */
+    background-size: 50px 50px;
+    /* Reduced mask for broader visibility */
+    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+}
+
+#hero-frame {
+    position: absolute;
+    inset: 30px;
+    /* Slight inset from edges */
+    z-index: 5;
+    pointer-events: none;
+    border: 1px solid rgba(100, 100, 100, 0.1);
+    /* Very subtle */
+    opacity: 0;
+    /* JS handles reveal */
+}
+
+/* Corner Markers */
+.corner-marker {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: rgba(100, 100, 100, 0.3);
+    /* Slightly more visible than frame */
+    border-style: solid;
+    transition: all 0.5s ease;
+}
+
+.tl {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+}
+
+.tr {
+    top: -1px;
+    right: -1px;
+    border-width: 1px 1px 0 0;
+}
+
+.bl {
+    bottom: -1px;
+    left: -1px;
+    border-width: 0 0 1px 1px;
+}
+
+.br {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+}
+
+.technical-label {
+    position: absolute;
+    font-family: 'Inter', sans-serif;
+    /* Or monospace */
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: rgba(100, 100, 100, 0.4);
+    text-transform: uppercase;
+}
+
+.lbl-tl {
+    top: 10px;
+    left: 15px;
+}
+
+.lbl-br {
+    bottom: 10px;
+    right: 15px;
+}
+
+/* --- FLOATING ICONS LAYER --- */
+#hero-icons-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    /* Content is 10, Grid is 1, Frame is 5. We want these behind Frame? Or floating freely? 
+                    User said "reinforce technical identity". 
+                    Let's put them at z-index 2 (above grid, below frame/text). */
+    pointer-events: none;
+}
+
+.hero-icon {
+    position: absolute;
+    color: rgba(100, 100, 100, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    /* JS reveal */
+}
+
+.hero-icon .material-icons-outlined {
+    font-size: 32px;
+    /* Default base */
+    font-weight: 100;
+    /* Thin look if font supports, strictly relying on icon style */
+}
+
+/* Positions */
+.icon-pos-1 {
+    top: 15%;
+    left: 10%;
+}
+
+/* Top Left - Memory */
+.icon-pos-2 {
+    bottom: 20%;
+    right: 12%;
+}
+
+/* Bottom Right - Code */
+.icon-pos-3 {
+    top: 30%;
+    right: 20%;
+}
+
+/* Mid Right - Cloud */
+.icon-pos-4 {
+    bottom: 15%;
+    left: 25%;
+}
+
+/* Deep Left - Laptop */
+
+/* Styles */
+.icon-blur {
+    filter: blur(1.5px);
+    opacity: 0.3 !important;
+}
+
+/* Distance */
+.icon-sm {
+    transform: scale(0.8);
+}
+
+.icon-lg {
+    transform: scale(1.2);
+}
+
+/* --- INTERACTIVE MICRO-PANELS --- */
+.hero-icon {
+    cursor: pointer;
+    transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    /* Ensure pointer events are active for click */
+    pointer-events: auto !important;
+}
+
+/* Active State (Sharp, Scale) */
+.hero-icon.active {
+    opacity: 1 !important;
+    filter: blur(0) !important;
+    transform: scale(1.05);
+    z-index: 50;
+    /* Bring to front */
+}
+
+/* Focus Mode: Dim others */
+.hero-icon.dimmed {
+    opacity: 0.1 !important;
+    filter: blur(2px) grayscale(100%);
+}
+
+/* Micro Panel */
+.micro-panel {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 12px 16px;
+    width: 200px;
+    border-radius: 4px;
+    /* Minimal rounded */
+    opacity: 0;
+    visibility: hidden;
+    /* Positioning logic will be handled by CSS relative to icon or fixed if simpler. 
+        Let's try relative with offset. */
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%) translateX(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    /* Extremely subtle */
+    pointer-events: none;
+    /* Let clicks pass through if needed, but text selection might be wanted. */
+}
+
+.dark .micro-panel {
+    background-color: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Adjust position for right-side icons to push left */
+.icon-pos-2 .micro-panel,
+.icon-pos-3 .micro-panel {
+    left: auto;
+    right: 100%;
+    transform: translateY(-50%) translateX(-10px);
+    text-align: right;
+}
+
+/* Panel Typography */
+.panel-header {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.dark .panel-header {
+    color: #fff;
+}
+
+.panel-line {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 6px;
+}
+
+.dark .panel-line {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.panel-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #666;
+}
+
+.dark .panel-desc {
+    color: #aaa;
+}
+
+/* Folder Open State */
+.directory-folder.open .folder-arrow {
+    transform: rotate(90deg);
+}
+
+.directory-folder.open .folder-content {
+    height: auto;
+    opacity: 1;
+}
+
+/* Cursor Pointer for ID Card to indicate interactivity */
+#id-card {
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Smooth hover scale if needed */
+}
+
+#id-card:hover {
+    transform: scale(1.02);
+    /* Subtle feedback */
+}
+
+.text-stroke-light {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+    color: transparent;
+}
+
+.text-stroke-dark {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+    color: transparent;
+}
+
+.fade-mask {
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+/* SCULPTURAL TYPOGRAPHY */
+.text-monument {
+    color: #1a1a1a;
+    /* Off-black for dark depth */
+    text-shadow:
+        -1px -1px 1px rgba(255, 255, 255, 0.1),
+        /* Top-Left Highlight */
+        1px 1px 0px rgba(0, 0, 0, 0.1),
+        /* Depth Layer 1 */
+        2px 2px 0px rgba(0, 0, 0, 0.05),
+        /* Depth Layer 2 */
+        0px 10px 30px rgba(0, 0, 0, 0.2);
+    /* Ambient Shadow */
+    will-change: transform, opacity, text-shadow;
+}
+
+.dark .text-monument {
+    color: #f0f0f0;
+    /* Off-white */
+    text-shadow:
+        -1px -1px 1px rgba(255, 255, 255, 0.2),
+        1px 1px 0px rgba(0, 0, 0, 0.5),
+        2px 2px 0px rgba(0, 0, 0, 0.3),
+        0px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Moved from index.html */
+.text-stroke-light {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+    color: transparent;
+}
+
+.text-stroke-dark {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+    color: transparent;
+}
+
+.fade-mask {
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+/* SCULPTURAL TYPOGRAPHY (Additional) */
+.text-monument {
+    color: #1a1a1a;
+    text-shadow:
+        -1px -1px 1px rgba(255, 255, 255, 0.1),
+        1px 1px 0px rgba(0, 0, 0, 0.1),
+        2px 2px 0px rgba(0, 0, 0, 0.05),
+        0px 10px 30px rgba(0, 0, 0, 0.2);
+    will-change: transform, opacity, text-shadow;
+}
+
+.dark .text-monument {
+    color: #f0f0f0;
+    text-shadow:
+        -1px -1px 1px rgba(255, 255, 255, 0.2),
+        1px 1px 0px rgba(0, 0, 0, 0.5),
+        2px 2px 0px rgba(0, 0, 0, 0.3),
+        0px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- HERO LAYERED COMPOSITION --- */
+#hero-composition {
+    perspective: 1000px;
+}
+
+.hero-portrait-img {
+    mask-image: linear-gradient(to bottom, black 80%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, black 90%, transparent 100%);
+}
+
+/* Optional: Add grain to the whole composition or specific layers if desired, 
+   but for now let's keep it clean as per "Editorial" request unless specified. 
+   The User said "Add subtle grain (optional)". Let's add it to the image itself via filter if possible, 
+   or a separate overlay div. The previous pseudo-element might have been sized wrong. 
+*/
