@@ -10,6 +10,12 @@ function initLoader() {
         document.documentElement.classList.remove('dark');
     }
 
+    // Force scroll to top on load to prevent GSAP FOUC / layout breaks
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const loader = document.querySelector('#loading-screen');
     const content = document.querySelector('#smooth-wrapper');
     const signatureMaskPath = document.querySelector('#signature-mask-path'); 
@@ -24,8 +30,25 @@ function initLoader() {
     // Check Session Storage (Bypass for user testing)
     if (false) { 
         if (loader) loader.style.display = 'none';
-        if (content) gsap.set(content, { opacity: 1 });
-        initApp(); 
+        if (content) {
+            document.body.style.overflow = 'hidden';
+            gsap.fromTo(content, 
+                { opacity: 0, scale: 0.85 }, 
+                { 
+                    opacity: 1, 
+                    scale: 1, 
+                    duration: 1.4, 
+                    ease: "power3.inOut",
+                    clearProps: "scale",
+                    onComplete: () => {
+                        document.body.style.overflow = '';
+                        initApp();
+                    }
+                }
+            );
+        } else {
+            initApp();
+        }
     } else {
         if (loader && content && signatureMaskPath && signatureUnderline) {
             const pathLength = signatureMaskPath.getTotalLength();
@@ -46,10 +69,28 @@ function initLoader() {
                         duration: 1.0, 
                         onComplete: () => {
                             loader.style.display = 'none';
-                            initApp();
+                            // Scroll trigger init is delayed until scale intro finishes
                         }
                     });
-                    gsap.to(content, { opacity: 1, duration: 1.0 });
+                    
+                    // Cinematic Center Opening Transition
+                    document.body.style.overflow = 'hidden';
+                    gsap.fromTo(content, 
+                        { opacity: 0, scale: 0.85 }, 
+                        { 
+                            opacity: 1, 
+                            scale: 1, 
+                            duration: 1.4, 
+                            ease: "power3.inOut", 
+                            clearProps: "scale",
+                            onComplete: () => {
+                                // Unlock scroll and initialize pins only after transforms are cleared 
+                                // to prevent position: fixed context bugs with CSS transforms
+                                document.body.style.overflow = '';
+                                initApp();
+                            }
+                        }
+                    );
                 }
             });
 
@@ -88,8 +129,25 @@ function initLoader() {
 
         } else {
              if (loader) loader.style.display = 'none';
-             if (content) content.style.opacity = 1;
-             initApp();
+             if (content) {
+                 document.body.style.overflow = 'hidden';
+                 gsap.fromTo(content, 
+                     { opacity: 0, scale: 0.85 }, 
+                     { 
+                         opacity: 1, 
+                         scale: 1, 
+                         duration: 1.4, 
+                         ease: "power3.inOut",
+                         clearProps: "scale",
+                         onComplete: () => {
+                             document.body.style.overflow = '';
+                             initApp();
+                         }
+                     }
+                 );
+             } else {
+                 initApp();
+             }
         }
     }
 }
@@ -117,18 +175,45 @@ function initApp() {
         cursor.style.top = e.clientY + 'px';
     });
 
-    // Hover Effects (Preserved)
-    const interactiveElements = document.querySelectorAll('a, button, .group');
+    // Hover Effects (Preserved & Enhanced)
+    const interactiveElements = document.querySelectorAll('a, button, .group, [data-cursor-text]');
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => {
-            cursor.style.width = '40px';
-            cursor.style.height = '40px';
-            cursor.style.opacity = '0.5';
+            const cursorText = el.getAttribute('data-cursor-text');
+            if (cursorText) {
+                // Large circular cursor with text
+                cursor.style.width = '70px';
+                cursor.style.height = '70px';
+                cursor.style.opacity = '1';
+                cursor.style.backgroundColor = document.documentElement.classList.contains('dark') ? '#ffffff' : '#000000';
+                
+                const textSpan = cursor.querySelector('.cursor-text');
+                if (textSpan) {
+                    textSpan.style.color = document.documentElement.classList.contains('dark') ? '#000000' : '#ffffff';
+                    textSpan.innerText = cursorText;
+                    textSpan.classList.remove('hidden', 'opacity-0');
+                    textSpan.classList.add('opacity-100');
+                }
+            } else {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+                cursor.style.opacity = '0.5';
+            }
         });
         el.addEventListener('mouseleave', () => {
             cursor.style.width = '8px';
             cursor.style.height = '8px';
             cursor.style.opacity = '1';
+            cursor.style.backgroundColor = ''; // Reset to CSS default
+            
+            const textSpan = cursor.querySelector('.cursor-text');
+            if (textSpan) {
+                textSpan.classList.remove('opacity-100');
+                textSpan.classList.add('opacity-0');
+                setTimeout(() => { 
+                    if (textSpan.classList.contains('opacity-0')) textSpan.classList.add('hidden'); 
+                }, 300); // Wait for fade
+            }
         });
     });
 
@@ -584,14 +669,13 @@ function initApp() {
     }
 
 
-    // --- 5. SCENE 3: WORK ---
-    const workGroups = gsap.utils.toArray("#work .group");
+    // --- 5. SCENE 3: WORK (Stacking Photo Frames) ---
+    const workSection = document.getElementById("work");
+    const workFrames = gsap.utils.toArray(".work-frame");
+    const workStack = document.getElementById("work-stack");
 
-    // Remove conflicting CSS transitions so GSAP can take over cleanly
-    workGroups.forEach(group => {
-        group.style.transition = "none";
-        const content = group.querySelector('.card-content');
-        if (content) content.style.transition = "none";
+    workFrames.forEach(frame => {
+        frame.style.transition = "none";
     });
 
     // --- INTERACTIVE SYSTEM NODES (Logic) ---
@@ -663,159 +747,74 @@ function initApp() {
         });
     });
 
-    // 1. Entrance Animation
-    // Hide initially (Add Z depth push)
-    gsap.set(workGroups, { y: 70, opacity: 0, scale: 0.96, z: -30 });
+    // --- SCROLL STACKING LOGIC ---
+    let frameMm = gsap.matchMedia();
 
-    // Staggered Entrance
-    ScrollTrigger.batch(workGroups, {
-        onEnter: (elements) => {
-            elements.forEach((el, index) => {
-                const isArchive = !el.querySelector('.card-content');
-                // Alternating rotation for aesthetics
-                const targetRotation = isArchive ? 0 : (index % 2 === 0 ? -2 : 2);
-                
-                // Introduce micro-delay variation to make it organic (start delay requirement)
-                const organicDelay = (index * 0.15) + (Math.random() * 0.05) + 0.1;
+    // Rotations for natural photo stack
+    const frameRotations = [-2, 1, -1.5, 2];
 
-                gsap.to(el, {
-                    y: 0,
-                    z: 0, // pull forward to z:0
-                    opacity: 1,
-                    scale: 1,
-                    rotation: targetRotation,
-                    duration: GLOBAL_DUR + 0.4, // slightly longer for cards
-                    delay: organicDelay,
-                    ease: GLOBAL_EASE,
-                    overwrite: "auto"
-                });
-
-                const pin = el.querySelector('.pin-head');
-                if (pin) {
-                   gsap.fromTo(pin, 
-                        { y: -50, opacity: 0, scale: 2 },
-                        { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "bounce.out", delay: organicDelay + 0.4 }
-                   );
-                }
-            });
-        },
-        start: "top 85%", 
-        once: true
-    });
-
-    // 2. Parallax Depth Enhancement & 3. Hover Upgrades
-    workGroups.forEach((group, i) => {
-        const imageLoader = group.querySelector('img');
-        const contentContainer = group.querySelector('.px-2'); // Text container
-        
-        // Depth Parallax
-        if (imageLoader && contentContainer) {
-            // Slower image movement (parallax)
-            gsap.to(imageLoader, {
-                y: 15,
-                scale: 1.05,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: group,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-            
-            // Text shifts upward slightly
-            gsap.to(contentContainer, {
-                y: -10,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: group,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-        }
-
-        // Hover Interaction 
-        const isArchive = !group.querySelector('.card-content');
-        const baseRot = isArchive ? 0 : (i % 2 === 0 ? -2 : 2);
-        
-        group.addEventListener('mouseenter', () => {
-             // Card lift & scale
-             gsap.to(group, {
-                y: -10,
-                scale: 1.03,
-                rotation: baseRot, // Lock rotation to prevent snapping bounds
-                boxShadow: "0 25px 40px -10px rgba(0, 0, 0, 0.2), 0 10px 20px -5px rgba(0, 0, 0, 0.1)",
-                duration: 0.5,
-                ease: "power3.out",
-                overwrite: "auto"
-            });
-            
-             // Inner content shift (Realism)
-             if (contentContainer) {
-                 gsap.to(contentContainer, {
-                    x: 4,
-                    duration: 0.4,
-                    ease: "power2.out",
-                    overwrite: "auto"
-                 });
-             }
+    frameMm.add("(min-width: 768px)", () => {
+        // Desktop Stacking Snapshot
+        gsap.set(workFrames, { 
+            y: (i) => i === 0 ? 0 : window.innerHeight, 
+            scale: (i) => i === 0 ? 1 : 0.85,
+            opacity: (i) => i === 0 ? 1 : 0,
+            rotation: (i) => i === 0 ? frameRotations[0] : 0
         });
 
-        group.addEventListener('mouseleave', () => {
-             // Reset card
-             gsap.to(group, {
-                y: 0,
-                scale: 1,
-                rotation: baseRot,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                duration: 0.5,
-                ease: "power3.out",
-                overwrite: "auto"
-            });
-            
-            // Reset Inner Content
-             if (contentContainer) {
-                 gsap.to(contentContainer, {
-                    x: 0,
-                    duration: 0.4,
-                    ease: "power2.out",
-                    overwrite: "auto"
-                 });
-             }
-        });
-    });
-
-    // 4. Scroll Continuity Improvement & Idle Motion
-    // Fade and move up slightly when leaving viewport towards Contact section
-    gsap.fromTo(workGroups, 
-        { y: 0, opacity: 1 },
-        {
-            y: -80,
-            scale: 0.97, // standardize scroll exit
-            z: -50,
-            opacity: 0,
-            stagger: 0.05,
-            ease: "none",
+        const stackTl = gsap.timeline({
             scrollTrigger: {
-                trigger: "#contact",
-                start: "top bottom+=100", // Start transitioning when Contact is entering
-                end: "top center", // Stop transitioning when Contact is halfway up
-                scrub: true,
-                immediateRender: false
+                trigger: workSection,
+                start: "center center", // Pin when section is perfectly centered
+                end: "+=200%",          // Length of the scroll animation
+                scrub: 1,
+                pin: true,              // Crucial: locks the section to prevent layout jumps/overlapping
+                anticipatePin: 1
             }
-        }
-    );
+        });
 
-    // Global idle breathing for work grid container
-    gsap.to("#work-grid", {
-        y: "-=8",
-        rotationZ: -0.2, // barely noticeable tilt
-        duration: gsap.utils.random(IDLE_MIN, IDLE_MAX),
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
+        workFrames.forEach((frame, i) => {
+            if (i === 0) return;
+            const stackOffset = i * -25;
+            const targetRot = frameRotations[i % frameRotations.length];
+            
+            stackTl.to(frame, {
+                y: stackOffset,
+                scale: 1,
+                opacity: 1,
+                rotation: targetRot,
+                duration: 1,
+                ease: "power2.out"
+            }, (i - 1) * 0.8);
+        });
+
+        // Hover Effect on Desktop Stack
+        workFrames.forEach((frame, i) => {
+            const baseRot = frameRotations[i % frameRotations.length];
+            frame.addEventListener("mouseenter", () => {
+                const limitY = i === 0 ? 0 : (i * -25);
+                gsap.to(frame, { y: limitY - 15, scale: 1.02, rotation: baseRot, duration: 0.3, overwrite: "auto", boxShadow: "0 25px 40px -10px rgba(0, 0, 0, 0.2)" });
+            });
+            frame.addEventListener("mouseleave", () => {
+                const limitY = i === 0 ? 0 : (i * -25);
+                gsap.to(frame, { y: limitY, scale: 1, rotation: baseRot, duration: 0.3, overwrite: "auto", boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" });
+            });
+        });
+
+        return () => { gsap.set(workFrames, { clearProps: "all" }); };
+    });
+
+    frameMm.add("(max-width: 767px)", () => {
+        // Mobile Fallback Fade
+        gsap.set(workFrames, { y: 40, opacity: 0 });
+        ScrollTrigger.batch(workFrames, {
+            onEnter: (elements) => {
+                gsap.to(elements, { y: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: GLOBAL_EASE, overwrite: "auto" });
+            },
+            start: "top 85%",
+            once: true
+        });
+        return () => { gsap.set(workFrames, { clearProps: "all" }); };
     });
 
 
@@ -828,7 +827,26 @@ function initApp() {
     const contactFooterElements = document.querySelector('.mt-40').children; // The 3 columns
     const prevSection = document.getElementById('work');
 
-    // 1. Scroll Entrance Animation (Sequenced)
+    // 1. Overlap / Slide-Up Transition Logic
+    // Keep the Work section visually stationary by translating it down precisely as the page scrolls up.
+    // This removes the gap issues of nested pins and beautifully overlays Contact like a rising curtain.
+    gsap.set(contactSection, { zIndex: 100 });
+    gsap.fromTo(prevSection, 
+        { y: 0 },
+        {
+            y: () => window.innerHeight,
+            ease: "none",
+            scrollTrigger: {
+                trigger: contactSection,
+                start: "top bottom",
+                end: "top top", 
+                scrub: true,
+                invalidateOnRefresh: true
+            }
+        }
+    );
+
+    // 2. Scroll Entrance Content Form Animation (Sequenced)
     // Hide initially with depth push
     gsap.set([contactH2, contactP, contactBtn, ...contactFooterElements], { y: 60, opacity: 0, z: -20 });
 
@@ -1135,59 +1153,67 @@ function initApp() {
     initRollingText();
 
     // --- 13. PROJECT MODAL LOGIC ---
-    // (Consolidated logic as per code refactor)
-    
-    const modal = document.getElementById('project-modal');
-    const modalImg = document.getElementById('modal-image');
+    // Project Modal Logic
+    const workItems = document.querySelectorAll('.work-frame, #work-grid .group');
+    const projectModal = document.getElementById('project-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalImage = document.getElementById('modal-image');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
     const modalGithub = document.getElementById('modal-github');
-    const closeModalBtn = document.getElementById('close-modal-btn');
     let isModalOpen = false;
 
     function openModal(card) {
-        if (isModalOpen) return;
+        if (!card) return;
+        const title = card.getAttribute('data-title');
+        const desc = card.getAttribute('data-desc');
+        const imgSrc = card.getAttribute('data-image');
+        const github = card.getAttribute('data-github');
+
+        if (!title) return; // Ignore non-project clicks like the archive card
+
+        modalTitle.innerText = title;
+        modalDesc.innerText = desc;
+        modalImage.src = imgSrc;
+        modalGithub.href = github;
+
+        // Hide cursor to prevent overlap clashing during modal
+        cursor.style.opacity = '0';
+        
+        projectModal.style.pointerEvents = 'auto';
         isModalOpen = true;
 
-        // 1. Populate Data
-        modalImg.src = card.dataset.image;
-        modalTitle.innerText = card.dataset.title;
-        // Split title for rolling effect if we wanted, but clean text is fine
-        modalDesc.innerText = card.dataset.desc;
-        modalGithub.href = card.dataset.github;
-
-        // 2. Activate Modal
-        modal.style.pointerEvents = "auto";
-        modal.style.opacity = "1"; // Ensure visibility for clip-path
-        modal.classList.add('open'); // Trigger CSS clip-path transition
-
-        // 3. Animate Content (Pop in)
-        gsap.fromTo([modalImg, modalTitle, modalDesc, modalGithub], 
-            { y: 50, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.3, ease: "power2.out" }
-        );
-
-        // Hide body scroll
-        document.body.style.overflow = "hidden";
+        // Animate elements inside (autoAlpha handles visibility: visible and opacity: 1 seamlessly)
+        gsap.to(projectModal, { autoAlpha: 1, duration: 0.4, ease: 'power2.out' });
+        gsap.fromTo(modalImage, { scale: 1.1, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1, ease: 'power3.out', delay: 0.2 });
+        gsap.fromTo(modalTitle, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.4 });
+        gsap.fromTo(modalDesc, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.5 });
+        gsap.fromTo(modalGithub, { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.6 });
+        
+        // Prevent body scroll (lock in place)
+        document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-        if (!isModalOpen) return;
+        projectModal.style.pointerEvents = 'none';
         isModalOpen = false;
-
-        modal.classList.remove('open');
-        modal.style.pointerEvents = "none";
         
-        // Allow exit transition to finish before hiding fully
-        setTimeout(() => {
-            modal.style.opacity = "0";
-            document.body.style.overflow = "";
-        }, 800);
+        gsap.to(projectModal, { autoAlpha: 0, duration: 0.4, ease: 'power2.in' });
+        
+        // Restore cursor
+        cursor.style.opacity = '1';
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
     }
 
-    // Attach listeners to Project Cards
-    document.querySelectorAll('#work .group[data-title]').forEach(card => {
-        card.addEventListener('click', () => openModal(card));
+    // Use Event Delegation to ensure clicks are registered even if GSAP alters the DOM or nodes
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.work-frame, #work-grid .group');
+        if (card) {
+            e.preventDefault();
+            openModal(card);
+        }
     });
 
     if (closeModalBtn) {
@@ -1527,7 +1553,10 @@ function initApp() {
     // We already have a 'heroScene' listener at the top.
     // The physics for ID card are separate.
 
-    // --- 14. TRANSITION BAND SCRUB ---
+    // --- 14. TRANSITION BAND LOGIC ---
+    // Smoothly fade in to prevent intro scaling FOUC
+    gsap.to('#transition-band', { opacity: 1, duration: 1.5, ease: "power2.inOut", delay: 0.5 });
+
     // Scroll-driven kinetic typography
     gsap.to(".marquee-row", {
         xPercent: -50,

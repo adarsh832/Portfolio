@@ -47,7 +47,9 @@
     </script>
     <link rel="stylesheet" href="css/styles.css">
     <!-- Custom Cursor Element -->
-    <div id="cursor-dot"></div>
+    <div id="cursor-dot" class="flex items-center justify-center text-white dark:text-black font-display text-[10px] uppercase tracking-widest opacity-0 font-bold overflow-hidden transition-all duration-300">
+        <span class="cursor-text hidden opacity-0 transition-opacity duration-300 absolute">View</span>
+    </div>
 </head>
 <body class="bg-white dark:bg-[#050505] text-black dark:text-white transition-colors duration-500 overflow-x-hidden antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
 
@@ -458,7 +460,7 @@
         </div>
     </section>
 </div>
-<section id="transition-band" class="relative z-20 w-full py-6 -mt-24 overflow-hidden bg-transparent select-none pointer-events-none fade-mask">
+<section id="transition-band" class="relative z-20 w-full py-6 -mt-[35vh] overflow-hidden bg-transparent select-none pointer-events-none fade-mask opacity-0">
     <div class="flex flex-col gap-4 transform -rotate-1 origin-center">
         <!-- Row 1: Left to Right -->
         <div class="marquee-row flex whitespace-nowrap">
@@ -496,105 +498,129 @@
     }
 </style>
 <section class="pb-24 pt-24 px-6 md:px-12 lg:px-24" id="work">
-<div class="mb-20">
-<div class="mb-20">
-    <div class="reveal-mask">
-        <h2 class="rolling-text reveal-text font-display text-5xl md:text-7xl uppercase mb-6 text-black dark:text-white">
-            Selected<br/>Works
-        </h2>
-    </div>
-<div class="flex items-center justify-between border-t border-black/10 dark:border-white/10 pt-4">
-<div class="h-px bg-black dark:bg-white w-full mr-4 opacity-10 project-divider"></div>
-<div class="text-right">
-<span class="block font-display text-xl text-gray-400 dark:text-gray-500">01 —</span>
-<span class="block font-display text-xl text-gray-400 dark:text-gray-500">04</span>
-</div>
-</div>
-</div>
-<div id="work-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-4 lg:gap-8 items-start">
-<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform -rotate-1 transition-all duration-300 cursor-pointer" 
-    data-title="APDATE" 
-    data-desc="A smart productivity application deployed on the Google Play Store. Built to transform user intent into structured actions through carefully designed system logic and performance-focused engineering." 
-    data-image="images/project_apdate.svg"
-    data-github="https://play.google.com/store/apps/details?id=com.apdate.apdate&pcampaignid=web_share">
-    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
-    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
-        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
-            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_apdate.svg"/>
+<div class="w-full flex flex-col md:flex-row items-center justify-between gap-12 max-w-7xl mx-auto md:min-h-[80vh]">
+    
+    <!-- Title Area (Left) -->
+    <div class="w-full md:w-[40%] z-50">
+        <div class="reveal-mask overflow-visible pr-4">
+            <h2 class="font-display text-5xl md:text-7xl lg:text-8xl uppercase mb-6 text-black dark:text-white pointer-events-auto leading-tight">
+                Selected<br/>Works
+            </h2>
         </div>
-        <div class="px-2">
-            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
-                <span>Intelligent Productivity App</span>
+        <div class="flex items-center justify-between border-t border-black/10 dark:border-white/10 pt-4 pointer-events-auto w-full">
+            <div class="h-px bg-black dark:bg-white w-full mr-4 opacity-10 project-divider"></div>
+            <div class="text-right shrink-0">
+                <span class="block font-display text-xl text-gray-400 dark:text-gray-500">01 —</span>
+                <span class="block font-display text-xl text-gray-400 dark:text-gray-500">04</span>
             </div>
-            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">APDATE</h3>
-            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">A smart productivity application deployed on the Google Play Store.</p>
-            <div class="flex justify-end">
-                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-xs">north_east</span>
+        </div>
+    </div>
+
+    <!-- Stack Container (Right) -->
+    <div id="work-stack" class="relative w-full md:w-[50%] lg:w-[480px] flex flex-col gap-12 md:gap-0 md:block md:h-[600px] z-40">
+        
+        <!-- CARD 1 -->
+        <div class="work-frame photo-frame group relative bg-white shadow-2xl p-4 pb-12 cursor-pointer z-[1] md:absolute md:top-10 md:left-0 md:w-full transition-transform duration-300 md:transform-none" 
+            data-title="GEMINI LINUX ASSISTANT"
+            data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
+            data-image="images/project_gemini.svg"
+            data-github="https://github.com/adarsh832"
+            data-cursor-text="view">
+            <div class="card-content">
+                <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5 rounded-sm">
+                    <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_apdate.svg"/>
+                </div>
+                <div class="px-2 pt-2 text-black">
+                    <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-500 mb-2">
+                        <span>Intelligent Productivity App</span>
+                    </div>
+                    <h3 class="font-display text-2xl uppercase leading-none mb-3 text-black">APDATE</h3>
+                    <p class="text-[11px] text-gray-600 mb-6 leading-relaxed">A smart productivity application deployed on the Google Play Store.</p>
+                    <div class="flex justify-end absolute bottom-6 right-6">
+                        <div class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                            <span class="material-icons-outlined text-sm">north_east</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform rotate-2 md:mt-12 transition-all duration-300 cursor-pointer"
-    data-title="TRACKMANIA_AI"
-    data-desc="An experimental automation project exploring real-time interaction and decision-based system design. Built as a creative engineering challenge focused on behavior and structure."
-    data-image="images/project_trackmania.svg"
-    data-github="https://github.com/adarsh832">
-    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
-    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
-        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
-            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_trackmania.svg"/>
-        </div>
-        <div class="px-2">
-            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
-                <span>Automation & System Experiment</span>
-            </div>
-            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">TRACKMANIA_AI</h3>
-            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">An experimental automation project exploring real-time interaction.</p>
-            <div class="flex justify-end">
-                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-xs">north_east</span>
+
+        <!-- CARD 2 -->
+        <div class="work-frame photo-frame group relative bg-white shadow-2xl p-4 pb-12 cursor-pointer z-[2] md:absolute md:top-10 md:left-0 md:w-full transition-transform duration-300 md:transform-none"
+            data-title="GEMINI LINUX ASSISTANT"
+            data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
+            data-image="images/project_gemini.svg"
+            data-github="https://github.com/adarsh832"
+            data-cursor-text="view">
+            <div class="card-content">
+                <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5 rounded-sm">
+                    <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_trackmania.svg"/>
+                </div>
+                <div class="px-2 pt-2 text-black">
+                    <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-500 mb-2">
+                        <span>Automation & System Experiment</span>
+                    </div>
+                    <h3 class="font-display text-2xl uppercase leading-none mb-3 text-black">TRACKMANIA_AI</h3>
+                    <p class="text-[11px] text-gray-600 mb-6 leading-relaxed">An experimental automation project exploring real-time interaction.</p>
+                    <div class="flex justify-end absolute bottom-6 right-6">
+                        <div class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                            <span class="material-icons-outlined text-sm">north_east</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="group relative bg-white dark:bg-neutral-100 shadow-xl p-4 pb-12 transform -rotate-1 transition-all duration-300 cursor-pointer"
-    data-title="GEMINI LINUX ASSISTANT"
-    data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
-    data-image="images/project_gemini.svg"
-    data-github="https://github.com/adarsh832">
-    <div class="pin-head absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-black dark:bg-white z-30 shadow-sm"></div>
-    <div class="card-content transition-transform duration-300 group-hover:-translate-y-1 group-hover:shadow-2xl">
-        <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5">
-            <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_gemini.svg"/>
-        </div>
-        <div class="px-2">
-            <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-400 mb-2">
-                <span>Developer Automation Tool</span>
-            </div>
-            <h3 class="font-display text-xl uppercase leading-none mb-3 text-black">GEMINI<br/>LINUX ASSISTANT</h3>
-            <p class="text-[10px] text-gray-500 mb-6 leading-relaxed">A command-line assistant that converts natural language into executable system commands.</p>
-            <div class="flex justify-end">
-                <div class="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-xs">north_east</span>
+
+        <!-- CARD 3 -->
+        <div class="work-frame photo-frame group relative bg-white shadow-2xl p-4 pb-12 cursor-pointer z-[3] md:absolute md:top-10 md:left-0 md:w-full transition-transform duration-300 md:transform-none"
+            data-title="GEMINI LINUX ASSISTANT"
+            data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
+            data-image="images/project_gemini.svg"
+            data-github="https://github.com/adarsh832"
+            data-cursor-text="view">
+            <div class="card-content">
+                <div class="bg-gray-100 aspect-[4/3] mb-4 overflow-hidden border border-black/5 rounded-sm">
+                    <img alt="Project Image" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="images/project_gemini.svg"/>
+                </div>
+                <div class="px-2 pt-2 text-black">
+                    <div class="flex justify-between items-center text-[0.5rem] uppercase tracking-widest text-gray-500 mb-2">
+                        <span>Developer Automation Tool</span>
+                    </div>
+                    <h3 class="font-display text-2xl uppercase leading-none mb-3 text-black">GEMINI ASSISTANT</h3>
+                    <p class="text-[11px] text-gray-600 mb-6 leading-relaxed">A command-line assistant that converts natural language into executable system commands.</p>
+                    <div class="flex justify-end absolute bottom-6 right-6">
+                        <div class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                            <span class="material-icons-outlined text-sm">north_east</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- CARD 4 (Archive) -->
+        <div class="work-frame photo-frame group relative bg-white shadow-2xl p-4 pb-12 cursor-pointer z-[4] md:absolute md:top-10 md:left-0 md:w-full transition-transform duration-300 md:transform-none"
+            data-title="GEMINI LINUX ASSISTANT"
+            data-desc="A command-line assistant that converts natural language into executable system commands. Design to enhance workflows through intelligent automation and structured execution."
+            data-image="images/project_gemini.svg"
+            data-github="https://github.com/adarsh832"
+            data-cursor-text="view">
+            <div class="card-content aspect-[4/3] flex flex-col items-center justify-center border-2 border-dashed border-gray-300 bg-gray-50 mb-4 hover:bg-gray-100 transition-colors rounded-sm">
+                <div class="space-y-4 text-center">
+                    <h3 class="font-display text-3xl uppercase text-black">Archive</h3>
+                    <p class="text-[0.6rem] uppercase tracking-[0.3em] text-gray-500 group-hover:text-black transition-colors">View All Projects</p>
+                    <div class="w-10 h-10 mx-auto rounded-full border border-gray-300 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors mt-4">
+                        <span class="material-icons-outlined text-sm">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
-<div class="relative aspect-[3/4] bg-transparent border border-dashed border-gray-400 dark:border-gray-600 p-8 flex flex-col justify-center items-center text-center hover:bg-white/50 dark:hover:bg-white/5 transition-colors cursor-pointer group">
-<div class="space-y-2">
-<h3 class="font-display text-2xl uppercase text-black dark:text-white">Archive</h3>
-<p class="text-[0.5rem] uppercase tracking-[0.3em] text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">View All Projects</p>
-</div>
-</div>
 </div>
 </section>
 
     <!-- PROJECT DETAIL MODAL -->
-    <div id="project-modal" class="fixed inset-0 z-[100] bg-white dark:bg-black text-black dark:text-white flex justify-center items-center pointer-events-none opacity-0">
+    <div id="project-modal" class="fixed inset-0 z-[100] bg-white dark:bg-black text-black dark:text-white flex justify-center items-center invisible opacity-0">
         <div class="absolute inset-0 bg-gray-100 dark:bg-neutral-900 opacity-90 backdrop-blur-xl"></div>
         
         <!-- Close Button -->

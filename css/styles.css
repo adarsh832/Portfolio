@@ -41,12 +41,7 @@ body {
     padding: 0;
 }
 
-/* Reset global section padding for the horizontal scenes */
-#chapter-wrapper section {
-    min-height: 100vh;
-    height: 100vh;
-    padding: 0;
-}
+/* Reset global section padding for the horizontal scenes (REMOVED) */
 
 #cursor-dot {
     width: 8px;
@@ -57,7 +52,11 @@ body {
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, background-color 0.3s;
+    /* Crucial for precise center rendering */
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dark #cursor-dot {
@@ -477,25 +476,27 @@ body {
     color: #1a1a1a;
     /* Off-black for dark depth */
     text-shadow:
-        -1px -1px 1px rgba(255, 255, 255, 0.1),
-        /* Top-Left Highlight */
-        1px 1px 0px rgba(0, 0, 0, 0.1),
-        /* Depth Layer 1 */
-        2px 2px 0px rgba(0, 0, 0, 0.05),
-        /* Depth Layer 2 */
-        0px 10px 30px rgba(0, 0, 0, 0.2);
-    /* Ambient Shadow */
-    will-change: transform, opacity, text-shadow;
+        -1px -1px 0px rgba(255, 255, 255, 0.1),
+        0px 5px 15px rgba(0, 0, 0, 0.15);
+    /* Simplified for performance */
+    will-change: transform, opacity;
+    /* Removed text-shadow from will-change */
 }
 
 .dark .text-monument {
     color: #f0f0f0;
     /* Off-white */
     text-shadow:
-        -1px -1px 1px rgba(255, 255, 255, 0.2),
-        1px 1px 0px rgba(0, 0, 0, 0.5),
-        2px 2px 0px rgba(0, 0, 0, 0.3),
-        0px 10px 30px rgba(0, 0, 0, 0.5);
+        -1px -1px 0px rgba(255, 255, 255, 0.05),
+        0px 5px 15px rgba(0, 0, 0, 0.3);
+    /* Simplified for performance */
+}
+
+/* Noise Background Optimization */
+.noise-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    opacity: 0.15;
 }
 
 /* Moved from index.html */
@@ -517,20 +518,16 @@ body {
 .text-monument {
     color: #1a1a1a;
     text-shadow:
-        -1px -1px 1px rgba(255, 255, 255, 0.1),
-        1px 1px 0px rgba(0, 0, 0, 0.1),
-        2px 2px 0px rgba(0, 0, 0, 0.05),
-        0px 10px 30px rgba(0, 0, 0, 0.2);
-    will-change: transform, opacity, text-shadow;
+        -1px -1px 0px rgba(255, 255, 255, 0.1),
+        0px 5px 15px rgba(0, 0, 0, 0.15);
+    will-change: transform, opacity;
 }
 
 .dark .text-monument {
     color: #f0f0f0;
     text-shadow:
-        -1px -1px 1px rgba(255, 255, 255, 0.2),
-        1px 1px 0px rgba(0, 0, 0, 0.5),
-        2px 2px 0px rgba(0, 0, 0, 0.3),
-        0px 10px 30px rgba(0, 0, 0, 0.5);
+        -1px -1px 0px rgba(255, 255, 255, 0.05),
+        0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* --- HERO LAYERED COMPOSITION --- */
@@ -542,9 +539,3 @@ body {
     mask-image: linear-gradient(to bottom, black 80%, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, black 80%, black 90%, transparent 100%);
 }
-
-/* Optional: Add grain to the whole composition or specific layers if desired, 
-   but for now let's keep it clean as per "Editorial" request unless specified. 
-   The User said "Add subtle grain (optional)". Let's add it to the image itself via filter if possible, 
-   or a separate overlay div. The previous pseudo-element might have been sized wrong. 
-*/
